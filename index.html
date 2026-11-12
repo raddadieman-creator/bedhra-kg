@@ -786,7 +786,7 @@ const isBoy=(k)=>((k||S)&&(k||S).g==='m');
 const charName=(k)=>isBoy(k)?'رائد':'رفرف';
 const miniBuddy=()=>isBoy()?FALCON_BIG.replace(/class="(wl|wr|eye|mouth)"/g,''):BFLY_BIG.replace(/class="(wl|wr|eye|mouth)"/g,'');
 let MODE=null;
-function applyMode(){const m=isBoy()?'m':'f';document.body.classList.toggle('boy',m==='m');document.body.classList.toggle('girl',m==='f');
+function applyMode(){const m=isBoy()?'m':(S&&S.g==='f')?'f':'n';document.body.classList.toggle('boy',m==='m');document.body.classList.toggle('girl',m==='f');
   if(MODE===m)return;MODE=m;
   $('#buddy svg').innerHTML=m==='m'?FALCON_BIG:BFLY_BIG;document.querySelector('.logo').innerHTML=m==='m'?LOGO_FALCON:LOGO_BFLY;
   $('#buddy').setAttribute('aria-label',charName()+': اضغط لتظهر التعليمة مرة أخرى');
@@ -800,7 +800,7 @@ const WB='(^|[\\s،.!؟:()\\-])';
 const FEMRE=new RegExp(WB+'([وف]?)('+Object.keys(FEMW).sort((a,b)=>b.length-a.length).join('|')+')(?=$|[\\s،.!؟:()\\-])','g');
 function gtext(t){if(!t||!/[\u0600-\u06FF]/.test(t))return t;
   if(isBoy()){BOYP.forEach(([a,b])=>{t=t.split(a).join(b)});t=t.replace(new RegExp(WB+'فراشة(?=$|[\\s،.!؟])','g'),'$1رائد فضاء')}
-  else t=t.replace(FEMRE,(m,a,w,x)=>a+w+FEMW[x]);
+  else if(S&&S.g==='f')t=t.replace(FEMRE,(m,a,w,x)=>a+w+FEMW[x]);
   return t}
 function gnode(n){if(n.nodeType===3){const pe=n.parentElement;if(!pe||pe.closest('.teach,.pin,[data-raw],script,style'))return;const v=gtext(n.nodeValue);if(v!==n.nodeValue)n.nodeValue=v;return}
   if(n.nodeType===1){if(n.closest('.teach,.pin,[data-raw]'))return;const w=document.createTreeWalker(n,NodeFilter.SHOW_TEXT);let x;const a=[];while(x=w.nextNode())a.push(x);a.forEach(gnode)}}
@@ -1096,7 +1096,7 @@ function homeView(){
         <b>ارسم على الخط</b><small>مستقيم، منحنٍ، متعرّج</small></button>
     </div></section>`);
   const meb=el.querySelector('.me b');if(meb){meb.dataset.raw='1';if(S.id!=='guest')meb.textContent=S.name}
-  if(S.id==='guest'){const sw=h(`<div class="gsw" data-raw="1"><button class="m ${S.g==='m'?'on':''}">ولد</button><button class="f ${S.g!=='m'?'on':''}">بنت</button></div>`);sw.querySelectorAll('button').forEach(b=>b.onclick=()=>{sfx.tap();S.g=b.classList.contains('m')?'m':'f';save();MODE=null;render()});el.querySelector('.me').after(sw)}
+  if(S.id==='guest'){const sw=h(`<div class="gsw" data-raw="1"><button class="m ${S.g==='m'?'on':''}">ولد</button><button class="f ${S.g==='f'?'on':''}">بنت</button></div>`);sw.querySelectorAll('button').forEach(b=>b.onclick=()=>{sfx.tap();S.g=b.classList.contains('m')?'m':'f';save();MODE=null;render()});el.querySelector('.me').after(sw)}
   if(S.id==='guest'&&!S.g&&!CL.kids.length&&!homeView.gasked){homeView.gasked=1;setTimeout(()=>genderPick(),250)}
   const meEl=el.querySelector('.me');if(meEl&&CL.kids.length){meEl.style.cursor='pointer';meEl.onclick=()=>{sfx.tap();kidPicker()}}
   if(CL.kids.length&&!CL.cur&&!homeView.asked){homeView.asked=1;setTimeout(kidPicker,250)}
