@@ -1,0 +1,1608 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>بذرة | منصة الروضة</title>
+<meta name="description" content="بذرة: منصة تفاعلية لأطفال الروضة في الأشكال والألوان والأعداد والخطوط.">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}</style>
+
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;600;700;800&display=swap">
+<style>
+/* عالم واحد مشرق للأطفال (تصميم بسمة واحدة مقصودة): سماء فاتحة، ألوان أساسية مشبعة، أزرار كبيرة، نشاط واحد في كل شاشة */
+:root{
+  --sky:#E9F5FF; --sky2:#D6ECFF; --paper:#FFFFFF; --ink:#2A2350; --ink2:#5B5680;
+  --red:#F25C68; --orange:#FF9F45; --yellow:#FFCF4A; --green:#36C285; --blue:#4A90EE; --purple:#9C6BE0;
+  --line:#CFE3F7; --shadow:rgba(42,35,80,.16);
+  --font:"Rubik","Tajawal","Segoe UI","Noto Sans Arabic",system-ui,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:var(--sky);color:var(--ink);font-family:var(--font);overflow:hidden;
+  background-image:radial-gradient(circle at 12% 18%,rgba(255,205,60,.35) 0 9px,transparent 10px),radial-gradient(circle at 88% 30%,rgba(58,141,255,.22) 0 7px,transparent 8px),radial-gradient(circle at 70% 85%,rgba(255,79,94,.22) 0 8px,transparent 9px),radial-gradient(circle at 25% 75%,rgba(46,194,126,.25) 0 7px,transparent 8px);
+  background-size:520px 520px}
+button{font-family:inherit;color:inherit;border:0;background:none;cursor:pointer}
+button:focus-visible,[tabindex]:focus-visible{outline:4px solid var(--blue);outline-offset:3px;border-radius:18px}
+.app{height:100%;display:flex;flex-direction:column;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* الشريط العلوي */
+.bar{display:flex;align-items:center;gap:10px;padding-block:10px 6px}
+.round{width:58px;height:58px;border-radius:50%;background:var(--paper);display:grid;place-items:center;box-shadow:0 5px 0 var(--line),0 8px 18px var(--shadow);flex:none;transition:transform .12s}
+.round:active{transform:translateY(3px);box-shadow:0 2px 0 var(--line)}
+.round svg{width:30px;height:30px}
+.brand{flex:1;min-width:0;display:flex;align-items:center;gap:10px}
+.brand b{font-size:clamp(20px,3.2vw,30px);font-weight:800;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.logo{width:46px;height:46px;flex:none}
+.stars{display:flex;align-items:center;gap:6px;background:var(--paper);border-radius:999px;padding:6px 14px 6px 10px;font-weight:800;font-size:22px;box-shadow:0 5px 0 var(--line)}
+.stars svg{width:28px;height:28px}
+
+.stage{flex:1;min-height:0;position:relative;overflow:auto;padding-block:6px 16px}
+
+/* الرئيسية */
+.home{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;text-align:center}
+.home h1{margin:0;font-size:clamp(30px,5.5vw,56px);font-weight:800;line-height:1.15;text-wrap:balance}
+.home p{margin:0;font-size:clamp(18px,2.6vw,24px);color:var(--ink2);font-weight:600}
+.doors{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(14px,3vw,34px);width:min(920px,100%)}
+.door{border-radius:36px;padding:22px 16px 20px;color:#fff;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:0 10px 0 rgba(0,0,0,.12),0 18px 30px var(--shadow);transition:transform .15s;position:relative;overflow:hidden}
+.door:active{transform:translateY(6px) scale(.99)}
+.door.shapes{background:linear-gradient(160deg,#5AA2FF,#3A6FE0)}
+.door.colors{background:linear-gradient(160deg,#FF7A88,#F2486A)}
+.door .art{width:min(220px,80%);aspect-ratio:1;max-width:100%}
+.door b{font-size:clamp(28px,4.6vw,46px);font-weight:800;line-height:1}
+.door small{font-size:clamp(15px,2vw,19px);font-weight:600;opacity:.95}
+.door .got{position:absolute;top:14px;left:16px;background:rgba(255,255,255,.25);border-radius:999px;padding:2px 12px;font-weight:800;font-size:18px}
+
+/* مسار الأنشطة */
+.path{min-height:100%;display:flex;flex-direction:column;align-items:center;gap:18px;padding-top:4px}
+.path h2{margin:0;font-size:clamp(28px,4.4vw,42px);font-weight:800;text-align:center}
+.stops{display:grid;grid-template-columns:repeat(var(--cols,3),minmax(0,1fr));gap:clamp(12px,2.4vw,26px);width:min(960px,100%)}
+.stop{background:var(--paper);border-radius:30px;padding:16px 10px 14px;display:flex;flex-direction:column;align-items:center;gap:6px;box-shadow:0 7px 0 var(--line),0 12px 22px var(--shadow);position:relative;transition:transform .12s}
+.stop:active{transform:translateY(4px)}
+.stop .n{position:absolute;top:10px;right:12px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800;font-size:20px}
+.stop .ic{width:clamp(70px,11vw,110px);aspect-ratio:1;max-width:100%}
+.stop b{font-size:clamp(20px,2.8vw,28px);font-weight:800}
+.stop .done{position:absolute;top:8px;left:10px;width:38px;height:38px}
+.stop.next{animation:bob 1.6s ease-in-out infinite}
+.stop.next::after{content:"";position:absolute;inset:-6px;border-radius:34px;border:4px dashed var(--yellow)}
+@keyframes bob{50%{transform:translateY(-6px)}}
+
+/* شاشة النشاط */
+.act{min-height:100%;display:flex;flex-direction:column;gap:12px}
+.ask{display:flex;align-items:center;gap:12px;background:var(--paper);border-radius:26px;padding:10px 14px;box-shadow:0 6px 0 var(--line)}
+.ask .say{width:62px;height:62px;border-radius:50%;background:var(--yellow);display:grid;place-items:center;flex:none;box-shadow:0 4px 0 #E3AE1C}
+.ask .say svg{width:34px;height:34px}
+.ask .say.talking{animation:pulse .7s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.08)}}
+.ask p{margin:0;font-size:clamp(20px,3vw,30px);font-weight:700;line-height:1.35;min-width:0;flex:1}
+.dots{display:flex;gap:7px;flex:none}
+.dots i{width:14px;height:14px;border-radius:50%;background:var(--line)}
+.dots i.on{background:var(--green)}
+.dots i.cur{background:var(--orange);transform:scale(1.25)}
+.board{flex:1;min-height:0;position:relative;display:flex;align-items:center;justify-content:center}
+
+/* البطاقات الكبيرة */
+.grid{display:grid;gap:clamp(12px,2.2vw,24px);width:min(980px,100%)}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g6{grid-template-columns:repeat(6,minmax(0,1fr))}
+.g5{grid-template-columns:repeat(5,minmax(0,1fr))}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.backpill{display:inline-flex;align-items:center;gap:6px;height:58px;padding:0 20px 0 16px;border-radius:999px;background:var(--orange);color:#fff;font-size:22px;font-weight:800;box-shadow:0 5px 0 #D97A1E,0 8px 18px var(--shadow);flex:none}
+.backpill svg{width:26px;height:26px}
+.backpill:active{transform:translateY(3px);box-shadow:0 2px 0 #D97A1E}
+.qrow{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center;min-height:20px}
+.tok{width:clamp(54px,8.5vw,92px);aspect-ratio:1;background:var(--paper);border-radius:20px;box-shadow:0 5px 0 var(--line);display:grid;place-items:center}
+.tok svg{width:80%;height:80%}
+.tok.q{border:4px dashed var(--orange);font-size:clamp(28px,4vw,44px);font-weight:800;color:var(--orange);box-shadow:none}
+.bigpic{background:var(--paper);border-radius:28px;box-shadow:0 7px 0 var(--line);width:min(220px,55%);aspect-ratio:1;display:grid;place-items:center}
+.bigpic svg{width:85%;height:85%}
+.scene{width:min(900px,100%);background:var(--paper);border-radius:30px;box-shadow:0 7px 0 var(--line);padding:10px}
+.scene svg{width:100%;height:auto;display:block}
+.scene .obj{cursor:pointer}
+.scene .obj.found{filter:drop-shadow(0 0 6px #2EC27E)}
+.count{font-size:clamp(20px,2.8vw,28px);font-weight:800;background:var(--paper);border-radius:999px;padding:4px 18px;box-shadow:0 5px 0 var(--line)}
+.slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;width:min(700px,100%)}
+.slot{border:4px dashed var(--line);border-radius:24px;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:rgba(255,255,255,.55);font-weight:800;font-size:clamp(16px,2.2vw,22px);color:var(--ink2);max-width:100%}
+.slot svg{width:70%;height:70%}
+.slot.full{border-style:solid;border-color:#A7E8C7;background:var(--paper)}
+.card{background:var(--paper);border-radius:28px;padding:14px 10px 12px;display:flex;flex-direction:column;align-items:center;gap:6px;box-shadow:0 7px 0 var(--line),0 12px 22px var(--shadow);transition:transform .12s;position:relative}
+.card:active{transform:translateY(4px)}
+.card .pic{width:100%;max-width:170px;aspect-ratio:1}
+.card b{font-size:clamp(20px,2.8vw,30px);font-weight:800}
+.card .tick{position:absolute;top:8px;left:8px;width:34px;height:34px}
+.card.seen{box-shadow:0 7px 0 #A7E8C7,0 12px 22px var(--shadow)}
+.card.good{animation:pop .5s}
+.card.bad{animation:shake .45s}
+@keyframes pop{40%{transform:scale(1.1)}}
+@keyframes shake{20%,60%{transform:translateX(-10px)}40%,80%{transform:translateX(10px)}}
+.reveal{display:flex;align-items:center;gap:14px;background:var(--paper);border-radius:26px;padding:12px 18px;box-shadow:0 6px 0 var(--line);width:min(980px,100%);min-height:110px}
+.reveal .objs{display:flex;gap:10px;flex:none}
+.reveal .objs svg{width:clamp(56px,8vw,84px);height:auto;aspect-ratio:1}
+.reveal p{margin:0;font-size:clamp(18px,2.5vw,26px);font-weight:700;line-height:1.4;min-width:0}
+.col{display:flex;flex-direction:column;gap:14px;align-items:center;width:100%}
+
+/* وصّل */
+.match{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(60px,14vw,220px);width:min(820px,100%)}
+.match .side{display:flex;flex-direction:column;gap:14px}
+.mi{background:var(--paper);border-radius:24px;height:clamp(78px,12vh,118px);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 0 var(--line);touch-action:none;position:relative;z-index:2}
+.mi svg{height:82%;width:auto;aspect-ratio:1}
+.mi.sel{outline:5px solid var(--orange)}
+.mi.ok{box-shadow:0 6px 0 #A7E8C7}
+.mi .dot{position:absolute;top:50%;width:22px;height:22px;border-radius:50%;background:var(--ink);transform:translateY(-50%)}
+.side.a .mi .dot{left:-11px}
+.side.b .mi .dot{right:-11px}
+svg.lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:visible}
+
+/* صنّف */
+.sort{display:flex;flex-direction:column;gap:18px;width:min(980px,100%);align-items:center}
+.tray{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;min-height:110px;background:rgba(255,255,255,.6);border-radius:28px;padding:12px;width:100%;border:3px dashed var(--line)}
+.item{width:clamp(70px,10vw,96px);aspect-ratio:1;background:var(--paper);border-radius:22px;display:grid;place-items:center;box-shadow:0 5px 0 var(--line);touch-action:none;user-select:none}
+.item svg{width:80%;height:80%;pointer-events:none}
+.item.sel{outline:5px solid var(--orange)}
+.item.drag{position:fixed;z-index:50;pointer-events:none;box-shadow:0 16px 30px var(--shadow);transform:scale(1.08)}
+.bins{display:grid;gap:14px;width:100%}
+.bin{border-radius:28px;min-height:150px;padding:10px;display:flex;flex-direction:column;align-items:center;gap:8px;border:5px solid;background:var(--paper)}
+.bin .lbl{width:64px;height:64px}
+.bin .in{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
+.bin .in svg{width:40px;height:40px}
+.bin.hot{transform:scale(1.03)}
+
+/* التلوين والرسم */
+.paint{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;width:min(1000px,100%);align-items:center}
+.canvasbox{background:var(--paper);border-radius:30px;box-shadow:0 7px 0 var(--line);padding:10px;display:flex;justify-content:center;min-width:0}
+.canvasbox svg,.canvasbox canvas{width:100%;max-width:640px;height:auto;display:block;touch-action:none}
+.palette{display:flex;flex-direction:column;gap:12px}
+.pc{width:64px;height:64px;border-radius:50%;box-shadow:0 5px 0 rgba(0,0,0,.15);border:5px solid #fff}
+.pc.on{outline:5px solid var(--ink);outline-offset:2px}
+.tools{display:flex;gap:10px;justify-content:center}
+.btn{background:var(--paper);border-radius:999px;padding:10px 22px;font-size:22px;font-weight:800;box-shadow:0 5px 0 var(--line);display:inline-flex;align-items:center;gap:8px}
+.btn svg{width:26px;height:26px}
+.btn.go{background:var(--green);color:#fff;box-shadow:0 6px 0 #1E9A62;font-size:26px;padding:12px 30px}
+.region{cursor:pointer;transition:fill .2s}
+.hint{animation:glow 1.1s ease-in-out infinite}
+@keyframes glow{50%{stroke-width:10;stroke:#FF9A3C}}
+
+/* امزج */
+.mix{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:20px;align-items:center;width:min(940px,100%)}
+.pots{display:flex;flex-direction:column;gap:14px}
+.pot{width:clamp(80px,11vw,110px);aspect-ratio:1;border-radius:28px;background:var(--paper);box-shadow:0 6px 0 var(--line);display:grid;place-items:center}
+.pot svg{width:80%;height:80%}
+.bowlwrap{display:flex;flex-direction:column;align-items:center;gap:10px}
+.bowlwrap svg{width:min(340px,100%);height:auto}
+.target{display:flex;flex-direction:column;align-items:center;gap:6px;background:var(--paper);border-radius:26px;padding:12px;box-shadow:0 6px 0 var(--line)}
+.target b{font-size:22px}
+.target svg{width:90px;height:90px}
+
+/* نافذة الإنجاز */
+.over{position:fixed;inset:0;background:rgba(42,35,80,.45);display:grid;place-items:center;z-index:80;padding:16px}
+.win{background:var(--paper);border-radius:36px;padding:22px 22px 24px;width:min(560px,100%);text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;box-shadow:0 20px 50px rgba(0,0,0,.25);animation:rise .45s cubic-bezier(.2,1.4,.4,1)}
+@keyframes rise{from{transform:translateY(40px) scale(.9);opacity:.4}}
+.win .big{width:120px;height:120px}
+.win h3{margin:0;font-size:clamp(28px,4vw,38px);font-weight:800}
+.win .fact{margin:0;font-size:clamp(19px,2.6vw,24px);font-weight:600;line-height:1.45;color:var(--ink2)}
+.win .value{background:#FFF6D9;border-radius:22px;padding:10px 14px;font-size:clamp(18px,2.5vw,23px);font-weight:700;line-height:1.45;width:100%}
+.win .value span{display:block;font-size:16px;color:#B07A00;font-weight:800}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:90}
+
+
+/* الدرس المصوّر */
+.lessonbtn{display:flex;align-items:center;gap:14px;width:min(960px,100%);border-radius:30px;padding:14px 20px;color:#fff;box-shadow:0 8px 0 rgba(0,0,0,.14),0 14px 26px var(--shadow);text-align:start}
+.lessonbtn .play{width:64px;height:64px;border-radius:50%;background:#fff;display:grid;place-items:center;flex:none}
+.lessonbtn .play svg{width:30px;height:30px}
+.lessonbtn b{font-size:clamp(22px,3vw,30px);font-weight:800;display:block}
+.lessonbtn small{font-size:clamp(15px,2vw,19px);font-weight:600;opacity:.95}
+.lesson{min-height:100%;display:flex;flex-direction:column;align-items:center;gap:12px}
+.screen{width:min(980px,100%);aspect-ratio:16/9;max-width:100%;background:#F3F9FF;border-radius:28px;overflow:hidden;box-shadow:0 8px 0 var(--line),0 14px 30px var(--shadow);position:relative}
+.screen svg{width:100%;height:100%;display:block}
+.cap{width:min(980px,100%);background:var(--paper);border-radius:22px;padding:10px 16px;font-size:clamp(19px,2.6vw,27px);font-weight:700;line-height:1.45;box-shadow:0 5px 0 var(--line);min-height:2.9em}
+.ctrl{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center}
+.ctrl .round{width:64px;height:64px}
+.ctrl .round.main{width:78px;height:78px;background:var(--green)}
+.sdots{display:flex;gap:7px}
+.sdots i{width:14px;height:14px;border-radius:50%;background:var(--line)}
+.sdots i.on{background:var(--orange)}
+.vnote{width:min(980px,100%);background:#FFF6D9;border-radius:18px;padding:8px 14px;font-size:16px;font-weight:600;color:#7A5A00}
+.screen .draw{stroke-dasharray:1400;stroke-dashoffset:1400;animation:ldraw 1.8s ease forwards}
+.screen .pop{transform-box:fill-box;transform-origin:center;animation:lpop .6s cubic-bezier(.2,1.5,.4,1) backwards}
+.screen .fadein{animation:lfade .8s ease backwards}
+.screen .bob{transform-box:fill-box;transform-origin:center;animation:lbob 1.6s ease-in-out infinite}
+.screen .fall{animation:lfall 1s ease-in backwards}
+.screen .fillto{animation:lfill 1s ease forwards}
+@keyframes ldraw{to{stroke-dashoffset:0}}
+@keyframes lpop{from{transform:scale(0);opacity:0}}
+@keyframes lfade{from{opacity:0}}
+@keyframes lbob{50%{transform:translateY(-12px) rotate(3deg)}}
+@keyframes lfall{from{transform:translateY(-160px);opacity:0}70%{opacity:1}}
+@keyframes lfill{from{fill:#F2F2F7}to{fill:var(--to)}}
+@keyframes ballpos{0%,28%{transform:translate(0,0)}33%,61%{transform:translate(0,120px)}66%,95%{transform:translate(-190px,120px)}100%{transform:translate(0,0)}}
+.screen .ballmove{animation:ballpos 9s ease-in-out forwards}
+
+/* ===== مظهر ثلاثي الأبعاد ===== */
+.round,.stars,.btn{box-shadow:inset 0 -5px 0 rgba(42,35,80,.10),inset 0 4px 0 rgba(255,255,255,.9),0 6px 0 var(--line),0 10px 18px var(--shadow)}
+.door{box-shadow:inset 0 -10px 0 rgba(0,0,0,.16),inset 0 6px 0 rgba(255,255,255,.28),0 12px 0 rgba(0,0,0,.14),0 22px 34px var(--shadow);transform:perspective(900px) rotateX(5deg);transition:transform .2s}
+.door:hover{transform:perspective(900px) rotateX(0) translateY(-4px)}
+.door:active{transform:perspective(900px) rotateX(0) translateY(6px)}
+.stop{box-shadow:inset 0 -7px 0 rgba(42,35,80,.07),inset 0 5px 0 #fff,0 8px 0 var(--line),0 14px 24px var(--shadow);background:linear-gradient(180deg,#fff,#F4F9FF)}
+.stop .n{box-shadow:inset 0 -4px 0 rgba(0,0,0,.18),inset 0 3px 0 rgba(255,255,255,.35)}
+.lessonbtn{box-shadow:inset 0 -8px 0 rgba(0,0,0,.16),inset 0 5px 0 rgba(255,255,255,.3),0 9px 0 rgba(0,0,0,.14),0 16px 28px var(--shadow)}
+.tok{filter:drop-shadow(0 6px 6px rgba(42,35,80,.18))}
+.ask .say{display:none!important}
+.cube3d{width:86px;height:86px;perspective:600px;margin-bottom:-6px}
+.cube3d .c{position:relative;width:100%;height:100%;transform-style:preserve-3d;animation:spin3d 9s linear infinite}
+.cube3d i{position:absolute;inset:0;border-radius:14px;box-shadow:inset 0 0 0 4px rgba(255,255,255,.35)}
+.cube3d i:nth-child(1){background:linear-gradient(135deg,#FF8A95,#FF4F5E);transform:translateZ(43px)}
+.cube3d i:nth-child(2){background:linear-gradient(135deg,#7DB6FF,#3A8DFF);transform:rotateY(180deg) translateZ(43px)}
+.cube3d i:nth-child(3){background:linear-gradient(135deg,#FFE07A,#FFCD3C);transform:rotateY(90deg) translateZ(43px)}
+.cube3d i:nth-child(4){background:linear-gradient(135deg,#6EE0A8,#2EC27E);transform:rotateY(-90deg) translateZ(43px)}
+.cube3d i:nth-child(5){background:linear-gradient(135deg,#C29BF2,#9B5DE5);transform:rotateX(90deg) translateZ(43px)}
+.cube3d i:nth-child(6){background:linear-gradient(135deg,#FFBE7D,#FF9A3C);transform:rotateX(-90deg) translateZ(43px)}
+@keyframes spin3d{from{transform:rotateX(-22deg) rotateY(0)}to{transform:rotateX(-22deg) rotateY(360deg)}}
+
+/* ===== الأطفال والإنجاز ===== */
+.kidbtn{width:58px;height:58px;padding:0;overflow:hidden}
+.kidbtn svg{width:100%;height:100%}
+.av{display:block;width:100%;height:100%}
+.me{display:flex;align-items:center;gap:12px;background:var(--paper);border-radius:999px;padding:6px 18px 6px 8px;box-shadow:inset 0 -5px 0 rgba(42,35,80,.08),0 6px 0 var(--line)}
+.me .av{width:52px;height:52px}
+.me b{font-size:22px;font-weight:800}
+.lv{display:inline-flex;align-items:center;gap:6px;background:#FFF4D6;color:#8A5A00;border-radius:999px;padding:4px 12px 4px 6px;font-weight:800;font-size:17px}
+.lv svg{width:30px;height:30px}
+.pick{background:var(--paper);border-radius:36px;padding:20px;width:min(760px,100%);max-height:100%;overflow:auto;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.pick h3{margin:0 0 12px;font-size:clamp(26px,4vw,36px)}
+.kids{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:14px}
+.kid{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 6px;border-radius:26px;background:#F4F9FF;box-shadow:inset 0 -5px 0 rgba(42,35,80,.07),0 6px 0 var(--line)}
+.kid .av{width:86px;height:86px}
+.kid b{font-size:18px;font-weight:800}
+.kid.on{outline:4px solid var(--orange)}
+.earn{display:flex;gap:6px;justify-content:center}
+.earn svg{width:48px;height:48px}
+.earn svg.off path{fill:#E7E9F2;stroke:#CFD3E3}
+.earn svg:nth-child(2){transform:translateY(-8px) scale(1.12)}
+.mst{display:flex;gap:2px}.mst svg{width:20px;height:20px}.mst svg.off path{fill:#E7E9F2;stroke:#CFD3E3}
+.rank{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:6px 16px;font-weight:800;font-size:20px;color:#fff}
+.r-top{background:linear-gradient(120deg,#FFB800,#FF8A00)}.r-good{background:linear-gradient(120deg,#2EC27E,#1E9E64)}.r-more{background:linear-gradient(120deg,#3A8DFF,#2A62D0)}
+.r-wip{background:#E8F1FF;color:#2A62D0}.r-none{background:#EEF0F5;color:#7A7F95}
+.lvup{display:flex;align-items:center;gap:10px;background:#FFF4D6;border-radius:22px;padding:8px 14px;font-weight:800;font-size:20px;color:#8A5A00}
+.lvup svg{width:44px;height:44px}
+.cert{background:linear-gradient(120deg,#FFCD3C,#FF9A3C)!important;color:#5A3300}
+.certcard{background:#FFFDF6;border-radius:30px;padding:26px 22px;width:min(620px,100%);text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;border:8px solid #FFE08A;box-shadow:0 0 0 6px #fff inset,0 20px 50px rgba(0,0,0,.3)}
+.certcard h3{margin:0;font-size:clamp(28px,4.6vw,40px);color:#C26A00}
+.certcard .av{width:110px;height:110px}
+.certcard .nm{font-size:clamp(26px,4vw,36px);font-weight:800}
+.certcard p{margin:0;font-size:20px;font-weight:600;color:var(--ink2)}
+
+/* ===== دخول المعلمة ===== */
+.pin{background:var(--paper);border-radius:34px;padding:22px;width:min(400px,100%);text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.pin h3{margin:0;font-size:28px}
+.pin .pd{display:flex;gap:12px}.pin .pd i{width:20px;height:20px;border-radius:50%;background:var(--line)}.pin .pd i.on{background:var(--purple)}
+.pin .keys{display:grid;grid-template-columns:repeat(3,72px);gap:10px}
+.pin .keys button{height:64px;border-radius:20px;background:#F4F9FF;font-size:28px;font-weight:800;box-shadow:inset 0 -5px 0 rgba(42,35,80,.08),0 5px 0 var(--line)}
+.pin small{color:var(--ink2);font-size:15px;font-weight:600}
+.pin.bad{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-10px)}75%{transform:translateX(10px)}}
+.teach{width:min(1060px,100%);margin-inline:auto;display:flex;flex-direction:column;gap:16px;padding-bottom:30px}
+.teach h2{margin:0;font-size:clamp(28px,4vw,38px)}
+.tsum{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.tsum div{background:var(--paper);border-radius:24px;padding:12px 16px;box-shadow:0 6px 0 var(--line)}
+.tsum b{display:block;font-size:34px;font-weight:800}
+.tsum span{font-size:16px;font-weight:600;color:var(--ink2)}
+.tbox{background:var(--paper);border-radius:28px;padding:16px;box-shadow:0 6px 0 var(--line);display:flex;flex-direction:column;gap:12px}
+.tbox h3{margin:0;font-size:22px}
+.trow{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.trow input{font:inherit;font-size:20px;font-weight:600;border:3px solid var(--line);border-radius:16px;padding:8px 14px;min-width:0;flex:1 1 200px;color:var(--ink);background:#fff}
+.avpick{display:flex;flex-wrap:wrap;gap:8px}
+.avpick button{width:58px;height:58px;border-radius:50%;padding:0}
+.avpick button.on{outline:4px solid var(--orange);outline-offset:2px}
+.tkid{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 14px;align-items:center;padding:12px;border-radius:22px;background:#F7FAFF}
+.tkid .av{width:64px;height:64px}
+.tkid .hd{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
+.tkid .hd b{font-size:22px;font-weight:800}
+.tkid .secs{grid-column:1/-1;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
+.sec{background:#fff;border-radius:18px;padding:10px 12px;display:flex;flex-direction:column;gap:6px}
+.sec .t{display:flex;justify-content:space-between;align-items:center;gap:8px;font-weight:800;font-size:17px}
+.bar2{height:12px;border-radius:999px;background:#EAF1FB;overflow:hidden}.bar2 i{display:block;height:100%;border-radius:999px}
+.sec .rank{font-size:15px;padding:3px 12px}
+.tact{display:flex;gap:8px;flex-wrap:wrap}
+.tact button{font-size:16px;padding:6px 14px;border-radius:999px;background:#EEF3FB;font-weight:700}
+.tact button.dz{background:#FFE3E6;color:#B3202F}
+.tnote{font-size:15px;color:var(--ink2);font-weight:600;margin:0}
+body.tview .buddy{display:none}
+body.boy .buddy .wl{animation-name:waveL}body.boy .buddy .wr{animation-name:waveR}
+@keyframes waveL{50%{transform:rotate(18deg)}}@keyframes waveR{50%{transform:rotate(-18deg)}}
+/* ===== هدوء الألوان وترتيب المساحات ===== */
+body{background-image:none}
+.home{gap:16px}
+.ttl{display:flex;align-items:center;justify-content:center;gap:16px}
+.merow{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px}
+.cube3d{width:62px;height:62px;margin:0}
+.cube3d i:nth-child(n){transform-origin:center}
+.cube3d i:nth-child(1){background:#F7A1AA;transform:translateZ(31px)}
+.cube3d i:nth-child(2){background:#9DC3F5;transform:rotateY(180deg) translateZ(31px)}
+.cube3d i:nth-child(3){background:#FFE08F;transform:rotateY(90deg) translateZ(31px)}
+.cube3d i:nth-child(4){background:#9EDDBE;transform:rotateY(-90deg) translateZ(31px)}
+.cube3d i:nth-child(5){background:#C9B2EE;transform:rotateX(90deg) translateZ(31px)}
+.cube3d i:nth-child(6){background:#FFC79A;transform:rotateX(-90deg) translateZ(31px)}
+.cube3d .c{animation-duration:14s}
+.door{transform:none;box-shadow:inset 0 -8px 0 rgba(0,0,0,.08),inset 0 5px 0 rgba(255,255,255,.22),0 9px 0 rgba(0,0,0,.07),0 16px 26px rgba(42,35,80,.12)}
+.door:hover{transform:translateY(-3px)}.door:active{transform:translateY(4px)}
+.door.shapes{background:linear-gradient(165deg,#8DBBF4,#6097E4)}
+.door.colors{background:linear-gradient(165deg,#F6A3AC,#E97A88)}
+.round,.stars,.btn{box-shadow:inset 0 -4px 0 rgba(42,35,80,.06),0 4px 0 var(--line),0 6px 14px rgba(42,35,80,.08)}
+.stop{box-shadow:inset 0 -5px 0 rgba(42,35,80,.05),0 6px 0 var(--line),0 10px 18px rgba(42,35,80,.07);background:var(--paper)}
+.stop .n{box-shadow:inset 0 -3px 0 rgba(0,0,0,.12)}
+.stop .n svg{width:22px;height:22px}
+.stop.next::after{border:3px dashed #F3C64B}
+.stops{gap:clamp(14px,2.6vw,30px)}
+.path{gap:16px}
+.lessonbtn{box-shadow:inset 0 -6px 0 rgba(0,0,0,.10),0 7px 0 rgba(0,0,0,.08),0 12px 22px rgba(42,35,80,.10)}
+.dots i.on{background:#7FD3AE}
+.tips{width:min(960px,100%);background:var(--paper);border-radius:24px;box-shadow:0 5px 0 var(--line);padding:4px 16px;margin-top:6px}
+.tips summary{cursor:pointer;font-weight:800;font-size:19px;padding:10px 0;color:var(--ink2)}
+.tips ul{margin:0 0 12px;padding-inline-start:22px;display:flex;flex-direction:column;gap:8px}
+.tips li{font-size:17px;font-weight:600;line-height:1.6;color:var(--ink)}
+.tips li small{display:block;color:var(--ink2);font-weight:600;font-size:14px}
+.links{display:flex;flex-direction:column;gap:10px}
+.links a{display:flex;flex-direction:column;gap:2px;padding:10px 14px;border-radius:16px;background:#F4F8FE;color:var(--ink);text-decoration:none;font-weight:800;font-size:17px}
+.links a span{font-weight:600;font-size:14px;color:var(--ink2)}
+
+@media (max-width:600px){.bar{gap:6px}.round,.kidbtn{width:44px;height:44px}.round svg{width:24px;height:24px}.kidbtn svg{width:100%;height:100%}#fsBtn{display:none}.brand b{display:none}.logo{width:36px;height:36px}.stars{font-size:18px;padding:4px 10px 4px 8px}.stars svg{width:22px;height:22px}.backpill{padding-inline:10px}.bar:has(#kidBtn:not([hidden])) .brand{display:none}}
+
+/* ===== ولد / بنت ===== */
+body.girl{--sky:#FFF0F7;--sky2:#FFE0EF;--line:#F7D3E5}
+body.boy{--sky:#E8F4FF;--sky2:#D3EAFF;--line:#CFE3F7}
+.gpick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(12px,3vw,26px);width:min(760px,100%)}
+.gbtn{border-radius:40px;padding:18px 12px 20px;color:#fff;display:flex;flex-direction:column;align-items:center;gap:6px;box-shadow:inset 0 -10px 0 rgba(0,0,0,.16),inset 0 6px 0 rgba(255,255,255,.3),0 12px 0 rgba(0,0,0,.12),0 20px 30px var(--shadow)}
+.gbtn:active{transform:translateY(6px)}
+.gbtn.m{background:linear-gradient(160deg,#5FB0FF,#2E6FE0)}
+.gbtn.f{background:linear-gradient(160deg,#FF9CCB,#F0559C)}
+.gbtn svg{width:min(190px,70%);aspect-ratio:1;max-width:100%}
+.gbtn b{font-size:clamp(30px,5vw,48px);font-weight:800;line-height:1.1}
+.gbtn small{font-size:clamp(16px,2.2vw,21px);font-weight:700;opacity:.95}
+.gsw{display:flex;gap:10px}
+.gsw button{font-size:18px;font-weight:800;padding:8px 18px;border-radius:999px;background:#EEF3FB;box-shadow:0 4px 0 var(--line)}
+.gsw button.on.m{background:#3A8DFF;color:#fff}.gsw button.on.f{background:#F0559C;color:#fff}
+.kid.m{background:#E3F0FF}.kid.f{background:#FFE6F2}
+.gchip{border-radius:999px;padding:3px 12px;font-weight:800;font-size:15px;color:#fff}.gchip.m{background:#3A8DFF}.gchip.f{background:#F0559C}
+
+/* ===== الأقسام الجديدة والصفحات ===== */
+.door.numbers{background:linear-gradient(165deg,#8ED6C1,#4FB497)}
+.door.lines{background:linear-gradient(165deg,#F8C88A,#EB9B4E)}
+.doors.four{width:min(1100px,100%)}.doors.four .door .art{width:min(130px,56%)}@media (min-width:900px){.doors.four{grid-template-columns:repeat(4,minmax(0,1fr))}.doors.four .door b{font-size:clamp(24px,2.6vw,34px)}}
+.doors.four .door{padding:16px 12px 16px}
+.grp{display:flex;flex-wrap:wrap;gap:3%;justify-content:center;align-content:center;width:100%;height:100%;padding:4%}
+.grp i{display:block;aspect-ratio:1}.grp i svg{width:100%;height:100%}
+.nbig{font-size:clamp(54px,9vw,96px);font-weight:800;line-height:1;min-width:1.2em;text-align:center}
+.reveal .grpbox{width:clamp(140px,22vw,220px);aspect-ratio:1;flex:none}
+.tapzone{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;width:min(820px,100%)}
+.tapit{width:clamp(80px,12vw,120px);aspect-ratio:1;background:var(--paper);border-radius:24px;box-shadow:0 6px 0 var(--line);position:relative;display:grid;place-items:center}
+.tapit svg{width:78%;height:78%}
+.tapit .k{position:absolute;top:-10px;right:-10px;width:40px;height:40px;border-radius:50%;background:#4FB497;color:#fff;font-weight:800;font-size:24px;display:grid;place-items:center;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+.tapit.done{background:#EAF8F2}
+.canvasbox.tr{background:#fff}
+.landing{min-height:100%;display:flex;flex-direction:column;align-items:center;gap:20px;padding-top:6px;text-align:center}
+.hero{width:min(980px,100%);border-radius:40px;padding:clamp(18px,4vw,36px) 18px;background:var(--paper);box-shadow:0 8px 0 var(--line),0 16px 30px rgba(42,35,80,.08);display:flex;flex-direction:column;align-items:center;gap:12px}
+.brandbig{display:flex;align-items:center;gap:12px}
+.brandbig svg{width:clamp(64px,10vw,96px);height:auto}
+.brandbig h1{margin:0;font-size:clamp(46px,8vw,84px);font-weight:800;color:#3E8E5E;line-height:1}
+.tag{margin:0;font-size:clamp(18px,2.6vw,24px);font-weight:600;color:var(--ink2);text-wrap:balance}
+.classcard{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px 16px;background:#F3FAF5;border-radius:24px;padding:10px 18px;font-size:clamp(17px,2.2vw,20px);font-weight:700}
+.classcard b{font-size:clamp(20px,2.8vw,26px);color:#3E8E5E}
+.startbtn{font-size:clamp(24px,3.6vw,34px);padding:14px 40px;border-radius:999px;background:#5BBE7E;color:#fff;font-weight:800;box-shadow:inset 0 -6px 0 rgba(0,0,0,.12),0 7px 0 #3E9A5E,0 14px 24px rgba(42,35,80,.12)}
+.startbtn:active{transform:translateY(4px)}
+.lnav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(10px,2vw,20px);width:min(980px,100%)}
+.lnav button{background:var(--paper);border-radius:28px;padding:16px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:inset 0 -5px 0 rgba(42,35,80,.05),0 6px 0 var(--line),0 10px 18px rgba(42,35,80,.07);font-weight:800;font-size:clamp(17px,2.4vw,22px)}
+.lnav svg{width:clamp(44px,7vw,64px);height:auto}
+.secprev{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.secprev button{border-radius:999px;padding:8px 18px;color:#fff;font-weight:800;font-size:18px}
+.pagewrap{width:min(980px,100%);margin-inline:auto;display:flex;flex-direction:column;gap:16px;padding-bottom:30px}
+.pagewrap h2{margin:0;font-size:clamp(28px,4.4vw,40px);text-align:center}
+.mecard{background:var(--paper);border-radius:32px;padding:18px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px 22px;box-shadow:0 6px 0 var(--line)}
+.mecard .av{width:96px;height:96px}
+.mecard .nm{font-size:30px;font-weight:800}
+.mecard .col2{display:flex;flex-direction:column;gap:8px;align-items:flex-start;min-width:0;flex:1 1 260px}
+.nextlv{font-size:17px;font-weight:600;color:var(--ink2)}
+.ladder{display:flex;justify-content:center;gap:clamp(6px,2vw,18px);flex-wrap:wrap}
+.ladder div{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 12px;border-radius:22px;background:var(--paper);opacity:.45;font-weight:800;font-size:15px;box-shadow:0 4px 0 var(--line)}
+.ladder div.got{opacity:1}.ladder div.cur{outline:3px solid #F3C64B}
+.ladder svg{width:48px;height:48px}
+.secgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.seccard{background:var(--paper);border-radius:28px;padding:14px;display:flex;flex-direction:column;gap:8px;align-items:center;box-shadow:0 6px 0 var(--line)}
+.seccard h3{margin:0;font-size:22px}
+.seccard .row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.lgroup{background:var(--paper);border-radius:28px;padding:16px;box-shadow:0 6px 0 var(--line);display:flex;flex-direction:column;gap:10px}
+.lgroup h3{margin:0;font-size:22px}
+.fineprint{font-size:14px;color:var(--ink2);font-weight:600;margin:0;text-align:center}
+@media (max-width:640px){.lnav{grid-template-columns:repeat(2,minmax(0,1fr))}.doors.four .door{padding-top:44px}}
+/* رفرف الفراشة */
+.buddy{position:fixed;left:calc(10px + env(safe-area-inset-left,0px));bottom:calc(8px + env(safe-area-inset-bottom,0px));z-index:70;width:clamp(96px,12vw,140px);aspect-ratio:1;cursor:pointer;animation:hover 3.2s ease-in-out infinite;touch-action:manipulation}
+.buddy svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 8px 10px rgba(42,35,80,.18))}
+.buddy .wl,.buddy .wr{transform-box:fill-box;animation:flap .9s ease-in-out infinite}
+.buddy .wl{transform-origin:100% 50%}.buddy .wr{transform-origin:0% 50%}
+.buddy.talk .wl,.buddy.talk .wr{animation-duration:.32s}
+.buddy.happy{animation:hop .7s ease-out}
+.buddy.think svg{transform:rotate(-10deg);transition:transform .3s}
+.buddy .mouth{transition:d .2s}
+@keyframes flap{50%{transform:scaleX(.55)}}
+@keyframes hover{50%{transform:translateY(-10px)}}
+@keyframes hop{30%{transform:translateY(-46px) rotate(8deg)}60%{transform:translateY(-20px) rotate(-6deg)}}
+.bubble{position:fixed;left:calc(clamp(96px,12vw,140px) + 18px + env(safe-area-inset-left,0px));bottom:calc(60px + env(safe-area-inset-bottom,0px));z-index:70;max-width:min(360px,calc(100vw - 150px));background:var(--paper);border-radius:22px 22px 22px 6px;padding:10px 16px;font-size:clamp(17px,2.2vw,22px);font-weight:700;line-height:1.4;box-shadow:0 8px 22px var(--shadow);border:3px solid #F7B3D6}
+.bubble[hidden]{display:none!important}
+.hintme{animation:hintglow 1s ease-in-out 4!important;position:relative;z-index:3}
+@keyframes hintglow{0%,100%{box-shadow:0 0 0 0 rgba(255,154,60,0)}50%{box-shadow:0 0 0 12px rgba(255,154,60,.75)}}
+.stage{padding-bottom:110px}
+@media (max-width:760px){
+  .g4,.g6,.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .g5{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .backpill{height:50px;padding:0 14px 0 10px;font-size:19px}
+  .ask .dots{display:none}
+  .g3,.stops{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .paint{grid-template-columns:minmax(0,1fr)}
+  .palette{flex-direction:row;flex-wrap:wrap;justify-content:center}
+  .mix{grid-template-columns:minmax(0,1fr)}
+  .pots{flex-direction:row;justify-content:center}
+  .reveal{flex-direction:column;text-align:center}
+  .brand b{font-size:20px}
+  .round{width:50px;height:50px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<div class="app">
+  <header class="bar">
+    <button class="round" id="homeBtn" aria-label="الصفحة الرئيسية"><svg viewBox="0 0 24 24" fill="none" stroke="#2A2350" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></svg></button>
+    <button class="backpill" id="backBtn" aria-label="رجوع"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>رجوع</button>
+    <div class="brand"><svg class="logo" viewBox="0 0 48 48"><path d="M23 22C17 8 4 6 4 16c0 7 8 9 19 8z" fill="#B78CF2"/><path d="M25 22C31 8 44 6 44 16c0 7-8 9-19 8z" fill="#FF8FC6"/><path d="M23 26C15 28 8 34 12 40c3 4 9 0 11-12z" fill="#7FD3FF"/><path d="M25 26c8 2 15 8 11 14-3 4-9 0-11-12z" fill="#FFD25E"/><rect x="21.5" y="14" width="5" height="26" rx="2.5" fill="#2A2350"/></svg><b>رحلة رفرف</b></div>
+    <button class="round kidbtn" id="kidBtn" aria-label="من يلعب الآن؟"></button>
+    <div class="stars" aria-label="نجومي"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z" fill="#FFCD3C" stroke="#E3AE1C" stroke-width="1.2"/></svg><span id="starCount">0</span></div>
+    <button class="round" id="teachBtn" aria-label="دخول المعلمة"><svg viewBox="0 0 24 24" fill="none" stroke="#2A2350" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7.5" r="3.5"/><path d="M4.5 20c.8-4 3.8-6 7.5-6s6.7 2 7.5 6"/><path d="M16.5 3.5l3 1.5-3 1.5"/></svg></button>
+    <button class="round" id="soundBtn" aria-label="المؤثرات الصوتية"></button>
+    <button class="round" id="fsBtn" aria-label="ملء الشاشة"><svg viewBox="0 0 24 24" fill="none" stroke="#2A2350" stroke-width="2.4" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+  </header>
+  <main class="stage" id="stage"></main>
+</div>
+<div class="buddy" id="buddy" role="button" tabindex="0" aria-label="رفرف: اضغط لتسمع التعليمة مرة أخرى">
+<svg viewBox="0 0 160 160">
+  <g class="wl"><path d="M76 74C60 30 18 18 14 48c-3 24 26 34 62 30z" fill="#B78CF2" stroke="#8B5FD8" stroke-width="3"/><circle cx="40" cy="50" r="9" fill="#fff" opacity=".7"/><path d="M76 86C52 88 28 104 38 124c8 14 30 6 38-34z" fill="#7FD3FF" stroke="#4CB3EA" stroke-width="3"/><circle cx="52" cy="108" r="6" fill="#fff" opacity=".7"/></g>
+  <g class="wr"><path d="M84 74C100 30 142 18 146 48c3 24-26 34-62 30z" fill="#FF8FC6" stroke="#EE5FA6" stroke-width="3"/><circle cx="120" cy="50" r="9" fill="#fff" opacity=".7"/><path d="M84 86c24 2 48 18 38 38-8 14-30 6-38-34z" fill="#FFD25E" stroke="#F0B526" stroke-width="3"/><circle cx="108" cy="108" r="6" fill="#fff" opacity=".7"/></g>
+  <rect x="71" y="62" width="18" height="70" rx="9" fill="#3A2F6B"/>
+  <path d="M74 44C70 30 62 22 54 20M86 44c4-14 12-22 20-24" stroke="#3A2F6B" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="54" cy="20" r="6" fill="#FF8FC6"/><circle cx="106" cy="20" r="6" fill="#B78CF2"/>
+  <circle cx="80" cy="54" r="24" fill="#5B4A9E"/>
+  <ellipse cx="71" cy="51" rx="6.5" ry="8" fill="#fff"/><ellipse cx="89" cy="51" rx="6.5" ry="8" fill="#fff"/>
+  <circle class="eye" cx="72" cy="53" r="3.6" fill="#1E1840"/><circle class="eye" cx="90" cy="53" r="3.6" fill="#1E1840"/>
+  <circle cx="64" cy="62" r="4" fill="#FF8FC6" opacity=".7"/><circle cx="96" cy="62" r="4" fill="#FF8FC6" opacity=".7"/>
+  <path class="mouth" d="M72 64q8 8 16 0" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+</svg></div>
+<div class="bubble" id="bubble" hidden></div>
+
+<script>
+(()=>{
+const C={red:'#F25C68',orange:'#FF9F45',yellow:'#FFCF4A',green:'#36C285',blue:'#4A90EE',purple:'#9C6BE0',brown:'#A0673A'};
+const CN={red:'الأحمر',orange:'البرتقالي',yellow:'الأصفر',green:'الأخضر',blue:'الأزرق',purple:'البنفسجي',brown:'البني'};
+const $=(s,r=document)=>r.querySelector(s);
+const stage=$('#stage');
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const h=(html)=>{const t=document.createElement('template');t.innerHTML=html.trim();return t.content.firstElementChild};
+
+/* ---------- التخزين ---------- */
+const KEY='bustan:v1';
+const CKEY='rafraf:class:v2';
+let CL={pin:'1234',kids:[],cur:null,guest:null};
+try{const v=JSON.parse(localStorage.getItem(CKEY)||'null');if(v&&Array.isArray(v.kids))CL={pin:v.pin||'1234',kids:v.kids,cur:v.cur||null,guest:v.guest||null,info:v.info||null,infoSet:v.infoSet||false}}catch(e){}
+if(!CL.guest){CL.guest={id:'guest',name:'ضيف',av:-1,done:{}};try{const o=JSON.parse(localStorage.getItem(KEY)||'null');if(o&&o.done)for(const k in o.done)CL.guest.done[k]=o.done[k]===true?1:o.done[k]}catch(e){}}
+if(!CL.info)CL.info={teacher:'أ. نورة',cls:'فصل البراعم',school:'روضة النخيل'};
+const curKid=()=>CL.kids.find(k=>k.id===CL.cur)||CL.guest;
+let S=curKid();
+const starsOf=k=>Object.values(k.done||{}).reduce((a,b)=>a+(+b||0),0);
+let DB=null,dbT=null;
+const save=()=>{try{localStorage.setItem(CKEY,JSON.stringify(CL))}catch(e){};if(DB){clearTimeout(dbT);dbT=setTimeout(()=>{DB.doc('rafraf/class').set({v:2,data:JSON.stringify({pin:CL.pin,kids:CL.kids,info:CL.info})}).catch(()=>{})},1200)}};
+const setStars=()=>{$('#starCount').textContent=starsOf(S);try{kidBtnRender()}catch(e){}};
+/* مزامنة سجل الفصل بين أجهزة المعلمة عند توفرها */
+(async()=>{try{if(!window.claude||!claude.use)return;const db=await claude.use('db');if(!db)return;
+  const t=setTimeout(()=>{},10000);const snap=await db.doc('rafraf/class').get();clearTimeout(t);DB=db;
+  if(snap.exists){const r=JSON.parse((snap.data()||{}).data||'{}');
+    if(r.pin&&CL.pin==='1234')CL.pin=r.pin;if(r.info&&!CL.infoSet)CL.info=r.info;
+    (r.kids||[]).forEach(rk=>{const lk=CL.kids.find(k=>k.id===rk.id);if(!lk)CL.kids.push(rk);else for(const a in rk.done||{})lk.done[a]=Math.max(lk.done[a]||0,rk.done[a]||0)});
+    S=curKid();try{localStorage.setItem(CKEY,JSON.stringify(CL))}catch(e){};render()}
+  save()}catch(e){}})();
+
+/* ---------- الأصوات ---------- */
+let muted=false,ac=null;
+try{muted=localStorage.getItem('bustan:mute')==='1'}catch(e){}
+const soundIcon=()=>{$('#soundBtn').innerHTML=muted?'<svg viewBox="0 0 24 24" fill="none" stroke="#2A2350" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M17 9l5 6M22 9l-5 6"/></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="#2A2350" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>'};
+function audio(){if(!ac){try{ac=new (window.AudioContext||window.webkitAudioContext)()}catch(e){}}if(ac&&ac.state==='suspended')ac.resume();return ac}
+function tone(f,t0,d,type='sine',v=.18){const a=audio();if(!a||muted)return;const o=a.createOscillator(),g=a.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(0,a.currentTime+t0);g.gain.linearRampToValueAtTime(v,a.currentTime+t0+.02);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+t0+d);o.connect(g);g.connect(a.destination);o.start(a.currentTime+t0);o.stop(a.currentTime+t0+d+.05)}
+let MIST=0;
+const sfx={
+  tap(){tone(660,0,.09,'triangle',.12)},
+  good(){mood('happy');[523,659,784].forEach((f,i)=>tone(f,i*.09,.25,'triangle',.18))},
+  bad(){MIST++;mood('think');tone(240,0,.18,'sine',.16);tone(200,.12,.22,'sine',.14)},
+  win(){mood('happy');[523,659,784,1047,784,1047].forEach((f,i)=>tone(f,i*.11,.3,'triangle',.18))},
+  pop(){tone(880,0,.06,'square',.06)},
+  splash(){[300,420,560].forEach((f,i)=>tone(f,i*.05,.2,'sine',.12))}
+};
+let arVoice=null;
+const FEM=/zariyah|laila|layla|mariam|maryam|amira|salma|hoda|huda|fatima|sana|rana|noura|nora|amal|reem|dalia|salwa|yasmin|female|انثى|أنثى/i,MALE=/maged|majed|tarik|tariq|hamed|naayf|shakir|omar|fahed|male/i;
+const KID={pitch:1.08,rate:.9};
+function pickVoice(){try{const ar=speechSynthesis.getVoices().filter(v=>/^ar/i.test(v.lang));const sa=v=>/^ar(-|_)SA/i.test(v.lang);
+  arVoice=ar.find(v=>sa(v)&&FEM.test(v.name))||ar.find(v=>FEM.test(v.name))||ar.find(v=>sa(v)&&!MALE.test(v.name))||ar.find(v=>!MALE.test(v.name))||ar.find(sa)||ar[0]||null;}catch(e){}}
+let bubbleT=null;
+function bubble(text){const b=$('#bubble'),bd=$('#buddy');b.textContent=text;b.hidden=false;bd.classList.add('talk');clearTimeout(bubbleT);bubbleT=setTimeout(()=>{b.hidden=true;bd.classList.remove('talk')},Math.min(9000,1800+text.length*85))}
+function mood(m){const bd=$('#buddy');bd.classList.remove('happy','think');void bd.offsetWidth;bd.classList.add(m);const mo=bd.querySelector('.mouth');mo.setAttribute('d',m==='think'?'M73 67q7-4 14 0':'M72 64q8 8 16 0');if(m==='think')setTimeout(()=>{bd.classList.remove('think');mo.setAttribute('d','M72 64q8 8 16 0')},1400)}
+function say(text){bubble(text)}
+
+/* ---------- الرسوم ---------- */
+let GID=0;
+const shade=(hex,t)=>{if(!/^#[0-9a-f]{6}$/i.test(hex))return hex;const n=[1,3,5].map(i=>parseInt(hex.slice(i,i+2),16));const to=t>0?255:0,k=Math.abs(t);return'#'+n.map(v=>Math.round(v+(to-v)*k).toString(16).padStart(2,'0')).join('')};
+const GEO={
+  circle:f=>`<circle cx="50" cy="46" r="38" fill="${f}"/>`,
+  square:f=>`<rect x="14" y="10" width="72" height="72" rx="9" fill="${f}"/>`,
+  triangle:f=>`<path d="M50 9 90 80H10z" fill="${f}" stroke="${f}" stroke-width="6" stroke-linejoin="round"/>`,
+  rectangle:f=>`<rect x="6" y="24" width="88" height="46" rx="9" fill="${f}"/>`,
+  oval:f=>`<ellipse cx="50" cy="47" rx="43" ry="27" fill="${f}"/>`
+};
+const GLOSS={
+  circle:'<ellipse cx="36" cy="30" rx="13" ry="7" transform="rotate(-32 36 30)" fill="#fff" opacity=".55"/>',
+  square:'<rect x="22" y="17" width="34" height="9" rx="4.5" fill="#fff" opacity=".5"/>',
+  triangle:'<path d="M45 26 34 47" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".5"/>',
+  rectangle:'<rect x="14" y="31" width="40" height="8" rx="4" fill="#fff" opacity=".5"/>',
+  oval:'<ellipse cx="32" cy="36" rx="15" ry="5.5" transform="rotate(-12 32 36)" fill="#fff" opacity=".5"/>'
+};
+const SH={};
+['circle','square','triangle','rectangle','oval'].forEach(k=>SH[k]=(c)=>{const id='g3d'+(++GID);
+  return `<defs><linearGradient id="${id}" x1="0" y1="0" x2=".35" y2="1"><stop offset="0" stop-color="${shade(c,.38)}"/><stop offset=".55" stop-color="${c}"/><stop offset="1" stop-color="${shade(c,-.12)}"/></linearGradient></defs>`
+   +`<ellipse cx="50" cy="94" rx="34" ry="4" fill="rgba(42,35,80,.13)"/>`
+   +`<g transform="translate(0 8)">${GEO[k](shade(c,-.32))}</g><g transform="translate(0 4)">${GEO[k](shade(c,-.22))}</g>`
+   +GEO[k](`url(#${id})`)+GLOSS[k]});
+const shape=(k,c)=>`<svg viewBox="0 0 100 100">${SH[k](c)}</svg>`;
+const SHN={circle:'الدائرة',square:'المربع',triangle:'المثلث',rectangle:'المستطيل',oval:'الشكل البيضاوي'};
+const SHN0={circle:'دائرة',square:'مربع',triangle:'مثلث',rectangle:'مستطيل',oval:'شكل بيضاوي'};
+const SHPL={circle:'الدوائر',square:'المربعات',triangle:'المثلثات',rectangle:'المستطيلات',oval:'الأشكال البيضاوية'};
+const SHC={circle:C.yellow,square:C.blue,triangle:C.red,rectangle:C.green,oval:C.purple};
+const SHFACT={
+  circle:'الدائرة مستديرة، ليس لها زوايا، لذلك تتدحرج الكرة بسهولة.',
+  square:'المربع له أربعة أضلاع متساوية في الطول.',
+  triangle:'المثلث له ثلاثة أضلاع وثلاث زوايا.',
+  rectangle:'المستطيل له ضلعان طويلان وضلعان قصيران.',
+  oval:'الشكل البيضاوي يشبه دائرة ممدودة، مثل البيضة.'
+};
+const O={
+  sun:`<svg viewBox="0 0 100 100"><g stroke="#FFB020" stroke-width="7" stroke-linecap="round">${[0,45,90,135,180,225,270,315].map(a=>`<line x1="50" y1="8" x2="50" y2="18" transform="rotate(${a} 50 50)"/>`).join('')}</g><circle cx="50" cy="50" r="24" fill="#FFCD3C"/></svg>`,
+  ball:`<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="38" fill="#3A8DFF"/><path d="M14 44c24 10 48 10 72 0M14 58c24 10 48 10 72 0" stroke="#fff" stroke-width="7" fill="none"/></svg>`,
+  clock:`<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="38" fill="#fff" stroke="#9B5DE5" stroke-width="8"/><path d="M50 50V28M50 50l14 10" stroke="#2A2350" stroke-width="6" stroke-linecap="round"/><circle cx="50" cy="50" r="5" fill="#2A2350"/></svg>`,
+  window:`<svg viewBox="0 0 100 100"><rect x="16" y="16" width="68" height="68" rx="4" fill="#BFE3FF" stroke="#8B5A2B" stroke-width="7"/><path d="M50 16v68M16 50h68" stroke="#8B5A2B" stroke-width="6"/></svg>`,
+  gift:`<svg viewBox="0 0 100 100"><rect x="18" y="30" width="64" height="58" rx="4" fill="#FF4F5E"/><rect x="45" y="30" width="10" height="58" fill="#FFCD3C"/><path d="M50 30c-6-14-22-16-22-6 0 6 12 6 22 6zm0 0c6-14 22-16 22-6 0 6-12 6-22 6z" fill="#FFCD3C"/></svg>`,
+  frame:`<svg viewBox="0 0 100 100"><rect x="14" y="14" width="72" height="72" rx="4" fill="#FFCD3C"/><rect x="24" y="24" width="52" height="52" fill="#E9F5FF"/><path d="M28 70l14-18 10 12 8-8 12 14z" fill="#2EC27E"/><circle cx="62" cy="36" r="6" fill="#FF9A3C"/></svg>`,
+  tent:`<svg viewBox="0 0 100 100"><path d="M50 12 92 86H8z" fill="#FF9A3C"/><path d="M50 40 64 86H36z" fill="#B85D00"/></svg>`,
+  mountain:`<svg viewBox="0 0 100 100"><path d="M50 12 94 88H6z" fill="#7A8CA8"/><path d="M50 12 63 35 56 32 50 38 44 32 37 35z" fill="#fff"/></svg>`,
+  pizza:`<svg viewBox="0 0 100 100"><path d="M50 90 12 18h76z" fill="#FFCD3C"/><path d="M8 12h84l-4 10H12z" fill="#D88A3A"/><circle cx="40" cy="36" r="6" fill="#FF4F5E"/><circle cx="60" cy="40" r="6" fill="#FF4F5E"/><circle cx="50" cy="62" r="6" fill="#FF4F5E"/></svg>`,
+  door:`<svg viewBox="0 0 100 100"><rect x="28" y="8" width="44" height="84" rx="3" fill="#B26B2F"/><rect x="34" y="16" width="32" height="30" rx="2" fill="#C98444"/><rect x="34" y="54" width="32" height="30" rx="2" fill="#C98444"/><circle cx="64" cy="52" r="4" fill="#FFCD3C"/></svg>`,
+  book:`<svg viewBox="0 0 100 100"><rect x="8" y="24" width="84" height="52" rx="4" fill="#3A8DFF"/><rect x="46" y="24" width="8" height="52" fill="#1F5FC0"/><path d="M16 36h22M16 46h22M62 36h22M62 46h22" stroke="#fff" stroke-width="4" stroke-linecap="round"/></svg>`,
+  choc:`<svg viewBox="0 0 100 100"><rect x="8" y="26" width="84" height="48" rx="5" fill="#7A4A2A"/><path d="M36 26v48M64 26v48M8 50h84" stroke="#5C3519" stroke-width="4"/></svg>`,
+  apple:`<svg viewBox="0 0 100 100"><path d="M50 30c-10-8-32-6-34 16-2 22 16 42 26 42 4 0 6-2 8-2s4 2 8 2c10 0 28-20 26-42-2-22-24-24-34-16z" fill="#FF4F5E"/><path d="M50 30c0-8 2-14 6-18" stroke="#7A4A2A" stroke-width="5" stroke-linecap="round" fill="none"/><path d="M54 22c6-8 16-8 18-4-6 6-12 6-18 4z" fill="#2EC27E"/></svg>`,
+  drop:`<svg viewBox="0 0 100 100"><path d="M50 8C38 30 22 46 22 62a28 28 0 0 0 56 0c0-16-16-32-28-54z" fill="#3A8DFF"/><path d="M38 64a12 12 0 0 0 8 12" stroke="#fff" stroke-width="5" stroke-linecap="round" fill="none"/></svg>`,
+  leaf:`<svg viewBox="0 0 100 100"><path d="M16 84C16 40 46 14 88 14c0 46-28 70-72 70z" fill="#2EC27E"/><path d="M18 82 70 32" stroke="#1E9A62" stroke-width="5" stroke-linecap="round"/></svg>`,
+  orange:`<svg viewBox="0 0 100 100"><circle cx="50" cy="55" r="36" fill="#FF9A3C"/><path d="M50 20c4-6 12-8 18-6-4 6-10 8-18 6z" fill="#2EC27E"/><circle cx="40" cy="46" r="2.5" fill="#E07B1F"/><circle cx="58" cy="60" r="2.5" fill="#E07B1F"/><circle cx="46" cy="70" r="2.5" fill="#E07B1F"/></svg>`,
+  grapes:`<svg viewBox="0 0 100 100"><path d="M50 22V10" stroke="#7A4A2A" stroke-width="5" stroke-linecap="round"/><path d="M52 16c8-6 18-4 20 0-8 4-14 4-20 0z" fill="#2EC27E"/>${[[38,30],[52,30],[66,30],[45,44],[59,44],[38,58],[52,58],[66,58],[45,72],[59,72],[52,85]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="9" fill="#9B5DE5" stroke="#7B3FC5" stroke-width="2"/>`).join('')}</svg>`,
+  balloon:(c)=>`<svg viewBox="0 0 100 100"><ellipse cx="50" cy="40" rx="27" ry="32" fill="${c}"/><path d="M46 71h8l-4 6z" fill="${c}"/><path d="M50 77c-6 6 6 10 0 18" stroke="#5B5680" stroke-width="2.5" fill="none"/><ellipse cx="40" cy="28" rx="6" ry="9" fill="#fff" opacity=".45"/></svg>`,
+  star:(c)=>`<svg viewBox="0 0 100 100"><path d="M50 8l12.5 26 28.5 4-20.6 20 4.9 28.5L50 73 24.7 86.5 29.6 58 9 38l28.5-4z" fill="${c}" stroke="rgba(0,0,0,.12)" stroke-width="3" stroke-linejoin="round"/></svg>`,
+  cup:(c)=>`<svg viewBox="0 0 100 100"><path d="M22 28h48l-6 58H28z" fill="${c}"/><path d="M70 40h8a10 10 0 0 1 0 22h-10" stroke="${c}" stroke-width="7" fill="none"/><rect x="18" y="22" width="56" height="8" rx="4" fill="${c}"/></svg>`,
+  egg:`<svg viewBox="0 0 100 100"><ellipse cx="50" cy="54" rx="28" ry="38" fill="#FFF3D6" stroke="#E8C98A" stroke-width="4"/><ellipse cx="40" cy="40" rx="6" ry="10" fill="#fff"/></svg>`,
+  mirror:`<svg viewBox="0 0 100 100"><ellipse cx="50" cy="46" rx="30" ry="40" fill="#C98444"/><ellipse cx="50" cy="46" rx="22" ry="32" fill="#D7F0FF"/><path d="M40 30l12-10M38 44l20-16" stroke="#fff" stroke-width="4" stroke-linecap="round"/><rect x="44" y="84" width="12" height="12" rx="3" fill="#C98444"/></svg>`,
+  rug:`<svg viewBox="0 0 100 100"><ellipse cx="50" cy="50" rx="46" ry="30" fill="#FF9A3C"/><ellipse cx="50" cy="50" rx="34" ry="20" fill="#FFCD3C"/><ellipse cx="50" cy="50" rx="20" ry="10" fill="#FF4F5E"/></svg>`,
+  strawberry:`<svg viewBox="0 0 100 100"><path d="M50 92C26 76 16 52 22 38c6-12 22-12 28-6 6-6 22-6 28 6 6 14-4 38-28 54z" fill="#FF4F5E"/><path d="M30 30c6-10 14-12 20-6 6-6 14-4 20 6-8 2-14 2-20-2-6 4-12 4-20 2z" fill="#2EC27E"/>${[[40,48],[60,48],[50,62],[38,66],[62,66],[50,78]].map(([x,y])=>`<ellipse cx="${x}" cy="${y}" rx="2" ry="3" fill="#FFE08A"/>`).join('')}</svg>`,
+  wave:`<svg viewBox="0 0 100 100"><rect x="6" y="20" width="88" height="66" rx="14" fill="#BFE3FF"/><path d="M6 56c14-10 22-10 30 0s16 10 30 0 22-10 28 0V86H6z" fill="#3A8DFF"/><path d="M6 70c14-8 22-8 30 0s16 8 30 0 22-8 28 0" stroke="#fff" stroke-width="4" fill="none"/><circle cx="76" cy="36" r="8" fill="#FFCD3C"/></svg>`,
+  banana:`<svg viewBox="0 0 100 100"><path d="M18 30c6 36 34 54 70 44-4-6-10-8-16-6-24 4-40-12-44-38z" fill="#FFCD3C" stroke="#E3AE1C" stroke-width="3"/><path d="M14 26l6 6" stroke="#7A4A2A" stroke-width="6" stroke-linecap="round"/></svg>`,
+  cucumber:`<svg viewBox="0 0 100 100"><rect x="14" y="36" width="72" height="28" rx="14" fill="#2EC27E" transform="rotate(-25 50 50)"/>${[[34,58],[48,50],[62,42],[42,44],[56,36]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="2.5" fill="#1E9A62"/>`).join('')}</svg>`,
+  carrot:`<svg viewBox="0 0 100 100"><path d="M30 34l40 12-38 44c-6 4-12-2-10-8z" fill="#FF9A3C"/><path d="M40 52l10 3M36 64l8 2" stroke="#E07B1F" stroke-width="4" stroke-linecap="round"/><path d="M52 40c4-14 14-20 24-18-4 8-12 12-18 18M58 42c8-8 20-8 26-2-8 4-16 6-24 4" fill="#2EC27E"/></svg>`,
+  eggplant:`<svg viewBox="0 0 100 100"><path d="M64 30c18 10 20 36 6 50-14 14-40 12-48-4-8-16 6-26 18-34 8-6 14-16 24-12z" fill="#9B5DE5"/><path d="M58 22c4 6 12 10 18 8 0 6-6 10-14 8M62 24l6-12" stroke="#2EC27E" stroke-width="6" stroke-linecap="round" fill="none"/><ellipse cx="40" cy="62" rx="5" ry="9" fill="#fff" opacity=".35"/></svg>`,
+  dice:`<svg viewBox="0 0 100 100"><path d="M20 34l30-14 30 14-30 14z" fill="#fff" stroke="#2A2350" stroke-width="3" stroke-linejoin="round"/><path d="M20 34v36l30 14V48z" fill="#F2F2F7" stroke="#2A2350" stroke-width="3" stroke-linejoin="round"/><path d="M80 34v36L50 84V48z" fill="#E2E2EC" stroke="#2A2350" stroke-width="3" stroke-linejoin="round"/><circle cx="50" cy="34" r="4" fill="#FF4F5E"/><circle cx="30" cy="52" r="3.5" fill="#2A2350"/><circle cx="40" cy="66" r="3.5" fill="#2A2350"/><circle cx="60" cy="56" r="3.5" fill="#2A2350"/><circle cx="70" cy="70" r="3.5" fill="#2A2350"/><circle cx="66" cy="44" r="3.5" fill="#2A2350"/></svg>`,
+  can:`<svg viewBox="0 0 100 100"><rect x="28" y="20" width="44" height="64" fill="#2EC27E"/><rect x="28" y="40" width="44" height="22" fill="#FFCD3C"/><ellipse cx="50" cy="84" rx="22" ry="7" fill="#1E9A62"/><ellipse cx="50" cy="20" rx="22" ry="7" fill="#C9F0D6" stroke="#1E9A62" stroke-width="3"/></svg>`,
+  icecream:`<svg viewBox="0 0 100 100"><path d="M30 44h40L50 94z" fill="#E8B26A" stroke="#C98444" stroke-width="3" stroke-linejoin="round"/><path d="M36 54l18 18M46 46l18 18M42 64l10-10M38 52l14-8" stroke="#C98444" stroke-width="2"/><circle cx="50" cy="34" r="20" fill="#FF8FC6"/><circle cx="58" cy="28" r="5" fill="#fff" opacity=".6"/></svg>`,
+  orangeSphere:`<svg viewBox="0 0 100 100"><circle cx="50" cy="55" r="36" fill="#FF9A3C"/><path d="M50 20c4-6 12-8 18-6-4 6-10 8-18 6z" fill="#2EC27E"/></svg>`
+};
+const SOL={
+  sphere:`<svg viewBox="0 0 100 100"><defs><radialGradient id="gS" cx="35%" cy="32%" r="70%"><stop offset="0" stop-color="#CFE4FF"/><stop offset=".45" stop-color="#5AA2FF"/><stop offset="1" stop-color="#1E5FC0"/></radialGradient></defs><ellipse cx="50" cy="90" rx="30" ry="5" fill="rgba(0,0,0,.12)"/><circle cx="50" cy="50" r="38" fill="url(#gS)"/></svg>`,
+  cube:`<svg viewBox="0 0 100 100"><ellipse cx="50" cy="92" rx="36" ry="5" fill="rgba(0,0,0,.12)"/><path d="M14 30l36-16 36 16-36 16z" fill="#FFE08A" stroke="#C99A1A" stroke-width="2.5" stroke-linejoin="round"/><path d="M14 30v44l36 16V46z" fill="#FFCD3C" stroke="#C99A1A" stroke-width="2.5" stroke-linejoin="round"/><path d="M86 30v44L50 90V46z" fill="#E3AE1C" stroke="#C99A1A" stroke-width="2.5" stroke-linejoin="round"/></svg>`,
+  cylinder:`<svg viewBox="0 0 100 100"><defs><linearGradient id="gC" x1="0" x2="1"><stop offset="0" stop-color="#1E9A62"/><stop offset=".35" stop-color="#5BE0A0"/><stop offset="1" stop-color="#1E9A62"/></linearGradient></defs><ellipse cx="50" cy="92" rx="30" ry="5" fill="rgba(0,0,0,.12)"/><path d="M24 20v62a26 8 0 0 0 52 0V20z" fill="url(#gC)"/><ellipse cx="50" cy="20" rx="26" ry="8" fill="#A7EBC8" stroke="#1E9A62" stroke-width="2.5"/></svg>`,
+  cone:`<svg viewBox="0 0 100 100"><defs><linearGradient id="gK" x1="0" x2="1"><stop offset="0" stop-color="#C92E3C"/><stop offset=".4" stop-color="#FF8A94"/><stop offset="1" stop-color="#C92E3C"/></linearGradient></defs><ellipse cx="50" cy="92" rx="32" ry="5" fill="rgba(0,0,0,.12)"/><path d="M50 10 80 80a30 9 0 0 1-60 0z" fill="url(#gK)"/><ellipse cx="50" cy="80" rx="30" ry="9" fill="none" stroke="#C92E3C" stroke-width="2.5" stroke-dasharray="4 4"/></svg>`
+};
+const SOLN={sphere:'الكرة',cube:'المكعب',cylinder:'الأسطوانة',cone:'المخروط'};
+const SOLFACT={sphere:'الكرة مجسّم مستدير من كل الجهات، ونراها دائرة إذا نظرنا إليها.',cube:'المكعب مجسّم له ستة وجوه، وكل وجه مربع.',cylinder:'الأسطوانة لها وجهان دائريان، وتتدحرج على جنبها.',cone:'المخروط له قاعدة دائرية ورأس مدبّب.'};
+const SOLOBJ={sphere:'orangeSphere',cube:'dice',cylinder:'can',cone:'icecream'};
+const SHOBJ={circle:['sun','ball','clock'],square:['window','gift','frame'],triangle:['tent','mountain','pizza'],rectangle:['door','book','choc'],oval:['egg','mirror','rug']};
+const OBN={sun:'الشمس',ball:'الكرة',clock:'الساعة',window:'النافذة',gift:'الهدية',frame:'الصورة',tent:'الخيمة',mountain:'الجبل',pizza:'قطعة البيتزا',door:'الباب',book:'الكتاب',choc:'لوح الشوكولاتة',apple:'التفاحة',drop:'قطرة الماء',leaf:'ورقة الشجرة',orange:'البرتقالة',grapes:'العنب',egg:'البيضة',mirror:'المرآة',rug:'السجادة',strawberry:'الفراولة',wave:'البحر',banana:'الموزة',cucumber:'الخيارة',carrot:'الجزرة',eggplant:'الباذنجانة',dice:'مكعب اللعب',can:'علبة العصير',icecream:'مخروط الآيس كريم',orangeSphere:'البرتقالة'};
+const COBJ={red:'apple',blue:'drop',yellow:'sun',green:'leaf',orange:'orange',purple:'grapes'};
+const COBJS={red:['apple','strawberry'],blue:['drop','wave'],yellow:['sun','banana'],green:['leaf','cucumber'],orange:['orange','carrot'],purple:['grapes','eggplant']};
+const ICON={
+  num:'<svg viewBox="0 0 100 100"><circle cx="30" cy="34" r="20" fill="#8ED6C1"/><circle cx="70" cy="34" r="20" fill="#F8C88A"/><circle cx="50" cy="72" r="20" fill="#9DC3F5"/><text x="30" y="43" text-anchor="middle" font-size="26" font-weight="800" fill="#fff" font-family="Rubik,sans-serif">١</text><text x="70" y="43" text-anchor="middle" font-size="26" font-weight="800" fill="#fff" font-family="Rubik,sans-serif">٢</text><text x="50" y="81" text-anchor="middle" font-size="26" font-weight="800" fill="#fff" font-family="Rubik,sans-serif">٣</text></svg>',
+  tap:'<svg viewBox="0 0 100 100"><circle cx="28" cy="30" r="12" fill="#F25C68"/><circle cx="56" cy="30" r="12" fill="#F25C68"/><circle cx="42" cy="56" r="12" fill="#F25C68"/><path d="M66 52v-8a6 6 0 0 1 12 0v22l6-4a6 6 0 0 1 8 8L80 88H62L52 70a6 6 0 0 1 10-6z" fill="#FFD9B8" stroke="#C98B5E" stroke-width="3" stroke-linejoin="round"/></svg>',
+  count:'<svg viewBox="0 0 100 100"><circle cx="24" cy="34" r="11" fill="#36C285"/><circle cx="50" cy="34" r="11" fill="#36C285"/><circle cx="76" cy="34" r="11" fill="#36C285"/><rect x="30" y="58" width="40" height="32" rx="10" fill="#4A90EE"/><text x="50" y="83" text-anchor="middle" font-size="26" font-weight="800" fill="#fff" font-family="Rubik,sans-serif">٣</text></svg>',
+  nmatch:'<svg viewBox="0 0 100 100"><rect x="8" y="30" width="34" height="40" rx="10" fill="#9C6BE0"/><text x="25" y="60" text-anchor="middle" font-size="28" font-weight="800" fill="#fff" font-family="Rubik,sans-serif">٢</text><path d="M46 50h10" stroke="#5B5680" stroke-width="5" stroke-linecap="round"/><circle cx="72" cy="40" r="10" fill="#FF9F45"/><circle cx="72" cy="64" r="10" fill="#FF9F45"/></svg>',
+  more:'<svg viewBox="0 0 100 100"><path d="M50 18v64M22 82h56" stroke="#5B5680" stroke-width="5" stroke-linecap="round"/><path d="M14 40h30M56 30h30" stroke="#5B5680" stroke-width="4"/><circle cx="22" cy="52" r="7" fill="#F25C68"/><circle cx="36" cy="52" r="7" fill="#F25C68"/><circle cx="64" cy="40" r="7" fill="#4A90EE"/></svg>',
+  order:'<svg viewBox="0 0 100 100"><rect x="62" y="56" width="28" height="30" rx="8" fill="#36C285"/><rect x="36" y="40" width="28" height="46" rx="8" fill="#4A90EE"/><rect x="10" y="22" width="28" height="64" rx="8" fill="#9C6BE0"/><text x="76" y="78" text-anchor="middle" font-size="20" font-weight="800" fill="#fff" font-family="Rubik,sans-serif">١</text><text x="50" y="70" text-anchor="middle" font-size="20" font-weight="800" fill="#fff" font-family="Rubik,sans-serif">٢</text><text x="24" y="62" text-anchor="middle" font-size="20" font-weight="800" fill="#fff" font-family="Rubik,sans-serif">٣</text></svg>',
+  lv:'<svg viewBox="0 0 100 100"><path d="M30 18v64M50 18v64M70 18v64" stroke="#4A90EE" stroke-width="7" stroke-dasharray="2 10" stroke-linecap="round"/></svg>',
+  lh:'<svg viewBox="0 0 100 100"><path d="M84 30H16M84 50H16M84 70H16" stroke="#E8913D" stroke-width="7" stroke-dasharray="2 10" stroke-linecap="round"/></svg>',
+  ld:'<svg viewBox="0 0 100 100"><path d="M82 18 18 82M82 46 46 82" stroke="#9C6BE0" stroke-width="7" stroke-dasharray="2 10" stroke-linecap="round"/></svg>',
+  lc:'<svg viewBox="0 0 100 100"><path d="M90 66q-13-34-26 0q-13-34-26 0q-13-34-26 0" stroke="#36C285" stroke-width="7" fill="none" stroke-dasharray="2 10" stroke-linecap="round"/></svg>',
+  lz:'<svg viewBox="0 0 100 100"><path d="M90 70 76 34 62 70 48 34 34 70 20 34" stroke="#A0673A" stroke-width="7" fill="none" stroke-dasharray="2 10" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  lw:'<svg viewBox="0 0 100 100"><path d="M90 50c-10-16-20-16-30 0s-20 16-30 0-14-10-20-6" stroke="#4A90EE" stroke-width="7" fill="none" stroke-dasharray="2 10" stroke-linecap="round"/></svg>',
+  lo:'<svg viewBox="0 0 100 100"><circle cx="30" cy="54" r="18" stroke="#F25C68" stroke-width="7" fill="none" stroke-dasharray="2 10" stroke-linecap="round"/><circle cx="70" cy="54" r="18" stroke="#F25C68" stroke-width="7" fill="none" stroke-dasharray="2 10" stroke-linecap="round"/></svg>',
+  ls:'<svg viewBox="0 0 100 100"><path d="M50 50c0-5 6-5 6 0 0 9-14 9-14 0 0-14 22-14 22 0 0 19-30 19-30 0 0-24 38-24 38 0" stroke="#E8913D" stroke-width="6" fill="none" stroke-dasharray="2 9" stroke-linecap="round"/></svg>',
+
+  learn:'<svg viewBox="0 0 100 100"><circle cx="44" cy="44" r="26" fill="none" stroke="#3A8DFF" stroke-width="10"/><path d="M63 63l20 20" stroke="#3A8DFF" stroke-width="12" stroke-linecap="round"/></svg>',
+  choose:'<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="#2EC27E"/><path d="M30 52l13 13 27-29" stroke="#fff" stroke-width="10" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  match:'<svg viewBox="0 0 100 100"><circle cx="20" cy="30" r="12" fill="#FF4F5E"/><circle cx="80" cy="70" r="12" fill="#3A8DFF"/><path d="M28 36C50 40 50 60 72 64" stroke="#2A2350" stroke-width="7" fill="none" stroke-linecap="round" stroke-dasharray="2 12"/></svg>',
+  sort:'<svg viewBox="0 0 100 100"><path d="M14 46h72l-8 42H22z" fill="#FF9A3C"/><circle cx="34" cy="30" r="11" fill="#FFCD3C"/><rect x="52" y="20" width="20" height="20" rx="3" fill="#3A8DFF"/></svg>',
+  color:'<svg viewBox="0 0 100 100"><path d="M64 14l22 22-40 40H24V54z" fill="#9B5DE5"/><path d="M24 76h22L24 54z" fill="#FFCD3C"/><path d="M14 90h72" stroke="#FF4F5E" stroke-width="8" stroke-linecap="round"/></svg>',
+  draw:'<svg viewBox="0 0 100 100"><path d="M14 72c10-30 22-30 30-10s20 20 30-12" stroke="#2EC27E" stroke-width="9" fill="none" stroke-linecap="round"/><circle cx="82" cy="40" r="8" fill="#FF4F5E"/></svg>',
+  mix:'<svg viewBox="0 0 100 100"><path d="M14 44h72c0 24-16 40-36 40S14 68 14 44z" fill="#fff" stroke="#2A2350" stroke-width="5"/><path d="M22 52h56c-2 14-14 24-28 24S24 66 22 52z" fill="#FF9A3C"/><circle cx="34" cy="24" r="10" fill="#FF4F5E"/><circle cx="64" cy="20" r="10" fill="#FFCD3C"/></svg>',
+  find:'<svg viewBox="0 0 100 100"><rect x="10" y="16" width="56" height="56" rx="6" fill="#BFE3FF" stroke="#8B5A2B" stroke-width="6"/><circle cx="62" cy="62" r="20" fill="#fff" fill-opacity=".6" stroke="#2A2350" stroke-width="7"/><path d="M76 76l14 14" stroke="#2A2350" stroke-width="9" stroke-linecap="round"/></svg>',
+  solid:'<svg viewBox="0 0 100 100"><path d="M14 30l36-16 36 16-36 16z" fill="#FFE08A"/><path d="M14 30v44l36 16V46z" fill="#FFCD3C"/><path d="M86 30v44L50 90V46z" fill="#E3AE1C"/></svg>',
+  pos:'<svg viewBox="0 0 100 100"><rect x="14" y="50" width="72" height="8" rx="3" fill="#B26B2F"/><rect x="20" y="58" width="7" height="34" fill="#B26B2F"/><rect x="73" y="58" width="7" height="34" fill="#B26B2F"/><circle cx="50" cy="38" r="12" fill="#FF4F5E"/><path d="M50 8v12" stroke="#2A2350" stroke-width="5" stroke-linecap="round"/><path d="M43 14l7 8 7-8" stroke="#2A2350" stroke-width="5" fill="none" stroke-linecap="round"/></svg>',
+  pattern:'<svg viewBox="0 0 100 100"><circle cx="16" cy="50" r="11" fill="#FF4F5E"/><rect x="32" y="39" width="22" height="22" rx="3" fill="#3A8DFF"/><circle cx="70" cy="50" r="11" fill="#FF4F5E"/><rect x="84" y="39" width="14" height="22" rx="3" fill="none" stroke="#FF9A3C" stroke-width="4" stroke-dasharray="4 3"/></svg>',
+  sort2:'<svg viewBox="0 0 100 100"><path d="M10 50h36l-4 38H14z" fill="#FF4F5E"/><path d="M54 50h36l-4 38H58z" fill="#3A8DFF"/><path d="M28 20 40 42H16z" fill="#FF4F5E"/><circle cx="72" cy="32" r="11" fill="#3A8DFF"/></svg>',
+  size:'<svg viewBox="0 0 100 100"><circle cx="18" cy="72" r="9" fill="#2EC27E"/><circle cx="44" cy="66" r="15" fill="#2EC27E"/><circle cx="76" cy="58" r="23" fill="#2EC27E"/></svg>',
+  shades:'<svg viewBox="0 0 100 100"><rect x="8" y="26" width="26" height="48" rx="6" fill="#BFD9FF"/><rect x="37" y="26" width="26" height="48" rx="6" fill="#3A8DFF"/><rect x="66" y="26" width="26" height="48" rx="6" fill="#1A4C99"/></svg>',
+  beads:'<svg viewBox="0 0 100 100"><path d="M6 50h88" stroke="#5B5680" stroke-width="3"/><circle cx="16" cy="50" r="10" fill="#FF4F5E"/><circle cx="38" cy="50" r="10" fill="#FFCD3C"/><circle cx="60" cy="50" r="10" fill="#FF4F5E"/><circle cx="82" cy="50" r="10" fill="#fff" stroke="#FF9A3C" stroke-width="4" stroke-dasharray="4 3"/></svg>',
+  env:'<svg viewBox="0 0 100 100"><rect x="0" y="0" width="100" height="62" fill="#BFE3FF"/><rect x="0" y="62" width="100" height="38" fill="#FFE08A"/><path d="M48 90c2-20 2-36 6-50" stroke="#A0673A" stroke-width="7" fill="none"/><path d="M54 40c-10-8-26-6-32 2 12-2 22 0 32-2zM54 40c10-8 26-6 32 2-12-2-22 0-32-2zM54 40c-4-12-14-18-22-16 8 4 14 10 22 16zM54 40c4-12 14-18 22-16-8 4-14 10-22 16z" fill="#2EC27E"/><circle cx="82" cy="18" r="9" fill="#FFCD3C"/></svg>'
+};
+const starSvg='<svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z" fill="#FFCD3C" stroke="#E3AE1C" stroke-width="1.2"/></svg>';
+const tickSvg='<svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#2EC27E"/><path d="M11 21l6 6 12-13" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const speakerSvg='<svg viewBox="0 0 24 24" fill="none" stroke="#2A2350" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>';
+
+/* ---------- الاحتفال ---------- */
+function confetti(){
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const cv=document.createElement('canvas');cv.className='confetti';document.body.appendChild(cv);
+  const dpr=Math.min(2,devicePixelRatio||1);cv.width=innerWidth*dpr;cv.height=innerHeight*dpr;const x=cv.getContext('2d');x.scale(dpr,dpr);
+  const cols=Object.values(C);const ps=Array.from({length:120},()=>({x:Math.random()*innerWidth,y:-20-Math.random()*innerHeight*.4,vx:(Math.random()-.5)*3,vy:2+Math.random()*4,r:Math.random()*6.28,s:6+Math.random()*8,c:cols[Math.floor(Math.random()*cols.length)],k:Math.floor(Math.random()*3)}));
+  let t=0;(function f(){x.clearRect(0,0,innerWidth,innerHeight);ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.r+=.08;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;if(p.k==0){x.beginPath();x.arc(0,0,p.s/2,0,7);x.fill()}else if(p.k==1)x.fillRect(-p.s/2,-p.s/2,p.s,p.s);else{x.beginPath();x.moveTo(0,-p.s/2);x.lineTo(p.s/2,p.s/2);x.lineTo(-p.s/2,p.s/2);x.fill()}x.restore()});if(++t<150)requestAnimationFrame(f);else cv.remove()})();
+}
+
+/* ---------- الأقسام والأنشطة ---------- */
+const SECTIONS={
+  shapes:{title:'عالم الأشكال',color:'#5E93E6',acts:[
+    {id:'learn',name:'أتعرّف الأشكال',icon:'learn'},{id:'find',name:'أبحث في غرفتي',icon:'find'},{id:'choose',name:'أختار الشكل',icon:'choose'},
+    {id:'solids',name:'المجسّمات',icon:'solid'},{id:'pos',name:'أين الكرة؟',icon:'pos'},{id:'pattern',name:'أكمل النمط',icon:'pattern'},
+    {id:'sort',name:'أصنّف بالشكل',icon:'sort'},{id:'sort2',name:'الشكل واللون معًا',icon:'sort2'},{id:'size',name:'من الأصغر للأكبر',icon:'size'},
+    {id:'draw',name:'أرسم الأشكال',icon:'draw'}],
+    end:{title:'أحسنت يا بطل الأشكال!',fact:'الأشكال حولنا في كل مكان: في الشمس والنوافذ والأبواب والكتب.',value:'قيمة اليوم: الترتيب',valueText:'أرتّب ألعابي في أماكنها كما رتّبتُ الأشكال في سلالها.'}},
+  colors:{title:'عالم الألوان',color:'#E97A88',acts:[
+    {id:'clearn',name:'أتعرّف الألوان',icon:'learn'},{id:'cchoose',name:'ما لونها؟',icon:'choose'},{id:'mix',name:'أمزج الألوان',icon:'mix'},
+    {id:'shades',name:'فاتح وغامق',icon:'shades'},{id:'csort',name:'أصنّف باللون',icon:'sort'},{id:'cpattern',name:'نمط الخرز',icon:'beads'},
+    {id:'env',name:'ألوان بيئتي',icon:'env'},{id:'rainbow',name:'قوس المطر',icon:'color'},{id:'cdraw',name:'أرسم بحرية',icon:'draw'}],
+    end:{title:'أحسنت يا بطل الألوان!',fact:'سبحان الله! خلق الله لنا ألوانًا جميلة في الفواكه والأشجار والسماء.',value:'قيمة اليوم: المشاركة',valueText:'أشارك أصدقائي ألواني، ونرسم معًا رسمة جميلة.'}},
+  numbers:{title:'عالم الأعداد',color:'#3FAE8E',acts:[
+    {id:'nlearn',name:'أتعرّف الأعداد',icon:'num'},{id:'ntap',name:'أعدّ بإصبعي',icon:'tap'},{id:'ncount',name:'كم عددها؟',icon:'count'},
+    {id:'nmatch',name:'العدد ومجموعته',icon:'nmatch'},{id:'nmore',name:'أكثر وأقل',icon:'more'},{id:'norder',name:'أرتّب الأعداد',icon:'order'}],
+    end:{title:'أحسنت يا بطل الأعداد!',fact:'نعدّ كل يوم: أصابع يدي خمسة، وأيام الأسبوع سبعة.',value:'قيمة اليوم: الأمانة',valueText:'أعدّ أغراضي، وأعيد ما أستعيره كاملًا.'}},
+  lines:{title:'ارسم على الخط',color:'#E8913D',acts:[
+    {id:'lv',name:'خط المطر',icon:'lv'},{id:'lh',name:'خط الطريق',icon:'lh'},{id:'ld',name:'الزحليقة',icon:'ld'},{id:'lc',name:'القفزات',icon:'lc'},
+    {id:'lz',name:'الجبال',icon:'lz'},{id:'lw',name:'الأمواج',icon:'lw'},{id:'lo',name:'العجلات',icon:'lo'},{id:'ls',name:'الحلزون',icon:'ls'}],
+    end:{title:'أحسنت يا بطل الخطوط!',fact:'الخطوط المستقيمة والمنحنية تقوّي أصابعي وتجهّزها للكتابة.',value:'قيمة اليوم: الإتقان',valueText:'أمسك القلم جيدًا، وأرسم بهدوء وإتقان.'}}
+};
+const FACTS={
+  learn:{fact:'تعرّفت على خمسة أشكال: الدائرة والمربع والمثلث والمستطيل والشكل البيضاوي.',value:'أنصت جيدًا لمعلمتي فأتعلّم أكثر.'},
+  find:{fact:'الأشكال حولنا في كل مكان: الساعة دائرة، والباب مستطيل، والنافذة مربع.',value:'أحافظ على أغراض بيتي ومدرستي.'},
+  solids:{fact:'المجسّمات نمسكها بأيدينا ونقلبها، أما الأشكال المسطحة فنرسمها على الورق.',value:'أستخدم ألعابي برفق وأعيدها إلى مكانها.'},
+  pos:{fact:'تعلّمت كلمات المكان: فوق وتحت وبجانب وداخل.',value:'أضع حذائي تحت السرير وحقيبتي فوق الرف.'},
+  pattern:{fact:'النمط شيء يتكرر بالترتيب نفسه، مثل نقش السجادة.',value:'أتبع النظام في الطابور والفصل.'},
+  sort2:{fact:'نظرتَ إلى الشكل واللون معًا قبل أن تختار.',value:'أنتبه جيدًا قبل أن أجيب.'},
+  size:{fact:'رتّبتَ الأشياء من الأصغر إلى الأكبر.',value:'أحترم الكبير وأعطف على الصغير.'},
+  choose:{fact:'العجلة دائرية لكي تدور، والباب مستطيل لكي ندخل منه.',value:'أفكّر قبل أن أختار.'},
+  match:{fact:'شريحة البيتزا مثلث، والنافذة مربع، والشمس دائرة.',value:'أحاول مرة بعد مرة حتى أنجح.'},
+  sort:{fact:'وضعتَ كل شكل في سلته المناسبة.',value:'الترتيب يجعل غرفتي جميلة.'},
+  color:{fact:'البيت مصنوع من أشكال: مربع ومثلث ومستطيل ودائرة.',value:'أحافظ على بيتي نظيفًا مرتبًا.'},
+  draw:{fact:'رسمت الأشكال بإصبعك خطوة خطوة.',value:'الصبر يساعدني على إتقان عملي.'},
+  clearn:{fact:'الألوان حولنا: التفاحة حمراء، والماء أزرق، والورقة خضراء.',value:'أشكر الله على نعمة الألوان.'},
+  shades:{fact:'إذا أضفنا الأبيض إلى اللون صار فاتحًا، وإذا أضفنا الأسود صار غامقًا.',value:'أجرّب وأكتشف بنفسي.'},
+  cpattern:{fact:'صنعتَ عقدًا جميلًا بنمط من الألوان.',value:'أصنع هدية لأمي بيديّ.'},
+  env:{fact:'في بلادي نخيل خضراء، وسماء زرقاء، ورمال صفراء.',value:'أحافظ على نظافة بيئتي.'},
+  cchoose:{fact:'لكل فاكهة لون يميزها، وكلها مفيدة لجسمي.',value:'آكل الفاكهة لأكون قويًا.'},
+  mix:{fact:'الأحمر والأصفر يصنعان البرتقالي، والأزرق والأصفر يصنعان الأخضر، والأحمر والأزرق يصنعان البنفسجي.',value:'عندما نتعاون نصنع شيئًا جديدًا.'},
+  csort:{fact:'جمعتَ الأشياء المتشابهة في لونها معًا.',value:'أعيد كل شيء إلى مكانه بعد اللعب.'},
+  rainbow:{fact:'قوس المطر يظهر بعد المطر عندما تشرق الشمس.',value:'أنتظر دوري بهدوء.'},
+  cdraw:{fact:'رسمتَ رسمة جميلة بألوانك.',value:'أغسل يديّ بعد الرسم والتلوين.'},
+  nlearn:{fact:'تعرّفت على الأعداد من واحد إلى عشرة.',value:'أعدّ نِعَم الله عليّ وأشكره.'},
+  ntap:{fact:'عددتَ الأشياء واحدًا واحدًا دون أن تنسى شيئًا.',value:'أتأنّى في عملي ولا أستعجل.'},
+  ncount:{fact:'آخر عدد نقوله عند العدّ هو عدد الأشياء كلها.',value:'أنتبه جيدًا قبل أن أجيب.'},
+  nmatch:{fact:'لكل عدد مجموعة تمثّله: ثلاثة تعني ثلاثة أشياء.',value:'أساعد أمي في عدّ الأطباق.'},
+  nmore:{fact:'نعرف الأكثر والأقل حين نقارن بين مجموعتين.',value:'أشارك أصدقائي ولا آخذ أكثر من حقي.'},
+  norder:{fact:'رتّبت الأعداد من الأصغر إلى الأكبر.',value:'أقف في الطابور بالترتيب.'},
+  lv:{fact:'رسمت خطوطًا مستقيمة من أعلى إلى أسفل.',value:'أشكر الله على نعمة المطر.'},
+  lh:{fact:'رسمت خطوطًا من اليمين إلى اليسار كما نكتب بالعربية.',value:'أعبر الطريق مع الكبار.'},
+  ld:{fact:'الخط المائل يشبه الزحليقة.',value:'أنتظر دوري في اللعب.'},
+  lc:{fact:'الخط المنحني يشبه القفزة والقوس.',value:'ألعب بأمان وأنتبه لأصدقائي.'},
+  lz:{fact:'الخط المتعرّج يصعد وينزل مثل الجبال.',value:'لا أستسلم إذا كان الطريق صعبًا.'},
+  lw:{fact:'الخط المموّج يشبه أمواج البحر.',value:'أحافظ على نظافة البحر والشاطئ.'},
+  lo:{fact:'رسمت دوائر مثل عجلات الدراجة.',value:'أحافظ على ألعابي وأدواتي.'},
+  ls:{fact:'رسمت حلزونًا يدور ويدور حتى يصل إلى الوسط.',value:'الصبر يوصلني إلى ما أريد.'}
+};
+
+let route={view:'landing'};
+/* مساعدة رفرف: إن توقف الطفل طويلًا أو أخطأ مرتين، تدلّه الفراشة على الجواب */
+let hintFn=null,idleT=null,lastAsk='';
+const HINTS=['دعني أساعدك، انظر إلى ما يلمع!','أنا معك، جرّب هذا!','هيا نحاول معًا، انظر هنا!'];
+function showHint(){if(!hintFn)return;const els=[].concat(hintFn()||[]).filter(Boolean);if(!els.length)return;els.forEach(e=>{e.classList.remove('hintme');void e.offsetWidth;e.classList.add('hintme');setTimeout(()=>e.classList.remove('hintme'),4200)});say(HINTS[Math.floor(Math.random()*HINTS.length)])}
+function armIdle(){clearTimeout(idleT);if(route.view==='act'&&hintFn)idleT=setTimeout(showHint,14000)}
+document.addEventListener('pointerdown',armIdle,true);
+$('#buddy').onclick=()=>{sfx.tap();mood('happy');if(route.view==='act'&&lastAsk)say(lastAsk);else if(route.view==='path')say('اختر النشاط الذي يلمع، أنا معك!');else say('مرحبًا! أنا رفرف. اختر عالمًا، وهيا نلعب معًا!')};
+$('#buddy').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$('#buddy').click()}};
+function go(r){route=r;hintFn=null;clearTimeout(idleT);try{speechSynthesis.cancel()}catch(e){}render();armIdle()}
+$('#homeBtn').onclick=()=>{sfx.tap();go({view:'landing'})};
+$('#backBtn').onclick=()=>{sfx.tap();if(route.view==='act'||route.view==='lesson')go({view:'path',sec:route.sec});else if(route.view==='path')go({view:'home'});else go({view:'landing'})};
+$('#soundBtn').onclick=()=>{muted=!muted;try{localStorage.setItem('bustan:mute',muted?'1':'0')}catch(e){};if(muted)try{speechSynthesis.cancel()}catch(e){};soundIcon();sfx.tap()};
+$('#fsBtn').onclick=async()=>{sfx.tap();try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen()}catch(e){}};
+document.addEventListener('pointerdown',()=>audio(),{once:true});
+
+function render(){
+  stage.innerHTML='';stage.scrollTop=0;applyMode();setStars();document.body.classList.remove('tview');
+  $('#backBtn').hidden=route.view==='landing';
+  if(route.view==='landing')return landingView();
+  if(route.view==='achieve')return achieveView();
+  if(route.view==='links')return linksView();
+  if(route.view==='home')return homeView();
+  if(route.view==='path')return pathView(route.sec);
+  if(route.view==='act')return actView(route.sec,route.i);
+  if(route.view==='lesson')return lessonView(route.sec);
+  if(route.view==='teacher')return teacherView();
+}
+
+
+
+
+/* ---------- الشخصيتان: رفرف للبنات، رائد الفضاء للأولاد ---------- */
+const BFLY_BIG=$('#buddy svg').innerHTML;
+const FALCON_BIG=`
+  <path d="M80 18V8" stroke="#B9C4DC" stroke-width="3" stroke-linecap="round"/><circle cx="80" cy="7" r="5" fill="#FFCF4A"/>
+  <rect x="50" y="70" width="60" height="54" rx="14" fill="#C9D3E8"/>
+  <rect x="61" y="116" width="16" height="22" rx="6" fill="#F4F7FF" stroke="#C9D3E8" stroke-width="2.5"/><rect x="83" y="116" width="16" height="22" rx="6" fill="#F4F7FF" stroke="#C9D3E8" stroke-width="2.5"/>
+  <rect x="57" y="133" width="22" height="10" rx="5" fill="#6C7A99"/><rect x="81" y="133" width="22" height="10" rx="5" fill="#6C7A99"/>
+  <g class="wl"><path d="M58 86Q40 88 31 102" stroke="#C9D3E8" stroke-width="18" stroke-linecap="round" fill="none"/><path d="M58 86Q40 88 31 102" stroke="#F4F7FF" stroke-width="12" stroke-linecap="round" fill="none"/><circle cx="30" cy="104" r="8" fill="#FF9F45"/></g>
+  <g class="wr"><path d="M102 86Q120 88 129 102" stroke="#C9D3E8" stroke-width="18" stroke-linecap="round" fill="none"/><path d="M102 86Q120 88 129 102" stroke="#F4F7FF" stroke-width="12" stroke-linecap="round" fill="none"/><circle cx="130" cy="104" r="8" fill="#FF9F45"/></g>
+  <rect x="55" y="74" width="50" height="50" rx="18" fill="#F4F7FF" stroke="#C9D3E8" stroke-width="3"/>
+  <rect x="68" y="88" width="24" height="15" rx="4" fill="#4A90EE"/><circle cx="74" cy="95.5" r="2.8" fill="#FFCF4A"/><circle cx="80" cy="95.5" r="2.8" fill="#F25C68"/><circle cx="86" cy="95.5" r="2.8" fill="#36C285"/>
+  <rect x="56" y="109" width="48" height="5" rx="2.5" fill="#FF9F45"/>
+  <circle cx="80" cy="50" r="33" fill="#F4F7FF" stroke="#C9D3E8" stroke-width="3"/>
+  <circle cx="47" cy="52" r="6.5" fill="#FF9F45"/><circle cx="113" cy="52" r="6.5" fill="#FF9F45"/>
+  <ellipse cx="80" cy="53" rx="25" ry="21" fill="#2B3A67"/>
+  <ellipse cx="80" cy="56" rx="20" ry="17" fill="#FFD9B8"/>
+  <path d="M60 52q4-14 20-14t20 14q-8-7-20-6t-20 6z" fill="#3A2A1A"/>
+  <circle class="eye" cx="73" cy="57" r="3.6" fill="#2A1A0A"/><circle class="eye" cx="87" cy="57" r="3.6" fill="#2A1A0A"/>
+  <circle cx="74.2" cy="55.6" r="1.1" fill="#fff"/><circle cx="88.2" cy="55.6" r="1.1" fill="#fff"/>
+  <circle cx="66" cy="64" r="3.5" fill="#FF9AA8" opacity=".7"/><circle cx="94" cy="64" r="3.5" fill="#FF9AA8" opacity=".7"/>
+  <path class="mouth" d="M72 64q8 8 16 0" stroke="#B5523A" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M60 40q8-12 24-12" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" opacity=".7"/>`;
+const LOGO_BFLY=document.querySelector('.logo').innerHTML;
+const LOGO_FALCON='<g transform="scale(.3)">'+FALCON_BIG.replace(/class="(wl|wr|eye|mouth)"/g,'')+'</g>';
+const isBoy=(k)=>((k||S)&&(k||S).g==='m');
+const charName=(k)=>isBoy(k)?'رائد':'رفرف';
+const miniBuddy=()=>isBoy()?FALCON_BIG.replace(/class="(wl|wr|eye|mouth)"/g,''):BFLY_BIG.replace(/class="(wl|wr|eye|mouth)"/g,'');
+let MODE=null;
+function applyMode(){const m=isBoy()?'m':'f';document.body.classList.toggle('boy',m==='m');document.body.classList.toggle('girl',m==='f');
+  if(MODE===m)return;MODE=m;
+  $('#buddy svg').innerHTML=m==='m'?FALCON_BIG:BFLY_BIG;document.querySelector('.logo').innerHTML=m==='m'?LOGO_FALCON:LOGO_BFLY;
+  $('#buddy').setAttribute('aria-label',charName()+': اضغط لتظهر التعليمة مرة أخرى');
+  const bb=document.querySelector('.brand b');bb.textContent='بذرة';bb.dataset.raw='1'}
+/* تكييف الخطاب: رائد للأولاد، وخطاب المؤنث للبنات */
+const FEMW={'اختر':'اختاري','ابحث':'ابحثي','المس':'المسي','ضع':'ضعي','ضعه':'ضعيه','رتّب':'رتّبي','رتب':'رتبي','ارسم':'ارسمي','لوّن':'لوّني','صل':'صلي','جرّب':'جرّبي','جرب':'جربي','حاول':'حاولي','انظر':'انظري','اضغط':'اضغطي','اسمع':'اسمعي','أكمل':'أكملي','أفرغ':'أفرغي','اصنع':'اصنعي','امسح':'امسحي','ابدأ':'ابدئي','مرّر':'مرّري','انتبه':'انتبهي','أخبر':'أخبري','شاهد':'شاهدي','العب':'العبي',
+ 'أحسنت':'أحسنتِ','رسمت':'رسمتِ','صنعت':'صنعتِ','أكملت':'أكملتِ','رتّبت':'رتّبتِ','رتبت':'رتبتِ','وضعت':'وضعتِ','جمعت':'جمعتِ','نظرت':'نظرتِ','نظرتَ':'نظرتِ','تعلّمت':'تعلّمتِ','تعلمت':'تعلمتِ','تعرّفت':'تعرّفتِ','تعرفت':'تعرفتِ','أنهيت':'أنهيتِ','صرتَ':'صرتِ','أنهى':'أنهت',
+ 'معك':'معكِ','حولك':'حولكِ','لونك':'لونكِ','عقدك':'عقدكِ','بيتك':'بيتكِ','معلمتك':'معلمتكِ','بألوانك':'بألوانكِ','بإصبعك':'بإصبعكِ','إصبعك':'إصبعكِ','يمكنك':'يمكنكِ','أساعدك':'أساعدكِ','تحب':'تحبين','تختار':'تختاري','بطل':'بطلة','متميّز':'متميّزة','متقن':'متقنة'};
+const BOYP=[['رفرف الفراشة','رائد الفضاء الصغير'],['فراشة ذهبية','رائد فضاء ذهبي'],['رفرف','رائد'],['الفراشة','رائد الفضاء']];
+const WB='(^|[\\s،.!؟:()\\-])';
+const FEMRE=new RegExp(WB+'([وف]?)('+Object.keys(FEMW).sort((a,b)=>b.length-a.length).join('|')+')(?=$|[\\s،.!؟:()\\-])','g');
+function gtext(t){if(!t||!/[\u0600-\u06FF]/.test(t))return t;
+  if(isBoy()){BOYP.forEach(([a,b])=>{t=t.split(a).join(b)});t=t.replace(new RegExp(WB+'فراشة(?=$|[\\s،.!؟])','g'),'$1رائد فضاء')}
+  else t=t.replace(FEMRE,(m,a,w,x)=>a+w+FEMW[x]);
+  return t}
+function gnode(n){if(n.nodeType===3){const pe=n.parentElement;if(!pe||pe.closest('.teach,.pin,[data-raw],script,style'))return;const v=gtext(n.nodeValue);if(v!==n.nodeValue)n.nodeValue=v;return}
+  if(n.nodeType===1){if(n.closest('.teach,.pin,[data-raw]'))return;const w=document.createTreeWalker(n,NodeFilter.SHOW_TEXT);let x;const a=[];while(x=w.nextNode())a.push(x);a.forEach(gnode)}}
+new MutationObserver(ms=>ms.forEach(m=>{if(m.type==='characterData')gnode(m.target);else m.addedNodes.forEach(gnode)})).observe(document.body,{subtree:true,childList:true,characterData:true});
+function genderPick(after){
+  const ov=h(`<div class="over"><div class="pick" style="width:min(800px,100%)"><h3>من أنت؟</h3><div class="gpick">
+    <button class="gbtn m" data-g="m"><svg viewBox="0 0 160 160">${FALCON_BIG.replace(/class="(wl|wr|eye|mouth)"/g,'')}</svg><b>ولد</b><small>ألعب مع رائد</small></button>
+    <button class="gbtn f" data-g="f"><svg viewBox="0 0 160 160">${BFLY_BIG.replace(/class="(wl|wr|eye|mouth)"/g,'')}</svg><b>بنت</b><small>ألعب مع رفرف</small></button></div></div></div>`);
+  ov.querySelector('.pick').dataset.raw='1';
+  ov.querySelectorAll('.gbtn').forEach(b=>b.onclick=()=>{sfx.good();S.g=b.dataset.g;save();ov.remove();MODE=null;render();after&&after()});
+  document.body.appendChild(ov)}
+
+/* ---------- الأطفال والإنجاز ---------- */
+const AVI=[
+ ['#FF4F5E','قلب','<path d="M50 76 24 50a15 15 0 0 1 26-21 15 15 0 0 1 26 21z" fill="#fff"/>'],
+ ['#FF9A3C','شمس','<circle cx="50" cy="50" r="14" fill="#fff"/>'+[0,45,90,135,180,225,270,315].map(a=>`<path d="M50 28v-8" stroke="#fff" stroke-width="6" stroke-linecap="round" transform="rotate(${a} 50 50)"/>`).join('')],
+ ['#F2B300','نجمة','<path d="M50 20l9 19 21 3-15 14 4 21-19-10-19 10 4-21-15-14 21-3z" fill="#fff"/>'],
+ ['#2EC27E','ورقة','<path d="M27 74C27 42 47 25 75 25c0 30-17 49-48 49z" fill="#fff"/><path d="M30 71 60 41" stroke="#2EC27E" stroke-width="4" stroke-linecap="round"/>'],
+ ['#3A8DFF','سمكة','<path d="M20 50c11-16 34-20 48-6l11-10v32L68 56C54 70 31 66 20 50z" fill="#fff"/><circle cx="35" cy="47" r="4" fill="#3A8DFF"/>'],
+ ['#9B5DE5','قمر','<path d="M60 22a30 30 0 1 0 18 46A26 26 0 1 1 60 22z" fill="#fff"/>'],
+ ['#FF6FB5','زهرة','<g fill="#fff">'+[0,72,144,216,288].map(a=>`<circle cx="50" cy="31" r="12" transform="rotate(${a} 50 50)"/>`).join('')+'</g><circle cx="50" cy="50" r="9" fill="#FFCD3C"/>'],
+ ['#12B5B0','غيمة','<path d="M30 68a14 14 0 0 1 2-28 18 18 0 0 1 34-4 14 14 0 0 1 6 32z" fill="#fff"/>']
+];
+const avSvg=(i)=>{if(i<0||!AVI[i])return `<svg class="av" viewBox="0 0 100 100"><circle cx="50" cy="52" r="46" fill="#B9C2D8"/><circle cx="50" cy="48" r="44" fill="#DDE3F0"/><circle cx="50" cy="40" r="13" fill="#fff"/><path d="M27 76c3-13 12-19 23-19s20 6 23 19" fill="#fff"/></svg>`;
+  const [c,,ic]=AVI[i];const id='a3d'+(++GID);return `<svg class="av" viewBox="0 0 100 100"><defs><radialGradient id="${id}" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="${shade(c,.35)}"/><stop offset="1" stop-color="${c}"/></radialGradient></defs><circle cx="50" cy="53" r="46" fill="${shade(c,-.3)}"/><circle cx="50" cy="49" r="45" fill="url(#${id})"/>${ic}<ellipse cx="34" cy="22" rx="14" ry="6" transform="rotate(-25 34 22)" fill="#fff" opacity=".35"/></svg>`};
+const SECK=()=>Object.keys(SECTIONS);
+const TOTAL=()=>SECK().reduce((a,k)=>a+SECTIONS[k].acts.length,0);
+const LV=[
+ {n:'بذرة',min:0,svg:'<svg viewBox="0 0 48 48"><ellipse cx="24" cy="32" rx="11" ry="8" fill="#A0673A"/><path d="M24 25c0-6 3-9 8-10-1 5-4 8-8 10z" fill="#2EC27E"/></svg>'},
+ {n:'برعم',min:.2,svg:'<svg viewBox="0 0 48 48"><path d="M24 44V22" stroke="#2EC27E" stroke-width="4" stroke-linecap="round"/><path d="M24 30c-9 0-13-5-13-11 8 0 13 4 13 11zM24 26c8 0 12-5 12-11-7 0-12 4-12 11z" fill="#2EC27E"/></svg>'},
+ {n:'زهرة',min:.45,svg:'<svg viewBox="0 0 48 48"><path d="M24 44V28" stroke="#2EC27E" stroke-width="4" stroke-linecap="round"/><g fill="#FF6FB5">'+[0,72,144,216,288].map(a=>`<circle cx="24" cy="12" r="6" transform="rotate(${a} 24 20)"/>`).join('')+'</g><circle cx="24" cy="20" r="5" fill="#FFCD3C"/></svg>'},
+ {n:'فراشة',min:.7,svg:'<svg viewBox="0 0 48 48"><path d="M23 22C17 8 4 6 4 16c0 7 8 9 19 8z" fill="#B78CF2"/><path d="M25 22C31 8 44 6 44 16c0 7-8 9-19 8z" fill="#FF8FC6"/><path d="M23 26C15 28 8 34 12 40c3 4 9 0 11-12z" fill="#7FD3FF"/><path d="M25 26c8 2 15 8 11 14-3 4-9 0-11-12z" fill="#FFD25E"/><rect x="21.5" y="14" width="5" height="26" rx="2.5" fill="#2A2350"/></svg>'},
+ {n:'فراشة ذهبية',min:.9,svg:'<svg viewBox="0 0 48 48"><path d="M23 22C17 8 4 6 4 16c0 7 8 9 19 8z" fill="#FFC22E"/><path d="M25 22C31 8 44 6 44 16c0 7-8 9-19 8z" fill="#FFB000"/><path d="M23 26C15 28 8 34 12 40c3 4 9 0 11-12z" fill="#FFD866"/><path d="M25 26c8 2 15 8 11 14-3 4-9 0-11-12z" fill="#FFD866"/><rect x="21.5" y="14" width="5" height="26" rx="2.5" fill="#8A5A00"/><path d="M8 6l2 4M40 6l-2 4M24 2v4" stroke="#FFB000" stroke-width="2.5" stroke-linecap="round"/></svg>'}
+];
+const levelOf=k=>{const f=starsOf(k)/(TOTAL()*3);let i=0;LV.forEach((l,j)=>{if(f>=l.min)i=j});const r={i,...LV[i]};if(k&&k.g==='m'&&i>=3){r.n=i===4?'رائد فضاء ذهبي':'رائد فضاء';r.svg=`<svg viewBox="0 0 160 160">${FALCON_BIG.replace(/class="(wl|wr|eye|mouth)"/g,'').replace(i===4?/#F4F7FF/g:/^$/,'#FFD54A')}</svg>`}return r};
+const lvChip=k=>{const l=levelOf(k);return `<span class="lv" data-raw="1">${l.svg}${l.n}</span>`};
+function secInfo(k,sec){const acts=SECTIONS[sec].acts,n=acts.length;const got=acts.map(a=>+(k.done||{})[a.id]||0).filter(Boolean);const d=got.length;const avg=d?got.reduce((a,b)=>a+b,0)/d:0;
+  let c;if(!d)c={k:'none',t:'لم يبدأ'};else if(d<n)c={k:'wip',t:'قيد الإنجاز'};else if(avg>=2.6)c={k:'top',t:'متميّز'};else if(avg>=2)c={k:'good',t:'متقن'};else c={k:'more',t:'يحتاج تعزيزًا'};
+  return {d,n,avg,cls:c}}
+const starMini=(on)=>`<svg viewBox="0 0 24 24" class="${on?'':'off'}"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z" fill="#FFCD3C" stroke="#E3AE1C" stroke-width="1.2"/></svg>`;
+const stars3=(n)=>[1,2,3].map(x=>starMini(x<=n)).join('');
+function kidBtnRender(){const b=$('#kidBtn');if(!b)return;b.hidden=!CL.kids.length;b.innerHTML=avSvg(S.av)}
+function kidPicker(){
+  const ov=h(`<div class="over"><div class="pick"><h3>من يلعب الآن؟</h3><div class="kids"></div></div></div>`);
+  const box=ov.querySelector('.kids');
+  [...CL.kids,CL.guest].forEach(k=>{const b=h(`<button class="kid ${k.g||''} ${k.id===S.id?'on':''}">${avSvg(k.av)}<b data-raw="1"></b></button>`);b.querySelector('b').textContent=k.name;
+    b.onclick=()=>{sfx.good();CL.cur=k.id==='guest'?null:k.id;S=curKid();save();ov.remove();go({view:route.view==='landing'||route.view==='achieve'?route.view:'home'});if(!S.g)genderPick();else say('مرحبًا يا '+k.name+'!')};box.appendChild(b)});
+  document.body.appendChild(ov);
+}
+function certificate(sec){const si=secInfo(S,sec);const d=new Date();
+  const ov=h(`<div class="over"><div class="certcard"><h3>شهادة إنجاز</h3>${avSvg(S.av)}<div class="nm"></div>
+    <p>أنهى رحلة ${SECTIONS[sec].title} مع رفرف</p><div class="earn">${stars3(Math.round(si.avg))}</div><span class="rank r-${si.cls.k}">${si.cls.t}</span>
+    <p style="font-size:16px">${d.toLocaleDateString('ar-SA')}</p><button class="btn go">إغلاق</button></div></div>`);
+  ov.querySelector('.nm').textContent=S.id==='guest'?(isBoy()?'بطل رائد':'بطلة رفرف'):S.name;ov.querySelector('.nm').dataset.raw='1';
+  ov.querySelector('.go').onclick=()=>{sfx.tap();ov.remove()};document.body.appendChild(ov);sfx.win();confetti()}
+$('#kidBtn').onclick=()=>{sfx.tap();kidPicker()};
+
+
+
+const TIPS={
+ shapes:[
+  ['جولة الأشكال','يتجوّل الأطفال في الفصل ويجمعون أشياء دائرية ومربعة ومستطيلة ومثلثة، ثم يصنّفونها في سلال.','تسمية الدائرة والمربع والمثلث والمستطيل والبيضاوي'],
+  ['كيس اللمس','تضع المعلمة كرة ومكعبًا وأسطوانة في كيس، ويتعرّف الطفل كل مجسم باللمس قبل إخراجه، ثم يقارنه بشكل مرسوم على الورق.','التمييز بين الأشكال المسطحة والمجسّمة'],
+  ['أين الدمية؟','تعطي المعلمة تعليمات حركية: ضع الدمية فوق الطاولة، تحتها، بجانبها، داخل الصندوق.','العلاقات المكانية: فوق، تحت، في، على، بجانب'],
+  ['قطار الأنماط','يكمل الأطفال نمطًا من بطاقات الأشكال على الأرض (دائرة، مربع، دائرة، مربع…) ثم يصنعون نمطًا خاصًا بهم.','إكمال الأنماط البسيطة وصنعها'],
+  ['العلب الثلاث','يرتّب الطفل ثلاث علب أو أكواب من الأصغر إلى الأكبر، ثم بالعكس.','ترتيب ثلاثة أشياء حسب الحجم']
+ ],
+ colors:[
+  ['لوحة المزج','يضع الطفل نقطة حمراء ونقطة صفراء على ورقة ويمزجهما بإصبعه، ثم يكرر ذلك مع الأزرق والأصفر، والأحمر والأزرق.','مزج الألوان الأساسية لصنع ألوان جديدة'],
+  ['سلة الألوان','يفرز الأطفال ألعاب الفصل في سلال ملونة، ثم يفرزونها مرة أخرى حسب اللون والشكل معًا.','التصنيف وفق أكثر من خاصية'],
+  ['نزهة الألوان','يخرج الأطفال إلى ساحة الروضة ويسمّون ألوان ما يرونه: النخلة، والسماء، والرمل.','ربط الألوان بالبيئة المحلية'],
+  ['قطرة بيضاء','تضيف المعلمة الأبيض قطرة بعد قطرة إلى لون واحد، ويلاحظ الأطفال كيف يصير أفتح.','ملاحظة التدرّج من الغامق إلى الفاتح'],
+  ['عقد الخرز','يصنع الطفل عقدًا من خرز أو مكرونة ملونة يتبع فيه نمطًا من لونين أو ثلاثة.','صنع الأنماط بالألوان']
+ ],
+ numbers:[
+  ['عدّ الحاضرين','يعدّ الأطفال زملاءهم كل صباح، ويضع كل طفل مكعبًا في سلة عند عدّه.','العدّ بالتناظر الأحادي: لكل شيء عدد واحد'],
+  ['صناديق الأعداد','صناديق مرقّمة من ١ إلى ٥، يضع الطفل في كل صندوق عددًا من الحصى يساوي رقمه.','ربط العدد بالكمية'],
+  ['أيهما أكثر؟','كومتان من الحلوى أو الخرز، يقارن الطفل بينهما ويشير إلى الأكثر ثم الأقل.','المقارنة بين مجموعتين'],
+  ['قطار الأعداد','بطاقات أعداد يرتّبها الأطفال على الأرض مثل عربات القطار.','ترتيب الأعداد']
+ ],
+ lines:[
+  ['الرسم في الرمل','يرسم الطفل بإصبعه خطوطًا مستقيمة ومنحنية في صينية رمل أو ملح.','تقوية العضلات الدقيقة للأصابع'],
+  ['خيط على الأرض','تلصق المعلمة شريطًا على الأرض بخطوط مستقيمة ومتعرّجة، ويمشي الأطفال عليه.','إدراك اتجاه الخط بالجسم كله'],
+  ['قصّ على الخط','يقصّ الطفل بمقص آمن على خط مستقيم ثم منحنٍ.','التآزر بين العين واليد'],
+  ['من اليمين إلى اليسار','تدرّب المعلمة الأطفال على بدء الخط من اليمين، استعدادًا للكتابة بالعربية.','الاستعداد للكتابة']
+ ]};
+const tipsHtml=sec=>`<details class="tips" data-raw="1"><summary>للمعلمة: أنشطة صفية مساندة</summary><ul>${TIPS[sec].map(([t,d,g])=>`<li><b>${t}:</b> ${d}<small>الهدف: ${g}</small></li>`).join('')}</ul></details>`;
+
+
+const UQ='https://drive.uqu.edu.sa/_/kidedumf/files/';
+const LINKS=[
+ {g:'أدلة المنهج الوطني لرياض الأطفال (وزارة التعليم)',who:'للمعلمة',items:[
+  [UQ+encodeURIComponent('الدليل السادس العمليات المعرفية')+'.pdf','دليل العمليات المعرفية والمعلومات العامة','الأشكال والألوان والأعداد والتصنيف والأنماط. بُنيت عليه أنشطة المنصة.'],
+  [UQ+encodeURIComponent('الدليل الثامن الصحة و التطور البدني')+'.pdf','دليل الصحة والتطور البدني','المهارات الحركية الدقيقة التي يدعمها قسم «ارسم على الخط».'],
+  [UQ+encodeURIComponent('الدليل الخامس النمو اللغوي')+'.pdf','دليل النمو اللغوي','الاستماع والتحدث والاستعداد للقراءة والكتابة.'],
+  [UQ+encodeURIComponent('الدليل الثالث نهج التعلم')+'.pdf','دليل نهج التعلم','الفضول والمثابرة والانتباه لدى الطفل.'],
+  [UQ+encodeURIComponent('الدليل التاسع دليل المعلمة لطرق و استراتيجيات التدريس')+'.pdf','دليل المعلمة لطرق واستراتيجيات التدريس','استراتيجيات التدريس المناسبة لمرحلة الروضة.']]},
+ {g:'للأسرة',who:'لولي الأمر',items:[
+  [UQ+encodeURIComponent('الدليل الثاني الأسرة')+'.pdf','دليل الأسرة','دور الأسرة في دعم تعلّم الطفل في البيت.'],
+  ['https://moe.gov.sa/ar/updates-and-media/updates/r-w-1441-321','تطبيق الروضة الافتراضية','تطبيق مجاني من وزارة التعليم لأطفال ٣–٦ سنوات.']]},
+ {g:'وزارة التعليم',who:'عام',items:[
+  ['https://moe.gov.sa/ar/education/general-education/kindergarten','صفحة رياض الأطفال','التعريف بمرحلة الطفولة المبكرة ومبادرات الوزارة.'],
+  ['https://moe.gov.sa/ar/updates-and-media/updates/e-l-s','معايير التعلم المبكر النمائية','خبر الوزارة عن تدريب المعلمات على تطبيق معايير التعلم المبكر (٣–٦ سنوات).']]}
+];
+
+
+/* ---------- الواجهة والإنجاز والروابط ---------- */
+const SEED='<svg viewBox="0 0 96 96"><ellipse cx="48" cy="80" rx="30" ry="9" fill="#C99A6B"/><path d="M48 80V46" stroke="#3E8E5E" stroke-width="7" stroke-linecap="round"/><path d="M48 58C30 58 20 48 20 34c16 0 28 8 28 24z" fill="#5BBE7E"/><path d="M48 50c18 0 28-11 28-26-17 0-28 9-28 26z" fill="#7DD39A"/></svg>';
+const NAVI={
+ secs:'<svg viewBox="0 0 64 64"><rect x="6" y="6" width="23" height="23" rx="7" fill="#8DBBF4"/><rect x="35" y="6" width="23" height="23" rx="7" fill="#F6A3AC"/><rect x="6" y="35" width="23" height="23" rx="7" fill="#8ED6C1"/><rect x="35" y="35" width="23" height="23" rx="7" fill="#F8C88A"/></svg>',
+ ach:'<svg viewBox="0 0 64 64"><path d="M20 8h24v14a12 12 0 0 1-24 0z" fill="#FFCF4A"/><path d="M20 12H10c0 10 4 14 10 14M44 12h10c0 10-4 14-10 14" stroke="#E0A92A" stroke-width="4" fill="none"/><rect x="28" y="34" width="8" height="12" fill="#E0A92A"/><rect x="18" y="46" width="28" height="10" rx="4" fill="#9C6BE0"/></svg>',
+ links:'<svg viewBox="0 0 64 64"><rect x="10" y="8" width="44" height="50" rx="8" fill="#9DC3F5"/><path d="M20 22h24M20 32h24M20 42h14" stroke="#fff" stroke-width="5" stroke-linecap="round"/></svg>',
+ teach:'<svg viewBox="0 0 64 64"><circle cx="32" cy="22" r="12" fill="#C9B2EE"/><path d="M12 58c2-12 10-18 20-18s18 6 20 18z" fill="#9C6BE0"/></svg>'};
+function landingView(){
+  const I=CL.info||{};
+  const el=h(`<section class="landing"><div class="hero"><div class="brandbig">${SEED}<h1>بذرة</h1></div>
+    <p class="tag">منصة تفاعلية لأطفال الروضة: أشكال وألوان وأعداد وخطوط، مع رفرف ورائد</p>
+    <div class="classcard" data-raw="1"><b></b><span class="t"></span><span class="sc"></span></div>
+    <button class="startbtn" id="startGo">ابدأ الرحلة</button></div>
+    <nav class="lnav" aria-label="صفحات المنصة"><button data-v="home">${NAVI.secs}الأقسام</button><button data-v="achieve">${NAVI.ach}إنجازي</button><button data-v="links">${NAVI.links}روابط مهمة</button><button data-v="teach">${NAVI.teach}للمعلمة</button></nav>
+    <div class="secprev">${SECK().map(k=>`<button data-k="${k}" style="background:${SECTIONS[k].color}">${SECTIONS[k].title}</button>`).join('')}</div></section>`);
+  const cc=el.querySelector('.classcard');cc.querySelector('b').textContent=I.cls||'';cc.querySelector('.t').textContent=I.teacher?'المعلمة: '+I.teacher:'';cc.querySelector('.sc').textContent=I.school||'';
+  el.querySelector('#startGo').onclick=()=>{sfx.good();go({view:'home'})};
+  el.querySelectorAll('.lnav button').forEach(b=>b.onclick=()=>{sfx.tap();if(b.dataset.v==='teach')pinPad();else go({view:b.dataset.v})});
+  el.querySelectorAll('.secprev button').forEach(b=>b.onclick=()=>{sfx.tap();go({view:'path',sec:b.dataset.k})});
+  stage.appendChild(el);
+}
+function lvNameAt(i,k){if(k&&k.g==='m'&&i>=3)return i===4?'رائد فضاء ذهبي':'رائد فضاء';return LV[i].n}
+function achieveView(){
+  const l=levelOf(S),st=starsOf(S),max=TOTAL()*3;const nx=LV[l.i+1];const need=nx?Math.max(0,Math.ceil(nx.min*max)-st):0;
+  const el=h(`<section class="pagewrap"><h2>إنجازي</h2>
+    <div class="mecard">${avSvg(S.av)}<div class="col2"><span class="nm" data-raw="1"></span>${lvChip(S)}<span class="lv" style="background:#EEF3FB;color:#2A2350">${starMini(1)}${st} من ${max} نجمة</span>
+      <div class="bar2" style="width:100%"><i style="width:${Math.round(st/max*100)}%;background:#5BBE7E"></i></div>
+      <span class="nextlv">${nx?`باقي ${need} نجمة لتصير ${lvNameAt(l.i+1,S)}`:'وصلت إلى أعلى مرتبة!'}</span></div></div>
+    <div class="ladder" data-raw="1">${LV.map((v,i)=>{const lk=(S.g==='m'&&i>=3)?levelOf({...S,done:{}}):null;return `<div class="${i<=l.i?'got':''} ${i===l.i?'cur':''}">${(S.g==='m'&&i>=3)?`<svg viewBox="0 0 160 160">${FALCON_BIG.replace(/class="(wl|wr|eye|mouth)"/g,'').replace(i===4?/#F4F7FF/g:/^$/,'#FFD54A')}</svg>`:v.svg}${lvNameAt(i,S)}</div>`}).join('')}</div>
+    <div class="secgrid"></div></section>`);
+  el.querySelector('.nm').textContent=S.id==='guest'?'ضيف':S.name;
+  const g=el.querySelector('.secgrid');
+  SECK().forEach(k=>{const si=secInfo(S,k),sc=SECTIONS[k];
+    const c=h(`<div class="seccard"><h3 style="color:${sc.color}">${sc.title}</h3><div class="bar2" style="width:100%"><i style="width:${Math.round(si.d/si.n*100)}%;background:${sc.color}"></i></div>
+      <span class="tnote">${si.d} من ${si.n} أنشطة</span><div class="earn" style="transform:scale(.7)">${stars3(Math.round(si.avg))}</div><span class="rank r-${si.cls.k}">${si.cls.t}</span>
+      <div class="row">${si.d===si.n?'<button class="btn cert">شهادتي</button>':''}<button class="btn go">${si.d?'أكمل':'ابدأ'}</button></div></div>`);
+    const cb=c.querySelector('.cert');if(cb)cb.onclick=()=>{sfx.tap();certificate(k)};c.querySelector('.go').onclick=()=>{sfx.tap();go({view:'path',sec:k})};g.appendChild(c)});
+  stage.appendChild(el);
+}
+function linksView(){
+  const el=h(`<section class="pagewrap" data-raw="1"><h2>روابط مهمة</h2>${LINKS.map(G=>`<div class="lgroup"><h3>${G.g} <span class="tnote">(${G.who})</span></h3><div class="links">${G.items.map(([u,t,d])=>`<a href="${u}" target="_blank" rel="noopener">${t}<span>${d}</span></a>`).join('')}</div></div>`).join('')}
+    <p class="fineprint">تفتح الروابط في نافذة جديدة. الأدلة منشورة على موقع جامعة أم القرى، وهي من سلسلة «أدلة تطبيقية للمنهج الوطني ومعايير التعلم المبكر النمائية (٠–٦ سنوات)» الصادرة عن وزارة التعليم.</p></section>`);
+  stage.appendChild(el);
+}
+
+/* ---------- دخول المعلمة ---------- */
+function pinPad(){let v='';
+  const ov=h(`<div class="over"><div class="pin"><h3>دخول المعلمة</h3><div class="pd">${'<i></i>'.repeat(4)}</div>
+    <div class="keys">${[1,2,3,4,5,6,7,8,9].map(n=>`<button data-n="${n}">${n}</button>`).join('')}<button data-x="1" aria-label="إغلاق">✕</button><button data-n="0">0</button><button data-d="1" aria-label="مسح">⌫</button></div>
+    <small>الرمز في هذه العيّنة: 1234، ويمكن تغييره من لوحة المعلمة</small></div></div>`);
+  const pd=[...ov.querySelectorAll('.pd i')],box=ov.querySelector('.pin');
+  const draw=()=>pd.forEach((d,i)=>d.classList.toggle('on',i<v.length));
+  ov.querySelectorAll('.keys button').forEach(b=>b.onclick=()=>{sfx.tap();
+    if(b.dataset.x){ov.remove();return}if(b.dataset.d){v=v.slice(0,-1);draw();return}
+    if(v.length<4)v+=b.dataset.n;draw();
+    if(v.length===4){if(v===CL.pin){ov.remove();go({view:'teacher'})}else{sfx.bad();box.classList.remove('bad');void box.offsetWidth;box.classList.add('bad');v='';setTimeout(draw,250)}}});
+  document.body.appendChild(ov)}
+$('#teachBtn').onclick=()=>{sfx.tap();if(route.view==='teacher')return;pinPad()};
+function teacherView(){
+  document.body.classList.add('tview');
+  const all=CL.kids;const mast=sec=>all.filter(k=>['top','good'].includes(secInfo(k,sec).cls.k)).length;
+  let av=0;
+  const el=h(`<section class="teach"><h2>لوحة المعلمة</h2>
+    <div class="tsum"><div><b>${all.length}</b><span>طفلًا في الفصل</span></div>${SECK().map(k=>`<div><b>${mast(k)}</b><span>أتقنوا ${SECTIONS[k].title}</span></div>`).join('')}</div>
+    <div class="tbox"><h3>بيانات الواجهة</h3><div class="trow"><input id="iT" maxlength="40" placeholder="اسم المعلمة"><input id="iC" maxlength="40" placeholder="اسم الفصل"><input id="iS" maxlength="50" placeholder="اسم الروضة"></div><div class="trow"><button class="btn" id="iSave">حفظ البيانات</button><span class="tnote" id="iMsg">تظهر هذه البيانات في واجهة المنصة.</span></div></div>
+    <div class="tbox"><h3>إضافة طفل</h3><div class="trow"><input id="kname" maxlength="24" placeholder="اسم الطفل"></div>
+      <div class="avpick">${AVI.map((a,i)=>`<button data-i="${i}" class="${i===0?'on':''}" aria-label="${a[1]}">${avSvg(i)}</button>`).join('')}</div>
+      <div class="gsw" id="kg"><button class="m">ولد</button><button class="f">بنت</button><span class="tnote" id="kgmsg"></span></div>
+      <div class="trow"><button class="btn go" id="kadd">إضافة</button><span class="tnote">يتعرّف الطفل على نفسه من صورته، فاختاري لكل طفل صورة يتذكرها.</span></div></div>
+    <div class="tbox"><h3>إنجاز الأطفال</h3><div class="tlist" style="display:flex;flex-direction:column;gap:10px"></div></div>
+    <div class="tbox"><h3>معايير التصنيف</h3><p class="tnote">ينال الطفل في كل نشاط ثلاث نجوم إذا أنجزه دون خطأ، ونجمتين مع خطأ أو خطأين، ونجمة واحدة مع أكثر من ذلك، وتُحفظ أفضل محاولة. وعند إنهاء جميع أنشطة العالم يُصنَّف: <span class="rank r-top">متميّز</span> متوسط ٢٫٦ نجمة فأكثر، <span class="rank r-good">متقن</span> من ٢ إلى أقل من ٢٫٦، <span class="rank r-more">يحتاج تعزيزًا</span> أقل من ٢.</p></div>
+    <div class="tbox"><h3>مراجع المنهج</h3><div class="trow"><button class="btn" id="goLinks">صفحة الروابط المهمة</button><span class="tnote">أدلة وزارة التعليم لرياض الأطفال وروابط للأسرة.</span></div></div>
+    <div class="tbox"><h3>رمز الدخول</h3><div class="trow"><input id="npin" inputmode="numeric" maxlength="4" placeholder="رمز جديد من 4 أرقام"><button class="btn" id="spin">حفظ الرمز</button></div><p class="tnote" id="pinmsg"></p></div>
+    <p class="tnote">يُحفظ سجل الفصل على هذا الجهاز، ويُزامَن مع حساب المعلمة عند فتح المنصة وهي مسجّلة الدخول.</p>
+    <div class="trow"><button class="btn go" id="tout">خروج المعلمة</button></div></section>`);
+  el.querySelectorAll('.avpick button').forEach(b=>b.onclick=()=>{av=+b.dataset.i;el.querySelectorAll('.avpick button').forEach(x=>x.classList.toggle('on',x===b))});
+  let kg=null;el.querySelectorAll('#kg button').forEach(b=>b.onclick=()=>{kg=b.classList.contains('m')?'m':'f';el.querySelectorAll('#kg button').forEach(x=>x.classList.toggle('on',x===b));el.querySelector('#kgmsg').textContent=''});
+  el.querySelector('#kadd').onclick=()=>{const n=el.querySelector('#kname').value.trim();if(!n){el.querySelector('#kname').focus();return}
+    if(!kg){el.querySelector('#kgmsg').textContent='اختاري ولد أو بنت أولًا.';return}
+    CL.kids.push({id:'k'+Date.now().toString(36),name:n,av,g:kg,done:{}});save();sfx.good();render()};
+  el.querySelector('#spin').onclick=()=>{const v=el.querySelector('#npin').value.trim();const m=el.querySelector('#pinmsg');
+    if(!/^\d{4}$/.test(v)){m.textContent='اكتبي أربعة أرقام.';return}CL.pin=v;save();m.textContent='حُفظ الرمز الجديد.';el.querySelector('#npin').value=''};
+  el.querySelector('#goLinks').onclick=()=>{sfx.tap();go({view:'links'})};
+  el.querySelector('#tout').onclick=()=>{sfx.tap();go({view:'landing'})};
+  el.querySelector('#iT').value=CL.info.teacher;el.querySelector('#iC').value=CL.info.cls;el.querySelector('#iS').value=CL.info.school;
+  el.querySelector('#iSave').onclick=()=>{CL.info={teacher:el.querySelector('#iT').value.trim(),cls:el.querySelector('#iC').value.trim(),school:el.querySelector('#iS').value.trim()};CL.infoSet=true;save();sfx.good();el.querySelector('#iMsg').textContent='حُفظت البيانات.'};
+  const list=el.querySelector('.tlist');
+  if(!all.length)list.innerHTML='<p class="tnote">لم تُضيفي أطفالًا بعد. أضيفي أسماء أطفال الفصل ليختار كل طفل صورته قبل اللعب.</p>';
+  all.forEach(k=>{
+    const row=h(`<div class="tkid">${avSvg(k.av)}<div class="hd"><b></b>${k.g?`<span class="gchip ${k.g}">${k.g==='m'?'ولد':'بنت'}</span>`:''}${lvChip(k)}<span class="lv" style="background:#EEF3FB;color:#2A2350">${starMini(1)}${starsOf(k)} من ${TOTAL()*3}</span></div><div class="secs"></div>
+      <div class="tact" style="grid-column:1/-1">${k.g?'':'<button data-a="gm">تحديد: ولد</button><button data-a="gf">تحديد: بنت</button>'}<button data-a="reset">تصفير الإنجاز</button><button data-a="del" class="dz">حذف الطفل</button></div></div>`);
+    row.querySelector('.hd b').textContent=k.name;
+    SECK().forEach(sec=>{const si=secInfo(k,sec),sc=SECTIONS[sec];
+      row.querySelector('.secs').insertAdjacentHTML('beforeend',`<div class="sec"><div class="t"><span>${sc.title}</span><span class="rank r-${si.cls.k}">${si.cls.t}</span></div>
+        <div class="bar2"><i style="width:${Math.round(si.d/si.n*100)}%;background:${sc.color}"></i></div><span class="tnote">${si.d} من ${si.n} أنشطة${si.d?` · متوسط ${si.avg.toFixed(1)} نجمة`:''}</span></div>`)});
+    row.querySelectorAll('.tact button').forEach(b=>b.onclick=()=>{
+      if(b.dataset.a==='gm'||b.dataset.a==='gf'){k.g=b.dataset.a==='gm'?'m':'f';save();render();return}
+      if(!b.dataset.sure){b.dataset.sure=1;b.textContent=b.dataset.a==='del'?'تأكيد الحذف':'تأكيد التصفير';return}
+      if(b.dataset.a==='del'){CL.kids=CL.kids.filter(x=>x!==k);if(CL.cur===k.id){CL.cur=null}}else k.done={};
+      S=curKid();save();render()});
+    list.appendChild(row)});
+  stage.appendChild(el);
+}
+
+/* ---------- الدرس المصوّر ---------- */
+function speakLesson(text,cb){
+  const est=Math.max(4200,text.length*120);let done=false;const fin=()=>{if(done)return;done=true;cb&&cb()};
+  setTimeout(fin,est);
+}
+const L=(inner)=>`<svg viewBox="0 0 800 450"><rect width="800" height="450" fill="#F3F9FF"/>${[[70,60,'#FFCD3C'],[730,90,'#3A8DFF'],[690,400,'#FF4F5E'],[90,390,'#2EC27E']].map(([x,y,c])=>`<circle cx="${x}" cy="${y}" r="10" fill="${c}" opacity=".35"/>`).join('')}${inner}<g transform="translate(18 330) scale(.72)" class="bob">${miniBuddy()}</g></svg>`;
+const obj=(name,x,y,sz,d)=>`<g class="pop" style="animation-delay:${d}s"><svg x="${x}" y="${y}" width="${sz}" height="${sz}" viewBox="0 0 100 100">${O[name].replace(/^<svg[^>]*>/,'').replace(/<\/svg>$/,'')}</svg></g>`;
+const solid=(name,x,y,sz,d)=>`<g class="pop" style="animation-delay:${d}s"><svg x="${x}" y="${y}" width="${sz}" height="${sz}" viewBox="0 0 100 100">${SOL[name].replace(/^<svg[^>]*>/,'').replace(/<\/svg>$/,'')}</svg></g>`;
+const num=(n,x,y,d,c='#FF9A3C')=>`<g class="pop" style="animation-delay:${d}s"><circle cx="${x}" cy="${y}" r="22" fill="${c}"/><text x="${x}" y="${y+9}" text-anchor="middle" font-size="26" font-weight="800" fill="#fff" font-family="Rubik,Tajawal,sans-serif">${n}</text></g>`;
+const title=(t,c='#2A2350')=>`<text x="400" y="70" text-anchor="middle" font-size="46" font-weight="800" fill="${c}" font-family="Rubik,Tajawal,sans-serif" class="fadein">${t}</text>`;
+const LESSONS=()=>({
+shapes:[
+ {say:'مرحبًا يا أصدقاء! أنا رفرف. هيا نتعلّم الأشكال معًا.',svg:L(title('الأشكال')+[['circle',C.yellow,130],['square',C.blue,260],['triangle',C.red,390],['rectangle',C.green,520],['oval',C.purple,640]].map(([k,c,x],i)=>`<g class="pop" style="animation-delay:${.3+i*.35}s"><svg x="${x}" y="150" width="120" height="120" viewBox="0 0 100 100">${SH[k](c)}</svg></g>`).join(''))},
+ {say:'هذه دائرة. الدائرة مستديرة وليس لها زوايا. الشمس دائرة، والساعة دائرة، والكرة دائرة.',svg:L(title('الدائرة')+`<circle cx="400" cy="200" r="90" fill="none" stroke="#E3AE1C" stroke-width="12" class="draw"/><circle cx="400" cy="200" r="84" fill="#FFCD3C" class="fadein" style="animation-delay:1.6s"/>`+obj('sun',210,300,110,2.4)+obj('clock',345,300,110,3)+obj('ball',480,300,110,3.6))},
+ {say:'هذا مربع. للمربع أربعة أضلاع متساوية: واحد، اثنان، ثلاثة، أربعة. النافذة مربع، وعلبة الهدية مربع.',svg:L(title('المربع')+`<rect x="320" y="110" width="160" height="160" fill="none" stroke="#1F5FC0" stroke-width="12" class="draw"/><rect x="326" y="116" width="148" height="148" fill="#3A8DFF" class="fadein" style="animation-delay:1.6s"/>`+num(1,400,142,2.2)+num(2,450,190,2.8)+num(3,400,238,3.4)+num(4,350,190,4)+obj('window',560,250,120,5)+obj('gift',120,250,120,5.6))},
+ {say:'هذا مثلث. للمثلث ثلاثة أضلاع وثلاث زوايا: واحد، اثنان، ثلاثة. الخيمة مثلث، وقطعة البيتزا مثلث.',svg:L(title('المثلث')+`<path d="M400 100 500 280H300z" fill="none" stroke="#C92E3C" stroke-width="12" stroke-linejoin="round" class="draw"/><path d="M400 116 488 272H312z" fill="#FF4F5E" class="fadein" style="animation-delay:1.6s"/>`+num(1,470,180,2.2)+num(2,400,305,2.8)+num(3,330,180,3.4)+obj('tent',560,240,130,4.4)+obj('pizza',110,240,130,5))},
+ {say:'هذا مستطيل. له ضلعان طويلان وضلعان قصيران. الباب مستطيل، والكتاب مستطيل.',svg:L(title('المستطيل')+`<rect x="270" y="140" width="260" height="130" fill="#2EC27E" class="fadein"/><path d="M270 140h260M270 270h260" stroke="#1E7A4E" stroke-width="14" class="draw" style="animation-delay:.8s"/><path d="M270 140v130M530 140v130" stroke="#FFCD3C" stroke-width="14" class="draw" style="animation-delay:2.4s"/><text x="400" y="122" text-anchor="middle" font-size="24" font-weight="800" fill="#1E7A4E" class="fadein" style="animation-delay:1.4s" font-family="Rubik,Tajawal,sans-serif">طويل</text><text x="575" y="212" text-anchor="middle" font-size="24" font-weight="800" fill="#C99A1A" class="fadein" style="animation-delay:3s" font-family="Rubik,Tajawal,sans-serif">قصير</text>`+obj('door',140,250,140,4)+obj('book',560,290,130,4.6))},
+ {say:'هذا شكل بيضاوي، يشبه دائرة ممدودة. البيضة بيضاوية، والمرآة بيضاوية.',svg:L(title('الشكل البيضاوي')+`<ellipse cx="400" cy="200" rx="140" ry="80" fill="none" stroke="#7B3FC5" stroke-width="12" class="draw"/><ellipse cx="400" cy="200" rx="133" ry="73" fill="#9B5DE5" class="fadein" style="animation-delay:1.6s"/>`+obj('egg',220,300,120,2.6)+obj('mirror',470,300,120,3.2))},
+ {say:'الدائرة مسطحة نرسمها على الورق، والكرة مجسّمة نمسكها بأيدينا. والمربع مسطح، والمكعب مجسّم.',svg:L(title('مسطح ومجسّم')+`<circle cx="230" cy="190" r="60" fill="#3A8DFF" class="pop"/><path d="M310 190h80" stroke="#2A2350" stroke-width="8" stroke-linecap="round" class="draw" style="animation-delay:.8s"/>`+solid('sphere',410,120,140,1.6)+`<rect x="170" y="300" width="110" height="110" rx="6" fill="#FFCD3C" class="pop" style="animation-delay:3s"/><path d="M310 355h80" stroke="#2A2350" stroke-width="8" stroke-linecap="round" class="draw" style="animation-delay:3.6s"/>`+solid('cube',410,285,140,4.4))},
+ {say:'والآن نتعلّم المكان. الكرة فوق الطاولة. والآن الكرة تحت الطاولة. والآن الكرة بجانب الطاولة.',svg:L(title('أين الكرة؟')+`<rect x="280" y="210" width="260" height="22" rx="6" fill="#B26B2F"/><rect x="300" y="232" width="20" height="150" fill="#B26B2F"/><rect x="500" y="232" width="20" height="150" fill="#B26B2F"/><rect y="382" width="800" height="68" fill="#E8C9A0"/><g class="ballmove"><circle cx="410" cy="182" r="28" fill="#FF4F5E"/><path d="M386 176q24 14 48 0" stroke="#fff" stroke-width="5" fill="none"/></g>`)},
+ {say:'أحسنتم! ابحثوا عن الأشكال في بيوتكم وفصلكم، وأخبروا معلمتكم بما وجدتم.',svg:L(title('ابحث عن الأشكال حولك!','#3A8DFF')+[['circle',C.yellow],['square',C.blue],['triangle',C.red],['rectangle',C.green],['oval',C.purple]].map(([k,c],i)=>`<g class="bob" style="animation-delay:${i*.25}s"><g class="pop" style="animation-delay:${i*.2}s"><svg x="${110+i*120}" y="170" width="110" height="110" viewBox="0 0 100 100">${SH[k](c)}</svg></g></g>`).join(''))}
+],
+colors:[
+ {say:'مرحبًا! أنا رفرف. هيا نتعلّم الألوان معًا.',svg:L(title('الألوان')+[C.red,C.orange,C.yellow,C.green,C.blue,C.purple].map((c,i)=>{const r=190-i*24;return `<path d="M${400-r} 380a${r} ${r} 0 0 1 ${2*r} 0" stroke="${c}" stroke-width="24" fill="none" class="draw" style="animation-delay:${i*.3}s"/>`}).join(''))},
+ {say:'هذه الألوان الأساسية: الأحمر، والأصفر، والأزرق.',svg:L(title('الألوان الأساسية')+[[C.red,'أحمر',190],[C.yellow,'أصفر',400],[C.blue,'أزرق',610]].map(([c,t,x],i)=>`<g class="pop" style="animation-delay:${.4+i*.8}s"><path transform="translate(${x-90} 120) scale(1.8)" d="M50 8c14 0 18 12 30 14s14 18 6 28 4 22-8 30-22 4-30 12-24-4-28-14-14-10-10-24-6-22 4-30S36 8 50 8z" fill="${c}"/><text x="${x}" y="345" text-anchor="middle" font-size="34" font-weight="800" fill="#2A2350" font-family="Rubik,Tajawal,sans-serif">${t}</text></g>`).join(''))},
+ ...[['red','yellow','orange','إذا مزجنا الأحمر والأصفر صار اللون برتقاليًا!'],['blue','yellow','green','وإذا مزجنا الأزرق والأصفر صار اللون أخضر!'],['red','blue','purple','وإذا مزجنا الأحمر والأزرق صار اللون بنفسجيًا!']].map(([a,b,r,t])=>({say:t,svg:L(title(CN[a].replace('ال','')+' + '+CN[b].replace('ال','')+' = '+CN[r].replace('ال',''))+`<circle cx="330" cy="150" r="30" fill="${C[a]}" class="fall"/><circle cx="470" cy="150" r="30" fill="${C[b]}" class="fall" style="animation-delay:.8s"/><path d="M230 230h340c0 90-76 150-170 150S230 320 230 230z" fill="#fff" stroke="#2A2350" stroke-width="8"/><path d="M250 246h300c-8 70-70 118-150 118S258 316 250 246z" class="fillto" style="--to:${C[r]};animation-delay:1.9s;fill:#F2F2F7"/>`)})),
+ {say:'انظروا حولكم: التفاحة حمراء، والموزة صفراء، والبحر أزرق، والورقة خضراء.',svg:L(title('ألوان من حولنا')+obj('apple',110,150,150,.3)+obj('banana',260,150,150,1.4)+obj('wave',410,150,150,2.5)+obj('leaf',560,150,150,3.6))},
+ {say:'إذا أضفنا الأبيض صار اللون فاتحًا، وإذا أضفنا الأسود صار غامقًا.',svg:L(title('فاتح وغامق')+[mixHex(C.blue,'#ffffff',.62),C.blue,mixHex(C.blue,'#000000',.45)].map((c,i)=>`<rect class="pop" style="animation-delay:${.4+i*.9}s" x="${190+i*150}" y="140" width="120" height="200" rx="18" fill="${c}"/>`).join('')+`<text x="250" y="380" text-anchor="middle" font-size="28" font-weight="800" fill="#2A2350" font-family="Rubik,Tajawal,sans-serif" class="fadein" style="animation-delay:.6s">فاتح</text><text x="550" y="380" text-anchor="middle" font-size="28" font-weight="800" fill="#2A2350" font-family="Rubik,Tajawal,sans-serif" class="fadein" style="animation-delay:2.4s">غامق</text>`)},
+ {say:'سبحان الله الذي خلق لنا الألوان الجميلة! ما لونك المفضّل؟ أخبر معلمتك.',svg:L(title('ما لونك المفضّل؟','#FF4F5E')+[C.red,C.orange,C.yellow,C.green,C.blue,C.purple].map((c,i)=>`<g class="bob" style="animation-delay:${i*.2}s"><g class="pop" style="animation-delay:${i*.15}s"><svg x="${105+i*100}" y="150" width="96" height="140" viewBox="0 0 100 100">${O.balloon(c).replace(/^<svg[^>]*>/,'').replace(/<\/svg>$/,'')}</svg></g></g>`).join(''))}
+],
+numbers:[
+ {say:'مرحبًا يا أصدقاء! هيا نتعلّم الأعداد ونعدّ معًا.',svg:L(title('الأعداد')+[1,2,3,4,5].map((n,i)=>`<g class="pop" style="animation-delay:${.3+i*.3}s"><svg x="${110+i*120}" y="160" width="110" height="110" viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="${NCOL[n%NCOL.length]}" opacity=".18"/>${digitSvg(n,NCOL[n%NCOL.length]).replace(/^<svg[^>]*>/,'').replace(/<\/svg>$/,'')}</svg></g>`).join(''))},
+ ...[[1,'apple','واحد: تفاحة واحدة.'],[2,'ball','اثنان: كرتان اثنتان.'],[3,'sun','ثلاثة: ثلاث شموس.'],[4,'leaf','أربعة: أربع ورقات.'],[5,'strawberry','خمسة: خمس حبات فراولة. وفي يدي خمسة أصابع!']].map(([n,o,t])=>({say:t,svg:L(title(AR[n]+'  '+NN[n],NCOL[n%NCOL.length])+Array.from({length:n},(_,i)=>obj(o,400-n*60+i*120,190,110,.4+i*.45)).join(''))})),
+ {say:'أحسنتم! عدّوا معي أصابع أيديكم، ثم أخبروا معلمتكم كم هي.',svg:L(title('عدّوا معي!','#3FAE8E')+[1,2,3,4,5,6,7,8,9,10].map((n,i)=>`<g class="bob" style="animation-delay:${i*.12}s"><g class="pop" style="animation-delay:${i*.12}s"><svg x="${85+i*64}" y="190" width="60" height="60" viewBox="0 0 100 100">${digitSvg(n,NCOL[n%NCOL.length]).replace(/^<svg[^>]*>/,'').replace(/<\/svg>$/,'')}</svg></g></g>`).join(''))}
+],
+lines:[
+ {say:'هيا نرسم الخطوط! الخطوط تقوّي أصابعنا وتجهّزها للكتابة.',svg:L(title('ارسم على الخط')+`<path d="M640 130H160" stroke="#E8913D" stroke-width="12" stroke-linecap="round" class="draw"/><path d="M640 250q-40-80-80 0t-80 0-80 0-80 0-80 0-80 0" stroke="#4A90EE" stroke-width="12" fill="none" stroke-linecap="round" class="draw" style="animation-delay:.8s"/><path d="M640 380l-40-60-40 60-40-60-40 60-40-60-40 60-40-60-40 60-40-60-40 60-40-60" stroke="#36C285" stroke-width="12" fill="none" stroke-linecap="round" stroke-linejoin="round" class="draw" style="animation-delay:1.6s"/>`)},
+ {say:'هذا خط مستقيم من أعلى إلى أسفل، مثل قطرات المطر.',svg:L(title('خط من أعلى إلى أسفل')+[260,400,540].map((x,i)=>`<path d="M${x} 120V400" stroke="#4A90EE" stroke-width="14" stroke-linecap="round" class="draw" style="animation-delay:${i*.6}s"/>`).join(''))},
+ {say:'وهذا خط مستقيم من اليمين إلى اليسار، كما نكتب باللغة العربية.',svg:L(title('خط من اليمين إلى اليسار')+[160,260,360].map((y,i)=>`<path d="M640 ${y}H160" stroke="#E8913D" stroke-width="14" stroke-linecap="round" class="draw" style="animation-delay:${i*.6}s"/>`).join(''))},
+ {say:'وهذا خط منحنٍ مثل قفزة الأرنب، وهذا خط متعرّج مثل الجبال.',svg:L(title('منحنٍ ومتعرّج')+`<path d="M660 230q-55-110-110 0t-110 0-110 0-110 0" stroke="#9C6BE0" stroke-width="14" fill="none" stroke-linecap="round" class="draw"/><path d="M660 390l-55-80-55 80-55-80-55 80-55-80-55 80-55-80" stroke="#36C285" stroke-width="14" fill="none" stroke-linecap="round" stroke-linejoin="round" class="draw" style="animation-delay:1.4s"/>`)},
+ {say:'نجلس جلسة صحيحة، ونمسك القلم جيدًا، ونرسم بهدوء. هيا نبدأ!',svg:L(title('هيا نبدأ!','#E8913D')+`<g class="bob"><path d="M300 330 470 160l40 40-170 170-56 16z" fill="#FFCF4A" stroke="#E0A92A" stroke-width="6" stroke-linejoin="round"/><path d="M470 160l20-20a20 20 0 0 1 28 28l-8 8z" fill="#F25C68"/><path d="M284 386l16-56 40 40z" fill="#3A2A1A"/></g>`)}
+]});
+
+function lessonView(sec){
+  const sc=LESSONS()[sec];let i=0,playing=true,token=0;
+  const el=h(`<section class="lesson"><div class="screen"></div><div class="cap"></div>
+    <div class="ctrl"><button class="round" id="lprev" aria-label="المشهد السابق"><svg viewBox="0 0 24 24" fill="none" stroke="#2A2350" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+    <button class="round main" id="lplay" aria-label="تشغيل أو إيقاف"></button>
+    <button class="round" id="lnext" aria-label="المشهد التالي"><svg viewBox="0 0 24 24" fill="none" stroke="#2A2350" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+    <div class="sdots">${sc.map(()=>'<i></i>').join('')}</div></div></section>`);
+  stage.appendChild(el);
+  const scr=el.querySelector('.screen'),cap=el.querySelector('.cap'),pb=el.querySelector('#lplay');
+  const icon=()=>pb.innerHTML=playing?'<svg viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="1.5" fill="#fff"/><rect x="14" y="5" width="4" height="14" rx="1.5" fill="#fff"/></svg>':'<svg viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z" fill="#fff"/></svg>';
+  function show(n){i=Math.max(0,Math.min(sc.length-1,n));const t=++token;scr.innerHTML=sc[i].svg;cap.textContent=sc[i].say;try{$('#bubble').hidden=true}catch(e){}
+    el.querySelectorAll('.sdots i').forEach((d,j)=>d.classList.toggle('on',j<=i));
+    if(playing)speakLesson(sc[i].say,()=>{if(t!==token||!playing||route.view!=='lesson')return;if(i<sc.length-1)show(i+1);else ending()})}
+  function ending(){playing=false;icon();sfx.win();confetti();cap.textContent='انتهى الدرس! هيا نلعب الأنشطة.';
+    const b=h('<button class="btn go" style="margin-top:4px">ابدأ الأنشطة</button>');b.onclick=()=>{sfx.tap();go({view:'path',sec})};el.querySelector('.ctrl').appendChild(b)}
+  pb.onclick=()=>{playing=!playing;icon();if(playing)show(i);else{token++;try{speechSynthesis.cancel()}catch(e){}}};
+  el.querySelector('#lnext').onclick=()=>{sfx.tap();show(i+1)};
+  el.querySelector('#lprev').onclick=()=>{sfx.tap();show(i-1)};
+  icon();show(0);
+}
+
+function homeView(){
+  const cnt=k=>SECTIONS[k].acts.filter(a=>S.done[a.id]).length;
+  const el=h(`<section class="home">
+    <div class="ttl"><div class="cube3d" aria-hidden="true"><div class="c"><i></i><i></i><i></i><i></i><i></i><i></i></div></div><h1>رحلة رفرف</h1></div>
+    <div class="merow">${CL.kids.length?`<div class="me">${avSvg(S.av)}<b>${S.id==='guest'?'ضيف':''}</b>${lvChip(S)}</div>`:`<div class="me" style="padding-inline:14px">${lvChip(S)}</div>`}</div>
+    <p>مرحبًا! أنا رفرف الفراشة، اختر العالم الذي تحب أن نلعب فيه معًا</p>
+    <div class="doors four">
+      <button class="door shapes" data-k="shapes"><span class="got">${cnt('shapes')} من ${SECTIONS.shapes.acts.length}</span>
+        <svg class="art" viewBox="0 0 200 200"><circle cx="62" cy="66" r="42" fill="#FFCD3C"/><rect x="112" y="26" width="68" height="68" rx="8" fill="#fff"/><path d="M60 110 104 186H16z" fill="#FF4F5E"/><rect x="112" y="122" width="76" height="46" rx="8" fill="#2EC27E"/></svg>
+        <b>الأشكال</b><small>دائرة، مربع، مثلث، مستطيل</small></button>
+      <button class="door colors" data-k="colors"><span class="got">${cnt('colors')} من ${SECTIONS.colors.acts.length}</span>
+        <svg class="art" viewBox="0 0 200 200">${['#FF4F5E','#FF9A3C','#FFCD3C','#2EC27E','#3A8DFF','#9B5DE5'].map((c,i)=>`<path d="M${20+i*12} 150a${80-i*12} ${80-i*12} 0 0 1 ${160-i*24} 0" stroke="${c}" stroke-width="12" fill="none"/>`).join('')}<circle cx="100" cy="168" r="18" fill="#fff"/></svg>
+        <b>الألوان</b><small>نتعرّف، نمزج، نلوّن</small></button>
+      <button class="door numbers" data-k="numbers"><span class="got">${cnt('numbers')} من ${SECTIONS.numbers.acts.length}</span>
+        <svg class="art" viewBox="0 0 200 200"><circle cx="56" cy="62" r="40" fill="#fff" opacity=".9"/><circle cx="144" cy="62" r="40" fill="#fff" opacity=".9"/><circle cx="100" cy="146" r="40" fill="#fff" opacity=".9"/><text x="56" y="82" text-anchor="middle" font-size="56" font-weight="800" fill="#3FAE8E" font-family="Rubik,sans-serif">١</text><text x="144" y="82" text-anchor="middle" font-size="56" font-weight="800" fill="#E8913D" font-family="Rubik,sans-serif">٢</text><text x="100" y="166" text-anchor="middle" font-size="56" font-weight="800" fill="#4A90EE" font-family="Rubik,sans-serif">٣</text></svg>
+        <b>الأعداد</b><small>نعدّ، نطابق، نرتّب</small></button>
+      <button class="door lines" data-k="lines"><span class="got">${cnt('lines')} من ${SECTIONS.lines.acts.length}</span>
+        <svg class="art" viewBox="0 0 200 200"><path d="M176 52H24" stroke="#fff" stroke-width="10" stroke-linecap="round"/><path d="M176 108q-19-34-38 0t-38 0-38 0-38 0" stroke="#fff" stroke-width="10" fill="none" stroke-linecap="round"/><path d="M176 168l-19-28-19 28-19-28-19 28-19-28-19 28-19-28" stroke="#fff" stroke-width="10" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/></svg>
+        <b>ارسم على الخط</b><small>مستقيم، منحنٍ، متعرّج</small></button>
+    </div></section>`);
+  const meb=el.querySelector('.me b');if(meb){meb.dataset.raw='1';if(S.id!=='guest')meb.textContent=S.name}
+  if(S.id==='guest'){const sw=h(`<div class="gsw" data-raw="1"><button class="m ${S.g==='m'?'on':''}">ولد</button><button class="f ${S.g!=='m'?'on':''}">بنت</button></div>`);sw.querySelectorAll('button').forEach(b=>b.onclick=()=>{sfx.tap();S.g=b.classList.contains('m')?'m':'f';save();MODE=null;render()});el.querySelector('.me').after(sw)}
+  if(S.id==='guest'&&!S.g&&!CL.kids.length&&!homeView.gasked){homeView.gasked=1;setTimeout(()=>genderPick(),250)}
+  const meEl=el.querySelector('.me');if(meEl&&CL.kids.length){meEl.style.cursor='pointer';meEl.onclick=()=>{sfx.tap();kidPicker()}}
+  if(CL.kids.length&&!CL.cur&&!homeView.asked){homeView.asked=1;setTimeout(kidPicker,250)}
+  el.querySelectorAll('.door').forEach(b=>b.onclick=()=>{sfx.tap();say(SECTIONS[b.dataset.k].title);go({view:'path',sec:b.dataset.k})});
+  stage.appendChild(el);
+}
+
+function pathView(sec){
+  const s=SECTIONS[sec];const nextI=s.acts.findIndex(a=>!S.done[a.id]);
+  const el=h(`<section class="path"><h2 style="color:${s.color}">${s.title}</h2><button class="lessonbtn" id="lessonGo" style="background:${s.color}"><span class="play"><svg viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z" fill="${s.color}"/></svg></span><span><b>شاهد الدرس مع رفرف</b><small>درس مصوّر قصير بالصور والحركة قبل الأنشطة</small></span></button><div class="stops" style="--cols:${s.acts.length%5===0?5:s.acts.length%4===0?4:3}"></div></section>`);
+  s.acts.forEach((a,i)=>{
+    const b=h(`<button class="stop ${i===nextI?'next':''}"><span class="n" style="background:${S.done[a.id]?'#36C285':s.color}">${S.done[a.id]?'<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#fff" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>':i+1}</span><span class="ic">${ICON[a.icon]}</span><b>${a.name}</b>${S.done[a.id]?`<span class="mst">${stars3(+S.done[a.id]||1)}</span>`:''}</button>`);
+    b.onclick=()=>{sfx.tap();go({view:'act',sec,i})};el.querySelector('.stops').appendChild(b);
+  });
+  {const lg=el.querySelector('#lessonGo');if(LESSONS()[sec])lg.onclick=()=>{sfx.tap();go({view:'lesson',sec})};else lg.hidden=true}
+  el.insertAdjacentHTML('beforeend',tipsHtml(sec));
+  if(nextI===-1){const cb=h('<button class="btn cert">شهادتي</button>');cb.onclick=()=>{sfx.tap();certificate(sec)};el.querySelector('#lessonGo').after(cb)}
+  stage.appendChild(el);
+  say(nextI===-1?'أنهيت كل الأنشطة! يمكنك اللعب مرة أخرى':'اضغط على النشاط رقم '+(nextI+1));
+}
+
+function actView(sec,i){
+  const s=SECTIONS[sec],a=s.acts[i];
+  const el=h(`<section class="act"><div class="ask"><button class="say" aria-label="اسمع التعليمة">${speakerSvg}</button><p></p><div class="dots">${s.acts.map((x,j)=>`<i class="${j===i?'cur':S.done[x.id]?'on':''}"></i>`).join('')}</div></div><div class="board"></div></section>`);
+  stage.appendChild(el);
+  const p=el.querySelector('.ask p'),btn=el.querySelector('.say'),board=el.querySelector('.board');
+  const ask=(t)=>{p.textContent=t;lastAsk=t;say(t,btn)};
+  btn.onclick=()=>say(p.textContent,btn);
+  const finish=()=>{hintFn=null;clearTimeout(idleT);
+    const got=MIST===0?3:MIST<=2?2:1;const wasAll=s.acts.every(x=>S.done[x.id]);const pl=levelOf(S).i;
+    S.done[a.id]=Math.max(+S.done[a.id]||0,got);save();setStars();sfx.win();confetti();const nl=levelOf(S);
+    const last=i===s.acts.length-1;const allDone=s.acts.every(x=>S.done[x.id]);const justAll=allDone&&!wasAll;
+    const f=FACTS[a.id];
+    const ov=h(`<div class="over"><div class="win"><svg class="big" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z" fill="#FFCD3C" stroke="#E3AE1C" stroke-width="1"/></svg>
+      <h3>${last&&allDone?s.end.title:'أحسنت!'}</h3><div class="earn">${stars3(got)}</div>
+      ${nl.i>pl?`<div class="lvup">${nl.svg}صرتَ الآن ${nl.n}!</div>`:''}${allDone&&(last||justAll)?`<span class="rank r-${secInfo(S,sec).cls.k}">${secInfo(S,sec).cls.t}</span>`:''}<p class="fact">${last&&allDone?s.end.fact:f.fact}</p>
+      <div class="value"><span>${last&&allDone?s.end.value:'فائدة وقيمة'}</span>${last&&allDone?s.end.valueText:f.value}</div>
+      <button class="btn go">${last?'إلى عالمي':'النشاط التالي'}</button></div></div>`);
+    document.body.appendChild(ov);
+    say((last&&allDone?s.end.title+'. '+s.end.valueText:'أحسنت! '+f.fact));
+    ov.querySelector('.go').onclick=()=>{sfx.tap();ov.remove();if(last)go({view:'path',sec});else go({view:'act',sec,i:i+1});if(justAll)setTimeout(()=>certificate(sec),400)};
+  };
+  MIST=0;
+  ACTS[a.id]({board,ask,finish,hint:f=>{hintFn=f;armIdle()},help:showHint});
+}
+
+/* أداة: اختيار عن طريق السحب أو اللمس */
+function dragPick(itemEls,targets,onDrop){
+  let sel=null;
+  itemEls.forEach(it=>{
+    it.addEventListener('pointerdown',e=>{
+      if(it.dataset.used)return;e.preventDefault();sfx.pop();
+      const r=it.getBoundingClientRect();const ghost=it.cloneNode(true);ghost.classList.add('drag');ghost.style.width=r.width+'px';ghost.style.height=r.height+'px';
+      const ox=e.clientX-r.left,oy=e.clientY-r.top;let moved=false;const sx=e.clientX,sy=e.clientY;
+      const mv=ev=>{if(!moved&&Math.hypot(ev.clientX-sx,ev.clientY-sy)>8){moved=true;document.body.appendChild(ghost);it.style.opacity=.3}
+        if(moved){ghost.style.left=(ev.clientX-ox)+'px';ghost.style.top=(ev.clientY-oy)+'px';targets.forEach(t=>t.classList.toggle('hot',hit(t,ev)))}};
+      const up=ev=>{removeEventListener('pointermove',mv);removeEventListener('pointerup',up);removeEventListener('pointercancel',up);ghost.remove();it.style.opacity='';targets.forEach(t=>t.classList.remove('hot'));
+        if(moved){const t=targets.find(t=>hit(t,ev));if(t)onDrop(it,t)}
+        else{itemEls.forEach(x=>x.classList.remove('sel'));if(sel===it){sel=null}else{sel=it;it.classList.add('sel')}}};
+      addEventListener('pointermove',mv);addEventListener('pointerup',up);addEventListener('pointercancel',up);
+    });
+  });
+  targets.forEach(t=>t.addEventListener('click',()=>{if(sel){const it=sel;sel=null;it.classList.remove('sel');onDrop(it,t)}}));
+  const hit=(t,ev)=>{const r=t.getBoundingClientRect();return ev.clientX>=r.left&&ev.clientX<=r.right&&ev.clientY>=r.top&&ev.clientY<=r.bottom};
+}
+
+
+/* أداة: جولات اختيار من بطاقات */
+function chooser({board,ask,finish,hint,help},R,o={}){
+  let r=0,right=null,wrong=0;
+  const wrap=h(`<div class="col"><div class="qrow"></div><div class="grid g${o.cols||3}" style="width:min(${o.w||760}px,100%)"></div></div>`);board.appendChild(wrap);
+  hint(()=>right);
+  function round(){const q=R[r];wrong=0;wrap.querySelector('.qrow').innerHTML=q.top||'';const g=wrap.querySelector('.grid');g.innerHTML='';ask(q.ask);
+    shuffle(q.opts).forEach(op=>{const c=h(`<button class="card"><span class="pic">${op.html}</span>${op.label?`<b>${op.label}</b>`:''}</button>`);if(op.ok)right=c;
+      c.onclick=()=>{if(op.ok){sfx.good();c.classList.add('good');c.insertAdjacentHTML('beforeend',`<span class="tick">${tickSvg}</span>`);if(q.onRight)q.onRight(wrap);say(q.yes||'أحسنت!');r++;setTimeout(()=>r<R.length?round():finish(),q.delay||1600)}
+        else{sfx.bad();c.classList.remove('bad');void c.offsetWidth;c.classList.add('bad');say(op.no||'حاول مرة أخرى');if(++wrong>=2)setTimeout(help,1600)}};
+      g.appendChild(c)})}
+  round();
+}
+/* أداة: ترتيب ثلاثة أشياء بالنقر */
+function orderer({board,ask,finish,hint,help},R,labels){
+  let r=0;const wrap=h(`<div class="col"><div class="grid g3" style="width:min(700px,100%)"></div><div class="slots"></div></div>`);board.appendChild(wrap);
+  let need=0,cards=[],wrong=0;hint(()=>cards.find(c=>+c.dataset.v===need));
+  function round(){const q=R[r];need=0;wrong=0;ask(q.ask);const g=wrap.querySelector('.grid'),sl=wrap.querySelector('.slots');g.innerHTML='';sl.innerHTML=labels.map(l=>`<div class="slot"><span>${l}</span></div>`).join('');
+    cards=shuffle(q.items.map((html,v)=>({html,v}))).map(({html,v})=>{const c=h(`<button class="card" data-v="${v}"><span class="pic">${html}</span></button>`);
+      c.onclick=()=>{if(c.dataset.used)return;if(v===need){sfx.good();c.dataset.used=1;c.style.visibility='hidden';const s=sl.children[need];s.classList.add('full');s.insertAdjacentHTML('afterbegin',html);say(labels[need]);need++;
+          if(need===3){say(q.yes||'أحسنت!');r++;setTimeout(()=>r<R.length?round():finish(),1500)}}
+        else{sfx.bad();c.classList.remove('bad');void c.offsetWidth;c.classList.add('bad');say(q.no||'ابحث عن غيره');if(++wrong>=2)setTimeout(help,1500)}};
+      g.appendChild(c);return c})}
+  round();
+}
+const tok=(k,c)=>`<div class="tok">${shape(k,c)}</div>`;
+const bead=(c)=>{const id='b3d'+(++GID);return `<div class="tok" style="border-radius:50%"><svg viewBox="0 0 100 100"><defs><radialGradient id="${id}" cx=".35" cy=".3" r=".75"><stop offset="0" stop-color="${shade(c,.5)}"/><stop offset=".55" stop-color="${c}"/><stop offset="1" stop-color="${shade(c,-.3)}"/></radialGradient></defs><circle cx="50" cy="50" r="40" fill="url(#${id})"/><circle cx="50" cy="50" r="9" fill="#fff" opacity=".8"/><ellipse cx="36" cy="34" rx="8" ry="5" fill="#fff" opacity=".45"/></svg></div>`};
+const mixHex=(a,b,t)=>{const p=x=>[1,3,5].map(i=>parseInt(x.slice(i,i+2),16));const A=p(a),B=p(b);return'#'+A.map((v,i)=>Math.round(v+(B[i]-v)*t).toString(16).padStart(2,'0')).join('')};
+
+
+/* ---------- أدوات الأعداد والخطوط ---------- */
+const AR=['٠','١','٢','٣','٤','٥','٦','٧','٨','٩','١٠'];
+const NN=['صفر','واحد','اثنان','ثلاثة','أربعة','خمسة','ستة','سبعة','ثمانية','تسعة','عشرة'];
+const NCOL=['#4A90EE','#F25C68','#36C285','#9C6BE0','#E8913D','#3FAE8E'];
+const icon=o=>typeof O[o]==='function'?O[o](C.yellow):O[o];
+const digitSvg=(n,c)=>`<svg viewBox="0 0 100 100"><text x="50" y="${n===10?70:74}" text-anchor="middle" font-size="${n===10?54:68}" font-weight="800" fill="${c}" font-family="Rubik,Tajawal,sans-serif">${AR[n]}</text></svg>`;
+const grp=(n,o)=>{const w=n<=1?60:n<=4?42:n<=6?30:n<=9?29:22;return `<div class="grp">${Array.from({length:n},()=>`<i style="width:${w}%">${icon(o)}</i>`).join('')}</div>`};
+const seg=(a,b)=>{const P=[];const L=Math.hypot(b[0]-a[0],b[1]-a[1]),n=Math.max(8,Math.round(L/12));for(let i=0;i<=n;i++)P.push([a[0]+(b[0]-a[0])*i/n,a[1]+(b[1]-a[1])*i/n]);return P};
+function wave(x0,x1,y,k,amp,type){const P=[];const N=160;for(let i=0;i<=N;i++){const t=i/N;const x=x0+(x1-x0)*t;const ph=t*k;
+  const yy=type==='arc'?y+amp*Math.abs(Math.sin(Math.PI*ph)):y+amp*Math.sin(2*Math.PI*ph);P.push([x,yy])}return P}
+function zig(x0,x1,ybot,ytop,n){const P=[];for(let i=0;i<n;i++){const xa=x0+(x1-x0)*i/n,xb=x0+(x1-x0)*(i+.5)/n,xc=x0+(x1-x0)*(i+1)/n;P.push(...seg([xa,ybot],[xb,ytop]).slice(i?1:0),...seg([xb,ytop],[xc,ybot]).slice(1))}return P}
+function circ(cx,cy,r){const P=[];for(let i=0;i<=90;i++){const a=-Math.PI/2-i/90*Math.PI*2;P.push([cx+r*Math.cos(a),cy+r*Math.sin(a)])}return P}
+function spiral(cx,cy,r,turns){const P=[];const N=260;for(let i=0;i<=N;i++){const t=i/N;const a=-Math.PI/2-t*turns*Math.PI*2;const rr=r*(1-t*.88);P.push([cx+rr*Math.cos(a),cy+rr*Math.sin(a)])}return P}
+const IMGC={};function svgImg(o,cb){if(!o)return null;if(IMGC[o])return IMGC[o];const im=new Image();im.onload=cb;im.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(icon(o).replace('<svg ','<svg xmlns="http://www.w3.org/2000/svg" '));IMGC[o]=im;return im}
+function traceAct({board,ask,finish,hint},R){
+  let r=0;const W=800,H=500;
+  const el=h(`<div class="col"><div class="canvasbox tr" style="width:min(720px,100%)"><canvas width="${W}" height="${H}"></canvas></div><div class="tools"><button class="btn" id="clr"><svg viewBox="0 0 24 24" fill="none" stroke="#2A2350" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>امسح</button></div></div>`);board.appendChild(el);
+  const cv=el.querySelector('canvas'),x=cv.getContext('2d');let strokes=[],q=null;const col=SECTIONS.lines.color;
+  function paint(){x.clearRect(0,0,W,H);
+    q.paths.forEach(P=>{x.save();x.setLineDash([3,20]);x.lineCap='round';x.lineWidth=14;x.strokeStyle='#D9D3EE';x.beginPath();P.forEach((p,i)=>i?x.lineTo(...p):x.moveTo(...p));x.stroke();x.restore()});
+    x.lineCap=x.lineJoin='round';x.lineWidth=22;x.strokeStyle=col;strokes.forEach(s=>{x.beginPath();s.forEach((p,i)=>i?x.lineTo(...p):x.moveTo(...p));x.stroke()});
+    q.paths.forEach(P=>{const a=P[0],b=P[P.length-1];
+      x.fillStyle='#36C285';x.beginPath();x.arc(a[0],a[1],15,0,7);x.fill();x.fillStyle='#fff';x.beginPath();x.arc(a[0],a[1],6,0,7);x.fill();
+      if(Math.hypot(a[0]-b[0],a[1]-b[1])>30){x.fillStyle='#FFCF4A';x.beginPath();for(let i=0;i<10;i++){const rr=i%2?7:16,an=-Math.PI/2+i*Math.PI/5;x.lineTo(b[0]+rr*Math.cos(an),b[1]+rr*Math.sin(an))}x.closePath();x.fill()}});
+    const ia=svgImg(q.a,paint),ib=svgImg(q.b,paint);const P0=q.paths[0],P1=q.paths[q.paths.length-1];
+    if(ia&&ia.complete&&ia.naturalWidth)x.drawImage(ia,P0[0][0]-30,Math.max(0,P0[0][1]-78),60,60);
+    if(ib&&ib.complete&&ib.naturalWidth){const e=P1[P1.length-1];x.drawImage(ib,e[0]-32,Math.min(H-64,e[1]+16),64,64)}}
+  function start(){q=R[r];strokes=[];paint();ask(q.ask)}
+  const pos=e=>{const b=cv.getBoundingClientRect();return[(e.clientX-b.left)*W/b.width,(e.clientY-b.top)*H/b.height]};
+  let drawing=false;
+  cv.addEventListener('pointerdown',e=>{e.preventDefault();drawing=true;cv.setPointerCapture(e.pointerId);strokes.push([pos(e)]);paint()});
+  cv.addEventListener('pointermove',e=>{if(!drawing)return;strokes[strokes.length-1].push(pos(e));paint()});
+  const end=()=>{if(!drawing)return;drawing=false;const all=strokes.flat();const G=q.paths.flat();
+    const cov=G.filter(p=>all.some(t=>Math.hypot(p[0]-t[0],p[1]-t[1])<40)).length/G.length;
+    const off=all.filter(t=>!G.some(p=>Math.hypot(p[0]-t[0],p[1]-t[1])<60)).length/Math.max(1,all.length);
+    if(off>.35&&all.length>20){sfx.bad();say('امشِ على النقاط نفسها، وحاول مرة أخرى');strokes=[];setTimeout(paint,500);return}
+    if(cov>.86){sfx.good();say('رائع! رسمت الخط كاملًا');r++;setTimeout(()=>r<R.length?start():finish(),1200)}};
+  cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
+  el.querySelector('#clr').onclick=()=>{sfx.tap();strokes=[];paint()};
+  hint(()=>el.querySelector('.canvasbox'));start();
+}
+
+const ACTS={
+/* ===== الأعداد ===== */
+nlearn({board,ask,finish,hint}){
+  const objs=['apple','ball','sun','leaf','drop','orange','egg','strawberry','banana','carrot'];const seen=new Set();
+  const el=h(`<div class="col"><div class="grid g5" style="width:min(860px,100%)"></div><div class="reveal" hidden><div class="nbig"></div><div class="grpbox"></div><p></p></div></div>`);board.appendChild(el);
+  const g=el.querySelector('.grid'),rv=el.querySelector('.reveal');
+  for(let n=1;n<=10;n++){const c=h(`<button class="card"><span class="pic">${digitSvg(n,NCOL[n%NCOL.length])}</span></button>`);
+    c.onclick=()=>{sfx.good();c.classList.add('good');if(!seen.has(n)){seen.add(n);c.classList.add('seen');c.insertAdjacentHTML('beforeend',`<span class="tick">${tickSvg}</span>`)}
+      rv.hidden=false;rv.querySelector('.nbig').textContent=AR[n];rv.querySelector('.nbig').style.color=NCOL[n%NCOL.length];rv.querySelector('.grpbox').innerHTML=grp(n,objs[n-1]);rv.querySelector('p').textContent='هذا العدد '+NN[n]+'. عُدّ الأشياء معي!';say('هذا العدد '+NN[n]);
+      if(seen.size===10)setTimeout(finish,1600)};g.appendChild(c)}
+  ask('المس كل عدد لترى كم شيئًا يمثّل');hint(()=>[...g.children].find(c=>!c.classList.contains('seen')));
+},
+ntap({board,ask,finish,hint}){
+  const R=[[3,'apple'],[5,'ball'],[4,'leaf'],[7,'strawberry'],[6,'sun']];let r=0;
+  const el=h(`<div class="col"><div class="tapzone"></div><div class="count" hidden></div></div>`);board.appendChild(el);
+  const z=el.querySelector('.tapzone'),cn=el.querySelector('.count');
+  function round(){const [n,o]=R[r];let k=0;z.innerHTML='';cn.hidden=true;ask('عُدّ الأشياء: المس كل واحد مرة واحدة');
+    for(let i=0;i<n;i++){const b=h(`<button class="tapit">${icon(o)}</button>`);b.onclick=()=>{if(b.classList.contains('done'))return;k++;sfx.pop();b.classList.add('done');b.insertAdjacentHTML('beforeend',`<span class="k">${AR[k]}</span>`);say(NN[k]);
+      if(k===n){sfx.good();cn.hidden=false;cn.textContent='عددها '+NN[n];say('أحسنت! عددها '+NN[n]);r++;setTimeout(()=>r<R.length?round():finish(),1700)}};z.appendChild(b)}}
+  hint(()=>[...z.children].find(b=>!b.classList.contains('done')));round();
+},
+ncount(ctx){
+  const R=[[3,'apple'],[5,'orange'],[2,'ball'],[6,'leaf'],[4,'egg'],[8,'strawberry']];
+  chooser(ctx,R.map(([n,o])=>{const d=shuffle([1,2,3,4,5,6,7,8,9,10].filter(x=>x!==n&&Math.abs(x-n)<=3)).slice(0,2);
+    return {top:`<div class="bigpic" style="width:min(280px,60%)">${grp(n,o)}</div>`,ask:'كم عددها؟',yes:'أحسنت! عددها '+NN[n],
+      opts:[n,...d].map(x=>({html:digitSvg(x,'#3FAE8E'),ok:x===n,no:'لنعدّها معًا مرة أخرى'}))}}),{cols:3,w:600});
+},
+nmatch(ctx){
+  const R=[[2,'ball'],[4,'apple'],[1,'sun'],[5,'leaf'],[3,'orange']];
+  chooser(ctx,R.map(([n,o])=>{const d=shuffle([1,2,3,4,5,6].filter(x=>x!==n)).slice(0,2);
+    return {top:`<div class="tok" style="width:clamp(90px,14vw,130px)">${digitSvg(n,'#3FAE8E')}</div>`,ask:'اختر المجموعة التي فيها '+NN[n],yes:'أحسنت! هذه '+NN[n],
+      opts:[n,...d].map(x=>({html:grp(x,o),ok:x===n,no:'عدّ الأشياء في المجموعة، ثم حاول مرة أخرى'}))}}),{cols:3,w:760});
+},
+nmore(ctx){
+  const R=[[5,2,'more','apple'],[3,6,'more','ball'],[4,1,'less','leaf'],[7,4,'more','strawberry'],[2,5,'less','orange']];
+  chooser(ctx,R.map(([a,b,m,o])=>{const ok=m==='more'?Math.max(a,b):Math.min(a,b);
+    return {ask:m==='more'?'أيّ المجموعتين فيها أشياء أكثر؟':'أيّ المجموعتين فيها أشياء أقل؟',yes:m==='more'?'أحسنت! هذه أكثر':'أحسنت! هذه أقل',
+      opts:[a,b].map(x=>({html:grp(x,o),ok:x===ok,no:'قارن بين المجموعتين جيدًا'}))}}),{cols:2,w:640});
+},
+norder(ctx){
+  orderer(ctx,[[1,2,3],[2,4,5],[3,6,8],[1,5,9]].map(q=>({ask:'رتّب الأعداد من الأصغر إلى الأكبر',yes:'أحسنت! '+q.map(x=>NN[x]).join('، '),no:'ابدأ بالعدد الأصغر',items:q.map(x=>digitSvg(x,'#3FAE8E'))})),['الأصغر','الأوسط','الأكبر']);
+},
+/* ===== ارسم على الخط ===== */
+lv(ctx){traceAct(ctx,[{ask:'انزل بقطرة الماء من أعلى إلى أسفل لتسقي الورقة',a:'drop',b:'leaf',paths:[200,400,600].map(x=>seg([x,80],[x,420]))}])},
+lh(ctx){traceAct(ctx,[{ask:'دحرج الكرة من اليمين إلى اليسار حتى تصل إلى الهدية',a:'ball',b:'gift',paths:[130,250,370].map(y=>seg([690,y],[110,y]))}])},
+ld(ctx){traceAct(ctx,[{ask:'انزل على الزحليقة من الأعلى إلى الأسفل',a:'orange',b:'cup',paths:[seg([660,80],[360,420]),seg([440,80],[140,420])]}])},
+lc(ctx){traceAct(ctx,[{ask:'اقفز مع الكرة قفزات صغيرة حتى تصل إلى الباب',a:'ball',b:'door',paths:[wave(700,100,330,4,-170,'arc')]},{ask:'والآن قفزات كبيرة',a:'ball',b:'door',paths:[wave(700,100,380,2,-260,'arc')]}])},
+lz(ctx){traceAct(ctx,[{ask:'امشِ على قمم الجبال حتى تصل إلى الخيمة',a:'ball',b:'tent',paths:[zig(700,100,360,140,6)]}])},
+lw(ctx){traceAct(ctx,[{ask:'تتبّع أمواج البحر من اليمين إلى اليسار',a:'drop',b:'wave',paths:[wave(700,100,180,3,60,'sine'),wave(700,100,350,3,60,'sine')]}])},
+lo(ctx){traceAct(ctx,[{ask:'ارسم عجلتي الدراجة، وابدأ من النقطة الخضراء',a:null,b:null,paths:[circ(560,250,120),circ(240,250,120)]}])},
+ls(ctx){traceAct(ctx,[{ask:'امشِ في الحلزون حتى تصل إلى التفاحة في الوسط',a:'ball',b:'apple',paths:[spiral(400,250,200,3)]}])},
+
+/* ===== الأشكال ===== */
+learn({board,ask,finish,hint}){
+  const keys=['circle','square','triangle','rectangle','oval'];const seen=new Set();
+  const col=h(`<div class="col"><div class="grid g5"></div><div class="reveal"><div class="objs"></div><p>المس كل شكل لتسمع اسمه وترى أشياء تشبهه</p></div></div>`);
+  board.appendChild(col);ask('المس كل شكل لتتعرّف عليه');hint(()=>col.querySelector('.card:not(.seen)'));
+  keys.forEach(k=>{const c=h(`<button class="card"><span class="pic">${shape(k,SHC[k])}</span><b>${SHN[k]}</b></button>`);
+    c.onclick=()=>{sfx.good();c.classList.remove('good');void c.offsetWidth;c.classList.add('good');
+      col.querySelector('.objs').innerHTML=SHOBJ[k].map(o=>O[o]).join('');col.querySelector('.reveal p').textContent='هذا '+SHN0[k]+'. '+SHFACT[k]+' مثل: '+SHOBJ[k].map(o=>OBN[o]).join('، ')+'.';
+      say(SHN[k]+'. '+SHFACT[k]);
+      if(!seen.has(k)){seen.add(k);c.classList.add('seen');c.insertAdjacentHTML('beforeend',`<span class="tick">${tickSvg}</span>`)}
+      if(seen.size===keys.length)setTimeout(finish,2600)};
+    col.querySelector('.grid').appendChild(c)});
+},
+choose({board,ask,finish,hint,help}){
+  const keys=['circle','square','triangle','rectangle','oval'];const rounds=shuffle([...keys,...shuffle(keys).slice(0,1)]);let r=0;
+  const grid=h(`<div class="grid g3"></div>`);board.appendChild(grid);
+  const cols=[C.red,C.blue,C.green,C.purple,C.orange,C.yellow];
+  let right=null,wrong=0;hint(()=>right);
+  function round(){grid.innerHTML='';wrong=0;const t=rounds[r];const opts=shuffle([t,...shuffle(keys.filter(k=>k!==t)).slice(0,2)]);
+    ask('أين '+SHN[t]+'؟');
+    opts.forEach(k=>{const c=h(`<button class="card"><span class="pic">${shape(k,cols[Math.floor(Math.random()*cols.length)])}</span></button>`);if(k===t)right=c;
+      c.onclick=()=>{if(k===t){sfx.good();c.classList.add('good');c.insertAdjacentHTML('beforeend',`<span class="tick">${tickSvg}</span>`);say('أحسنت! هذا '+SHN[t]);r++;setTimeout(()=>r<rounds.length?round():finish(),1300)}
+        else{sfx.bad();c.classList.remove('bad');void c.offsetWidth;c.classList.add('bad');say('هذا '+SHN[k]+'. حاول مرة أخرى');if(++wrong>=2)setTimeout(help,1600)}};
+      grid.appendChild(c)})}
+  round();
+},
+match({board,ask,finish,hint}){
+  const keys=shuffle(['circle','square','triangle','rectangle']);const objs=shuffle(keys.map(k=>({k,o:SHOBJ[k][Math.floor(Math.random()*3)]})));
+  const m=h(`<div class="match"><svg class="lines"></svg><div class="side a"></div><div class="side b"></div></div>`);board.appendChild(m);
+  ask('صِل كل شكل بالشيء الذي يشبهه');
+  const A=m.querySelector('.side.a'),B=m.querySelector('.side.b'),L=m.querySelector('.lines');
+  keys.forEach(k=>A.appendChild(h(`<button class="mi" data-k="${k}">${shape(k,SHC[k])}<span class="dot"></span></button>`)));
+  objs.forEach(({k,o})=>B.appendChild(h(`<button class="mi" data-k="${k}" data-o="${o}">${O[o]}<span class="dot"></span></button>`)));
+  let done=0,sel=null,live=null;hint(()=>{const s=A.querySelector('.mi:not([data-used])');return s?[s,B.querySelector(`.mi[data-k="${s.dataset.k}"]:not([data-used])`)]:null});
+  const ctr=(el,side)=>{const r=el.getBoundingClientRect(),R=m.getBoundingClientRect();return{x:(side==='a'?r.left:r.right)-R.left,y:r.top+r.height/2-R.top}};
+  const line=(a,b,col,dash)=>{const l=document.createElementNS('http://www.w3.org/2000/svg','line');l.setAttribute('x1',a.x);l.setAttribute('y1',a.y);l.setAttribute('x2',b.x);l.setAttribute('y2',b.y);l.setAttribute('stroke',col);l.setAttribute('stroke-width',9);l.setAttribute('stroke-linecap','round');if(dash)l.setAttribute('stroke-dasharray','2 14');L.appendChild(l);return l};
+  const lines=[];
+  const tryPair=(s,t)=>{if(!t||t.dataset.used)return;if(s.dataset.k===t.dataset.k){sfx.good();s.dataset.used=t.dataset.used=1;s.classList.add('ok');t.classList.add('ok');lines.push([s,t,SHC[s.dataset.k]]);redraw();say('أحسنت! '+OBN[t.dataset.o]+' تشبه '+SHN[s.dataset.k]);if(++done===4)setTimeout(finish,1500)}
+    else{sfx.bad();t.classList.remove('bad');void t.offsetWidth;t.classList.add('bad');say('ليس هذا. حاول مرة أخرى')}};
+  function redraw(){L.innerHTML='';lines.forEach(([s,t,c])=>line(ctr(s,'a'),ctr(t,'b'),c))}
+  addEventListener('resize',redraw);
+  A.querySelectorAll('.mi').forEach(s=>s.addEventListener('pointerdown',e=>{
+    if(s.dataset.used)return;e.preventDefault();sfx.pop();const st=ctr(s,'a');let moved=false;const sx=e.clientX,sy=e.clientY;
+    const mv=ev=>{if(Math.hypot(ev.clientX-sx,ev.clientY-sy)>8)moved=true;if(!moved)return;const R=m.getBoundingClientRect();if(live)live.remove();live=line(st,{x:ev.clientX-R.left,y:ev.clientY-R.top},'#2A2350',true)};
+    const up=ev=>{removeEventListener('pointermove',mv);removeEventListener('pointerup',up);if(live){live.remove();live=null}
+      if(moved){const t=[...B.querySelectorAll('.mi')].find(t=>{const r=t.getBoundingClientRect();return ev.clientX>=r.left&&ev.clientX<=r.right&&ev.clientY>=r.top&&ev.clientY<=r.bottom});tryPair(s,t)}
+      else{A.querySelectorAll('.mi').forEach(x=>x.classList.remove('sel'));sel=s;s.classList.add('sel');say(SHN[s.dataset.k])}};
+    addEventListener('pointermove',mv);addEventListener('pointerup',up)}));
+  B.querySelectorAll('.mi').forEach(t=>t.addEventListener('click',()=>{if(sel){const s=sel;sel=null;s.classList.remove('sel');tryPair(s,t)}else say(OBN[t.dataset.o])}));
+},
+sort({board,ask,finish,hint}){
+  const keys=['circle','square','triangle','rectangle'];const cols=[C.red,C.blue,C.green,C.purple,C.orange,C.yellow];
+  const items=shuffle(keys.flatMap(k=>[0,1].map(()=>({k,c:cols[Math.floor(Math.random()*cols.length)]}))));
+  const el=h(`<div class="sort"><div class="tray"></div><div class="bins" style="grid-template-columns:repeat(4,minmax(0,1fr))"></div></div>`);board.appendChild(el);
+  ask('ضع كل شكل في السلة التي تشبهه');
+  const binCol={circle:'#FFCD3C',square:'#3A8DFF',triangle:'#FF4F5E',rectangle:'#2EC27E'};
+  keys.forEach(k=>el.querySelector('.bins').appendChild(h(`<div class="bin" data-k="${k}" style="border-color:${binCol[k]}"><svg class="lbl" viewBox="0 0 100 100">${SH[k]('none').replace('fill="none"',`fill="none" stroke-dasharray="8 8"`).replace('stroke="rgba(0,0,0,.12)"',`stroke="${binCol[k]}"`).replace('stroke-width="3"','stroke-width="7"')}</svg><div class="in"></div></div>`)));
+  items.forEach(({k,c})=>el.querySelector('.tray').appendChild(h(`<div class="item" data-k="${k}" tabindex="0">${shape(k,c)}</div>`)));
+  let n=0;hint(()=>{const it=el.querySelector('.tray .item');return it?[it,el.querySelector(`.bin[data-k="${it.dataset.k}"]`)]:null});
+  dragPick([...el.querySelectorAll('.item')],[...el.querySelectorAll('.bin')],(it,b)=>{
+    if(it.dataset.k===b.dataset.k){sfx.good();it.dataset.used=1;b.querySelector('.in').insertAdjacentHTML('beforeend',it.innerHTML);it.remove();say(SHN[b.dataset.k]);if(++n===items.length){el.querySelector('.tray').innerHTML='<b style="font-size:26px">رتّبتَ كل الأشكال!</b>';setTimeout(finish,1200)}}
+    else{sfx.bad();b.animate([{transform:'translateX(-8px)'},{transform:'translateX(8px)'},{transform:'none'}],{duration:300});say('هذه سلة '+SHN[b.dataset.k]+'. ابحث عن سلة أخرى')}
+  });
+},
+color({board,ask,finish,hint:hintGlow}){
+  const regions=[['wall','square','المربع'],['roof','triangle','المثلث'],['door','rectangle','المستطيل'],['sun','circle','الدائرة'],['win1','square','النافذة المربعة'],['win2','square','النافذة المربعة الثانية']];
+  const svg=`<svg viewBox="0 0 400 320"><rect x="0" y="250" width="400" height="70" fill="#C9F0D6"/>
+    <circle class="region" data-r="sun" cx="330" cy="70" r="40" fill="#fff" stroke="#2A2350" stroke-width="5"/>
+    <rect class="region" data-r="wall" x="80" y="140" width="190" height="150" fill="#fff" stroke="#2A2350" stroke-width="5"/>
+    <path class="region" data-r="roof" d="M175 40 290 140H60z" fill="#fff" stroke="#2A2350" stroke-width="5" stroke-linejoin="round"/>
+    <rect class="region" data-r="door" x="150" y="200" width="50" height="90" fill="#fff" stroke="#2A2350" stroke-width="5"/>
+    <rect class="region" data-r="win1" x="100" y="160" width="38" height="38" fill="#fff" stroke="#2A2350" stroke-width="5"/>
+    <rect class="region" data-r="win2" x="212" y="160" width="38" height="38" fill="#fff" stroke="#2A2350" stroke-width="5"/></svg>`;
+  const el=h(`<div class="paint"><div class="canvasbox">${svg}</div><div class="palette"></div></div>`);board.appendChild(el);
+  let cur=C.red;const pal=el.querySelector('.palette');
+  Object.entries(C).forEach(([n,c])=>{const b=h(`<button class="pc ${c===cur?'on':''}" style="background:${c}" aria-label="${CN[n]}"></button>`);b.onclick=()=>{cur=c;pal.querySelectorAll('.pc').forEach(x=>x.classList.remove('on'));b.classList.add('on');sfx.tap();say(CN[n])};pal.appendChild(b)});
+  let step=0;const filled=new Set();
+  const hint=()=>{el.querySelectorAll('.region').forEach(r=>r.classList.remove('hint'));if(step<regions.length){const [id,,nm]=regions[step];el.querySelector(`[data-r="${id}"]`).classList.add('hint');ask('اختر لونًا، ثم لوّن '+nm)}};
+  el.querySelectorAll('.region').forEach(r=>r.addEventListener('click',()=>{r.setAttribute('fill',cur);sfx.splash();const id=r.dataset.r;if(!filled.has(id)){filled.add(id)}
+    while(step<regions.length&&filled.has(regions[step][0]))step++;hint();if(filled.size===regions.length){ask('ما أجمل بيتك!');setTimeout(finish,1400)}}));
+  hint();hintGlow(()=>el.querySelector('.region.hint'));
+},
+draw({board,ask,finish,hint}){
+  const order=['circle','square','triangle','rectangle'];let idx=0;
+  const el=h(`<div class="col"><div class="canvasbox" style="width:min(640px,100%)"><canvas width="800" height="560"></canvas></div><div class="tools"><button class="btn" id="clr"><svg viewBox="0 0 24 24" fill="none" stroke="#2A2350" stroke-width="2.4" stroke-linecap="round"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>امسح</button></div></div>`);board.appendChild(el);
+  const cv=el.querySelector('canvas'),x=cv.getContext('2d');let pts=[],strokes=[];
+  const outline=k=>{const P=[];const add=(a,b)=>{for(let t=0;t<=1;t+=.02)P.push([a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t])};
+    if(k==='circle'){for(let t=0;t<Math.PI*2;t+=.06)P.push([400+200*Math.cos(t),280+200*Math.sin(t)])}
+    if(k==='square'){const q=[[220,100],[580,100],[580,460],[220,460]];q.forEach((p,i)=>add(p,q[(i+1)%4]))}
+    if(k==='triangle'){const q=[[400,70],[640,480],[160,480]];q.forEach((p,i)=>add(p,q[(i+1)%3]))}
+    if(k==='rectangle'){const q=[[110,160],[690,160],[690,400],[110,400]];q.forEach((p,i)=>add(p,q[(i+1)%4]))}
+    return P};
+  const col={circle:C.yellow,square:C.blue,triangle:C.red,rectangle:C.green};
+  function paint(){x.clearRect(0,0,800,560);const k=order[idx];x.save();x.setLineDash([4,22]);x.lineCap='round';x.lineWidth=16;x.strokeStyle='#C9C3E6';x.beginPath();pts.forEach((p,i)=>i?x.lineTo(...p):x.moveTo(...p));x.closePath();x.stroke();x.restore();
+    x.lineCap=x.lineJoin='round';x.lineWidth=26;x.strokeStyle=col[k];strokes.forEach(s=>{x.beginPath();s.forEach((p,i)=>i?x.lineTo(...p):x.moveTo(...p));x.stroke()});
+    x.fillStyle='#2A2350';x.beginPath();x.arc(...pts[0],14,0,7);x.fill()}
+  function start(){pts=outline(order[idx]);strokes=[];paint();ask('مرّر إصبعك على النقاط لترسم '+SHN[order[idx]])}
+  const pos=e=>{const r=cv.getBoundingClientRect();return[(e.clientX-r.left)*800/r.width,(e.clientY-r.top)*560/r.height]};
+  let drawing=false;
+  cv.addEventListener('pointerdown',e=>{e.preventDefault();drawing=true;cv.setPointerCapture(e.pointerId);strokes.push([pos(e)]);paint()});
+  cv.addEventListener('pointermove',e=>{if(!drawing)return;strokes[strokes.length-1].push(pos(e));paint()});
+  const end=()=>{if(!drawing)return;drawing=false;const all=strokes.flat();const cov=pts.filter(p=>all.some(q=>Math.hypot(p[0]-q[0],p[1]-q[1])<42)).length/pts.length;
+    if(cov>.85){sfx.good();say('رائع! رسمت '+SHN[order[idx]]);idx++;setTimeout(()=>idx<order.length?start():finish(),1100)}};
+  cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
+  el.querySelector('#clr').onclick=()=>{sfx.tap();strokes=[];paint()};
+  hint(()=>el.querySelector('.canvasbox'));
+  start();
+},
+
+find({board,ask,finish,hint}){
+  const rounds=[['circle',2],['rectangle',2],['square',2],['triangle',3],['oval',2]];let ri=0,got=0;
+  const room=`<svg viewBox="0 0 600 380">
+    <rect width="600" height="270" fill="#FFF4E0"/><rect y="270" width="600" height="110" fill="#E8C9A0"/>
+    <path d="M40 30 L330 30" stroke="#5B5680" stroke-width="2"/>
+    <path class="obj" data-s="triangle" d="M60 30h50l-25 40z" fill="#FF4F5E"/>
+    <path class="obj" data-s="triangle" d="M160 30h50l-25 40z" fill="#3A8DFF"/>
+    <path class="obj" data-s="triangle" d="M260 30h50l-25 40z" fill="#2EC27E"/>
+    <g class="obj" data-s="circle"><circle cx="440" cy="70" r="40" fill="#fff" stroke="#9B5DE5" stroke-width="8"/><path d="M440 70V44M440 70l18 12" stroke="#2A2350" stroke-width="6" stroke-linecap="round"/></g>
+    <g class="obj" data-s="square"><rect x="190" y="95" width="110" height="110" fill="#BFE3FF" stroke="#8B5A2B" stroke-width="8"/><path d="M245 95v110M190 150h110" stroke="#8B5A2B" stroke-width="6"/></g>
+    <g class="obj" data-s="oval"><ellipse cx="365" cy="160" rx="28" ry="40" fill="#C98444"/><ellipse cx="365" cy="160" rx="20" ry="31" fill="#D7F0FF"/></g>
+    <g class="obj" data-s="rectangle"><rect x="490" y="120" width="86" height="210" rx="4" fill="#B26B2F"/><circle cx="560" cy="230" r="6" fill="#FFCD3C"/></g>
+    <g class="obj" data-s="rectangle"><rect x="30" y="230" width="150" height="16" rx="3" fill="#8B5A2B"/><rect x="40" y="246" width="12" height="70" fill="#8B5A2B"/><rect x="158" y="246" width="12" height="70" fill="#8B5A2B"/></g>
+    <g class="obj" data-s="square"><rect x="80" y="180" width="50" height="50" fill="#FF4F5E"/><rect x="100" y="180" width="10" height="50" fill="#FFCD3C"/></g>
+    <g class="obj" data-s="oval"><ellipse cx="300" cy="335" rx="110" ry="26" fill="#9B5DE5"/><ellipse cx="300" cy="335" rx="70" ry="14" fill="#C9A9F5"/></g>
+    <g class="obj" data-s="circle"><circle cx="440" cy="320" r="30" fill="#3A8DFF"/><path d="M412 312c18 8 38 8 56 0M412 326c18 8 38 8 56 0" stroke="#fff" stroke-width="5" fill="none"/></g>
+  </svg>`;
+  const el=h(`<div class="col"><span class="count" id="cnt"></span><div class="scene">${room}</div></div>`);board.appendChild(el);
+  const objs=[...el.querySelectorAll('.obj')];
+  hint(()=>objs.filter(o=>o.dataset.s===rounds[ri]?.[0]&&!o.classList.contains('found')).slice(0,1).map(o=>o));
+  const setR=()=>{got=0;const [k,n]=rounds[ri];el.querySelector('#cnt').textContent=`${SHPL[k]}: 0 من ${n}`;ask('ابحث في الغرفة عن كل '+SHPL[k]+' والمسها')};
+  objs.forEach(o=>o.addEventListener('click',()=>{const [k,n]=rounds[ri]||[];if(!k||o.classList.contains('found'))return;
+    if(o.dataset.s===k){sfx.good();o.classList.add('found');got++;el.querySelector('#cnt').textContent=`${SHPL[k]}: ${got} من ${n}`;say('أحسنت! هذا '+SHN0[k]);
+      if(got===n){ri++;setTimeout(()=>{if(ri<rounds.length){objs.forEach(x=>x.classList.remove('found'));setR()}else finish()},1300)}}
+    else{sfx.bad();say('هذا '+SHN0[o.dataset.s]+'. نبحث عن '+SHPL[k])}}));
+  setR();
+},
+solids(ctx){
+  const {board,ask,hint}=ctx;const keys=['sphere','cube','cylinder','cone'];const seen=new Set();
+  const col=h(`<div class="col"><div class="grid g4"></div><div class="reveal"><div class="objs"></div><p>المس كل مجسّم لتتعرّف عليه</p></div></div>`);board.appendChild(col);
+  ask('هذه مجسّمات نمسكها بأيدينا. المس كل واحد لتتعرّف عليه');hint(()=>col.querySelector('.card:not(.seen)'));
+  keys.forEach(k=>{const c=h(`<button class="card"><span class="pic">${SOL[k]}</span><b>${SOLN[k]}</b></button>`);
+    c.onclick=()=>{sfx.good();col.querySelector('.objs').innerHTML=O[SOLOBJ[k]];const t=SOLN[k]+'. '+SOLFACT[k]+' مثل '+OBN[SOLOBJ[k]]+'.';col.querySelector('.reveal p').textContent=t;say(t);
+      if(!seen.has(k)){seen.add(k);c.classList.add('seen');c.insertAdjacentHTML('beforeend',`<span class="tick">${tickSvg}</span>`)}
+      if(seen.size===4)setTimeout(stage2,3200)};
+    col.querySelector('.grid').appendChild(c)});
+  function stage2(){board.innerHTML='';
+    chooser(ctx,shuffle(keys).map(k=>({top:`<div class="bigpic">${O[SOLOBJ[k]]}</div>`,ask:OBN[SOLOBJ[k]]+'. ما المجسّم الذي يشبهها؟',yes:'أحسنت! '+OBN[SOLOBJ[k]]+' تشبه '+SOLN[k],
+      opts:shuffle(keys.filter(x=>x!==k)).slice(0,2).map(x=>({html:SOL[x],label:SOLN[x],no:'هذا '+SOLN[x]+'. حاول مرة أخرى'})).concat([{html:SOL[k],label:SOLN[k],ok:true}])})),{cols:3,w:680})}
+},
+pos(ctx){
+  const P={on:['فوق الطاولة',85,57],under:['تحت الطاولة',85,117],beside:['بجانب الطاولة',20,117],inside:['داخل الصندوق',170,104]};
+  const scene=k=>{const [,x,y]=P[k];const ball=`<circle cx="${x}" cy="${y}" r="11" fill="#FF4F5E"/><path d="${`M${x-9} ${y-3}q9 5 18 0`}" stroke="#fff" stroke-width="2.5" fill="none"/>`;
+    return `<svg viewBox="0 0 200 140"><rect width="200" height="140" fill="#F3F9FF"/><rect y="128" width="200" height="12" fill="#E8C9A0"/>
+    <rect x="40" y="68" width="90" height="10" rx="3" fill="#B26B2F"/><rect x="48" y="78" width="8" height="50" fill="#B26B2F"/><rect x="114" y="78" width="8" height="50" fill="#B26B2F"/>
+    <path d="M148 98h44v30h-44z" fill="#E3AE1C"/>${ball}${k==='inside'?'':''}<path d="M148 106h44v22h-44z" fill="#FFCD3C" stroke="#C99A1A" stroke-width="2"/><path d="M148 98l-8-8M192 98l8-8" stroke="#C99A1A" stroke-width="3" stroke-linecap="round"/></svg>`};
+  const ks=Object.keys(P);
+  chooser(ctx,shuffle(ks).map(k=>({ask:'اختر الصورة التي فيها الكرة '+P[k][0],yes:'أحسنت! الكرة '+P[k][0],opts:ks.map(x=>({html:scene(x),ok:x===k,no:'هنا الكرة '+P[x][0]+'. حاول مرة أخرى'}))})),{cols:2,w:820});
+},
+pattern(ctx){
+  const T={a:['circle',C.red],b:['square',C.blue],c:['triangle',C.yellow],d:['circle',C.green],e:['triangle',C.purple],f:['oval',C.orange]};
+  const rounds=[
+    {seq:'ababa',ans:'b',pool:'abc'},
+    {seq:'deded',ans:'e',pool:'def'},
+    {seq:'aabaa',ans:'b',pool:'abd'},
+    {seq:'abcab',ans:'c',pool:'abc'},
+    {seq:'fdffdf',ans:'f',pool:'fde'}
+  ];
+  chooser(ctx,rounds.map(q=>({top:[...q.seq].map(x=>tok(...T[x])).join('')+'<div class="tok q">؟</div>',ask:'انظر إلى النمط. ما الشكل الذي يأتي بعده؟',yes:'أحسنت! أكملتَ النمط',
+    opts:[...q.pool].map(x=>({html:shape(...T[x]),ok:x===q.ans,no:'انظر جيدًا إلى ما يتكرر، وحاول مرة أخرى'}))})),{cols:3,w:560});
+},
+sort2({board,ask,finish,hint}){
+  const bins=[['triangle','red'],['circle','blue'],['square','yellow']];
+  const items=shuffle([...bins,...bins,['circle','red'],['triangle','blue'],['square','green']].map(([k,c])=>({k,c})));
+  const el=h(`<div class="sort"><div class="tray"></div><div class="bins" style="grid-template-columns:repeat(4,minmax(0,1fr))"></div></div>`);board.appendChild(el);
+  ask('انتبه للشكل واللون معًا! ضع كل شكل في سلته، وما لا يناسب أي سلة ضعه في السلة الرمادية');
+  bins.forEach(([k,c])=>el.querySelector('.bins').appendChild(h(`<div class="bin" data-k="${k}" data-c="${c}" style="border-color:${C[c]}"><svg class="lbl" viewBox="0 0 100 100">${SH[k](C[c])}</svg><div class="in"></div></div>`)));
+  el.querySelector('.bins').appendChild(h(`<div class="bin" data-k="other" style="border-color:#A9A6BF"><svg class="lbl" viewBox="0 0 100 100"><path d="M14 40h72l-8 48H22z" fill="#C9C6DA"/><text x="50" y="72" text-anchor="middle" font-size="34" font-weight="800" fill="#fff">؟</text></svg><div class="in"></div></div>`));
+  items.forEach(({k,c})=>el.querySelector('.tray').appendChild(h(`<div class="item" data-k="${k}" data-c="${c}" tabindex="0">${shape(k,C[c])}</div>`)));
+  const fits=(it)=>bins.find(([k,c])=>it.dataset.k===k&&it.dataset.c===c);
+  let n=0;hint(()=>{const it=el.querySelector('.tray .item');if(!it)return null;const f=fits(it);return[it,f?el.querySelector(`.bin[data-k="${f[0]}"]`):el.querySelector('.bin[data-k="other"]')]});
+  dragPick([...el.querySelectorAll('.item')],[...el.querySelectorAll('.bin')],(it,b)=>{
+    const f=fits(it);const ok=b.dataset.k==='other'?!f:(f&&b.dataset.k===f[0]);
+    if(ok){sfx.good();it.dataset.used=1;b.querySelector('.in').insertAdjacentHTML('beforeend',it.innerHTML);it.remove();say(b.dataset.k==='other'?'صحيح، هذا لا يناسب أي سلة':SHN0[b.dataset.k]+' '+CN[b.dataset.c].replace('ال',''));if(++n===items.length){el.querySelector('.tray').innerHTML='<b style="font-size:26px">ممتاز! انتبهتَ للشكل واللون</b>';setTimeout(finish,1300)}}
+    else{sfx.bad();b.animate([{transform:'translateX(-8px)'},{transform:'translateX(8px)'},{transform:'none'}],{duration:300});say('انظر إلى الشكل واللون معًا')}
+  });
+},
+size(ctx){
+  const S=[.42,.68,.98];const mk=(k,c)=>S.map(sc=>`<svg viewBox="0 0 100 100"><g transform="translate(${50-50*sc} ${50-50*sc}) scale(${sc})">${SH[k](c)}</g></svg>`);
+  orderer(ctx,[
+    {items:mk('circle',C.green),ask:'رتّب الدوائر: ابدأ بالأصغر ثم الأكبر',yes:'أحسنت! من الأصغر إلى الأكبر',no:'ابحث عن الأصغر'},
+    {items:mk('triangle',C.orange),ask:'رتّب المثلثات من الأصغر إلى الأكبر',yes:'رائع!',no:'ابحث عن الأصغر بينها'},
+    {items:mk('square',C.purple),ask:'رتّب المربعات من الأصغر إلى الأكبر',yes:'ممتاز!',no:'ابحث عن الأصغر بينها'}
+  ],['صغير','متوسط','كبير']);
+},
+/* ===== الألوان ===== */
+clearn({board,ask,finish,hint}){
+  const keys=['red','blue','yellow','green','orange','purple'];const seen=new Set();
+  const col=h(`<div class="col"><div class="grid g6"></div><div class="reveal"><div class="objs"></div><p>المس كل لون لتسمع اسمه</p></div></div>`);board.appendChild(col);
+  ask('المس كل لون لتتعرّف عليه');hint(()=>col.querySelector('.card:not(.seen)'));
+  keys.forEach(k=>{const c=h(`<button class="card"><span class="pic"><svg viewBox="0 0 100 100"><path d="M50 8c14 0 18 12 30 14s14 18 6 28 4 22-8 30-22 4-30 12-24-4-28-14-14-10-10-24-6-22 4-30S36 8 50 8z" fill="${C[k]}"/></svg></span><b>${CN[k].replace('ال','')}</b></button>`);
+    c.onclick=()=>{sfx.splash();c.classList.remove('good');void c.offsetWidth;c.classList.add('good');col.querySelector('.objs').innerHTML=COBJS[k].map(o=>O[o]).join('');
+      const t='اللون '+CN[k]+'، مثل '+COBJS[k].map(o=>OBN[o]).join(' و')+'.';col.querySelector('.reveal p').textContent=t;say(t);
+      if(!seen.has(k)){seen.add(k);c.classList.add('seen');c.insertAdjacentHTML('beforeend',`<span class="tick">${tickSvg}</span>`)}
+      if(seen.size===6)setTimeout(finish,2300)};
+    col.querySelector('.grid').appendChild(c)});
+},
+cchoose({board,ask,finish,hint,help}){
+  const keys=shuffle(['red','blue','yellow','green','orange','purple']);let r=0;const pick={};keys.forEach(k=>pick[k]=COBJS[k][Math.floor(Math.random()*2)]);
+  const wrap=h(`<div class="col"><div class="card" style="width:min(220px,60%);pointer-events:none"><span class="pic" id="q"></span></div><div class="grid g3" style="width:min(640px,100%)"></div></div>`);board.appendChild(wrap);
+  let right=null,wrong=0;hint(()=>right);
+  function round(){wrong=0;const t=keys[r];wrap.querySelector('#q').innerHTML=O[pick[t]];ask('ما لون '+OBN[pick[t]]+'؟');const g=wrap.querySelector('.grid');g.innerHTML='';
+    shuffle([t,...shuffle(keys.filter(k=>k!==t)).slice(0,2)]).forEach(k=>{const c=h(`<button class="card" aria-label="${CN[k]}"><span class="pic"><svg viewBox="0 0 100 100"><path d="M50 10C38 32 22 46 22 62a28 28 0 0 0 56 0c0-16-16-30-28-52z" fill="${C[k]}"/></svg></span><b>${CN[k].replace('ال','')}</b></button>`);if(k===t)right=c;
+      c.onclick=()=>{if(k===t){sfx.good();c.classList.add('good');say('أحسنت! '+OBN[pick[t]]+' لونها '+CN[t]);r++;setTimeout(()=>r<keys.length?round():finish(),1400)}else{sfx.bad();c.classList.remove('bad');void c.offsetWidth;c.classList.add('bad');say('هذا '+CN[k]+'. حاول مرة أخرى');if(++wrong>=2)setTimeout(help,1600)}};g.appendChild(c)})}
+  round();
+},
+mix({board,ask,finish,hint}){
+  const tasks=[['orange',['red','yellow']],['green',['blue','yellow']],['purple',['red','blue']]];let ti=0;let bowl=[];
+  const el=h(`<div class="mix"><div class="pots"></div><div class="bowlwrap"><svg viewBox="0 0 300 200"><path d="M20 70h260c0 70-58 120-130 120S20 140 20 70z" fill="#fff" stroke="#2A2350" stroke-width="7"/><path id="paintfill" d="M34 82h232c-6 52-56 94-116 94S40 134 34 82z" fill="#F2F2F7"/><path d="M14 70h272" stroke="#2A2350" stroke-width="10" stroke-linecap="round"/></svg><div class="tools"><button class="btn" id="empty">أفرغ الوعاء</button></div></div><div class="target"><b>اصنع اللون</b><svg viewBox="0 0 100 100"><path id="tg" d="M50 8c14 0 18 12 30 14s14 18 6 28 4 22-8 30-22 4-30 12-24-4-28-14-14-10-10-24-6-22 4-30S36 8 50 8z"/></svg><b id="tgn"></b></div></div>`);board.appendChild(el);
+  const pots=el.querySelector('.pots'),fill=el.querySelector('#paintfill');
+  ['red','yellow','blue'].forEach(k=>{const b=h(`<button class="pot" aria-label="${CN[k]}"><svg viewBox="0 0 100 100"><rect x="22" y="30" width="56" height="58" rx="8" fill="${C[k]}"/><rect x="16" y="22" width="68" height="14" rx="5" fill="#2A2350"/><path d="M30 36c0 14 10 14 10 22" stroke="#fff" stroke-width="5" opacity=".5" fill="none" stroke-linecap="round"/></svg></button>`);
+    b.dataset.k=k;b.onclick=()=>{if(bowl.length>=2)return;sfx.splash();bowl.push(k);say(CN[k]);fill.setAttribute('fill',bowl.length===1?C[k]:fill.getAttribute('fill'));if(bowl.length===2)setTimeout(mixNow,500)};pots.appendChild(b)});
+  const res=(a,b)=>{const s=[a,b].sort().join('+');return{'red+yellow':'orange','blue+yellow':'green','blue+red':'purple'}[s]||a};
+  function mixNow(){const [a,b]=bowl;const r=res(a,b);fill.animate([{opacity:.3},{opacity:1}],{duration:600});fill.setAttribute('fill',C[r]);
+    const target=tasks[ti][0];
+    if(a===b){say(CN[a]+' مع '+CN[b]+' يبقى '+CN[a]+'. جرّب لونين مختلفين');setTimeout(clear,1800);return}
+    if(r===target){sfx.good();say(CN[a]+' و'+CN[b]+' يصنعان اللون '+CN[r]+'! أحسنت');ti++;setTimeout(()=>{clear();ti<tasks.length?setTask():finish()},2200)}
+    else{sfx.bad();say(CN[a]+' و'+CN[b]+' يصنعان '+CN[r]+'. لكننا نريد '+CN[target]+'. جرّب مرة أخرى');setTimeout(clear,2600)}}
+  function clear(){bowl=[];fill.setAttribute('fill','#F2F2F7')}
+  function setTask(){const t=tasks[ti][0];el.querySelector('#tg').setAttribute('fill',C[t]);el.querySelector('#tgn').textContent=CN[t].replace('ال','');ask('اختر لونين واصنع اللون '+CN[t])}
+  el.querySelector('#empty').onclick=()=>{sfx.tap();clear()};
+  hint(()=>tasks[ti]?tasks[ti][1].filter(k=>!bowl.includes(k)).map(k=>pots.querySelector(`[data-k="${k}"]`)):null);
+  setTask();
+},
+csort({board,ask,finish,hint}){
+  const cs=['red','yellow','blue'];const kinds=['balloon','star','cup'];
+  const items=shuffle(cs.flatMap(c=>kinds.map(k=>({c,k}))));
+  const el=h(`<div class="sort"><div class="tray"></div><div class="bins" style="grid-template-columns:repeat(3,minmax(0,1fr))"></div></div>`);board.appendChild(el);
+  ask('ضع كل شيء في السلة التي لها لونه نفسه');
+  cs.forEach(c=>el.querySelector('.bins').appendChild(h(`<div class="bin" data-c="${c}" style="border-color:${C[c]};background:${C[c]}22"><svg class="lbl" viewBox="0 0 100 100"><path d="M14 40h72l-8 48H22z" fill="${C[c]}"/><path d="M30 40c0-20 40-20 40 0" stroke="${C[c]}" stroke-width="7" fill="none"/></svg><div class="in"></div></div>`)));
+  items.forEach(({c,k})=>el.querySelector('.tray').appendChild(h(`<div class="item" data-c="${c}" tabindex="0">${O[k](C[c])}</div>`)));
+  let n=0;hint(()=>{const it=el.querySelector('.tray .item');return it?[it,el.querySelector(`.bin[data-c="${it.dataset.c}"]`)]:null});
+  dragPick([...el.querySelectorAll('.item')],[...el.querySelectorAll('.bin')],(it,b)=>{
+    if(it.dataset.c===b.dataset.c){sfx.good();it.dataset.used=1;b.querySelector('.in').insertAdjacentHTML('beforeend',it.innerHTML);it.remove();say(CN[b.dataset.c]);if(++n===items.length){el.querySelector('.tray').innerHTML='<b style="font-size:26px">رتّبتَ كل الألوان!</b>';setTimeout(finish,1200)}}
+    else{sfx.bad();b.animate([{transform:'translateX(-8px)'},{transform:'translateX(8px)'},{transform:'none'}],{duration:300});say('هذه السلة '+CN[b.dataset.c].replace('ال','')+'. ابحث عن سلة أخرى')}
+  });
+},
+
+shades(ctx){
+  const sw=c=>`<svg viewBox="0 0 100 100"><path d="M50 8c14 0 18 12 30 14s14 18 6 28 4 22-8 30-22 4-30 12-24-4-28-14-14-10-10-24-6-22 4-30S36 8 50 8z" fill="${c}"/></svg>`;
+  const tri=b=>[mixHex(b,'#ffffff',.62),b,mixHex(b,'#000000',.45)].map(sw);
+  orderer(ctx,[
+    {items:tri(C.blue),ask:'رتّب الأزرق: من الأفتح إلى الأغمق',yes:'أحسنت! الأبيض يجعل اللون فاتحًا',no:'ابحث عن الأفتح'},
+    {items:tri(C.green),ask:'رتّب الأخضر من الأفتح إلى الأغمق',yes:'رائع!',no:'ابحث عن الأفتح'},
+    {items:tri(C.red),ask:'رتّب الأحمر من الأفتح إلى الأغمق',yes:'ممتاز! الأسود يجعل اللون غامقًا',no:'ابحث عن الأفتح'}
+  ],['فاتح','متوسط','غامق']);
+},
+cpattern(ctx){
+  const K={r:C.red,y:C.yellow,b:C.blue,g:C.green,p:C.purple,o:C.orange};
+  const rounds=[{seq:'ryryr',ans:'y',pool:'ryb'},{seq:'bbgbb',ans:'g',pool:'bgp'},{seq:'rybry',ans:'b',pool:'ryb'},{seq:'oppopp',ans:'o',pool:'poy'}];
+  chooser(ctx,rounds.map(q=>({top:'<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:center;background:linear-gradient(#0000 47%,#5B5680 47% 53%,#0000 53%);padding:4px 10px">'+[...q.seq].map(x=>bead(K[x])).join('')+'<div class="tok q" style="border-radius:50%">؟</div></div>',
+    ask:'نصنع عقدًا من الخرز. ما لون الخرزة التالية؟',yes:'أحسنت! عقدك جميل',opts:[...q.pool].map(x=>({html:`<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="${K[x]}"/><circle cx="50" cy="50" r="9" fill="#fff" opacity=".8"/></svg>`,label:CN[Object.keys(C).find(k=>C[k]===K[x])].replace('ال',''),ok:x===q.ans,no:'انظر إلى الألوان التي تتكرر'}))})),{cols:3,w:520});
+},
+env({board,ask,finish,hint}){
+  const regions=[['sky','blue'],['sun','yellow'],['sea','blue'],['sand','yellow'],['trunk','brown'],['leaves','green'],['dates','red']];
+  const dot=(x,y,k)=>`<circle cx="${x}" cy="${y}" r="9" fill="${C[k]}" stroke="#fff" stroke-width="2.5" pointer-events="none"/>`;
+  const svg=`<svg viewBox="0 0 400 300">
+    <rect class="region" data-r="sky" data-k="blue" width="400" height="190" fill="#fff" stroke="#2A2350" stroke-width="3"/>
+    <path d="M40 60c0-12 20-16 28-6 6-10 26-8 26 6 10 0 12 14 0 16H44c-10 0-12-14-4-16z" fill="#fff" stroke="#C9C3E6" stroke-width="2"/>
+    <circle class="region" data-r="sun" data-k="yellow" cx="330" cy="62" r="34" fill="#fff" stroke="#2A2350" stroke-width="3"/>
+    <path class="region" data-r="sea" data-k="blue" d="M0 172c40-10 70-10 110 0s70 10 110 0 70-10 110 0 50 8 70 4V216H0z" fill="#fff" stroke="#2A2350" stroke-width="3"/>
+    <path class="region" data-r="sand" data-k="yellow" d="M0 210c60-12 120-10 200 0s140 8 200-2V300H0z" fill="#fff" stroke="#2A2350" stroke-width="3"/>
+    <path class="region" data-r="trunk" data-k="brown" d="M150 270c6-50 6-100 18-150h14c-10 50-12 100-14 150z" fill="#fff" stroke="#2A2350" stroke-width="3"/>
+    <g class="region" data-r="leaves" data-k="green" fill="#fff" stroke="#2A2350" stroke-width="3"><path d="M175 118c-24-22-64-20-80 2 30-8 54-4 80-2z"/><path d="M175 118c24-22 64-20 80 2-30-8-54-4-80-2z"/><path d="M175 118c-10-30-34-44-56-40 22 10 40 24 56 40z"/><path d="M175 118c10-30 34-44 56-40-22 10-40 24-56 40z"/><path d="M175 118c-30 0-52 20-56 40 18-18 36-28 56-40z"/><path d="M175 118c30 0 52 20 56 40-18-18-36-28-56-40z"/></g>
+    <g class="region" data-r="dates" data-k="red" fill="#fff" stroke="#2A2350" stroke-width="2.5">${[[164,134],[176,136],[188,134],[170,146],[182,146]].map(([x,y])=>`<ellipse cx="${x}" cy="${y}" rx="6" ry="8"/>`).join('')}</g>
+    ${dot(24,24,'blue')}${dot(330,62,'yellow')}${dot(30,198,'blue')}${dot(40,262,'yellow')}${dot(162,240,'brown')}${dot(110,118,'green')}${dot(176,160,'red')}
+  </svg>`;
+  const el=h(`<div class="paint"><div class="canvasbox">${svg}</div><div class="palette"></div></div>`);board.appendChild(el);
+  let cur=null,n=0;const pal=el.querySelector('.palette');
+  ['blue','yellow','green','brown','red','orange'].forEach(k=>{const b=h(`<button class="pc" data-k="${k}" style="background:${C[k]}" aria-label="${CN[k]}"></button>`);b.onclick=()=>{cur=k;pal.querySelectorAll('.pc').forEach(x=>x.classList.remove('on'));b.classList.add('on');sfx.tap();say(CN[k])};pal.appendChild(b)});
+  hint(()=>{const r=el.querySelector('.region:not([data-ok])');return r?pal.querySelector(`[data-k="${r.dataset.k}"]`):null});
+  ask('لوّن صورة بلادي: النخلة والبحر والرمل. انظر إلى النقطة واختر لونها');
+  el.querySelectorAll('.region').forEach(r=>r.addEventListener('click',()=>{if(r.dataset.ok)return;if(!cur){say('اختر لونًا أولًا');return}
+    if(cur===r.dataset.k){r.setAttribute('fill',C[cur]);r.dataset.ok=1;sfx.splash();say(CN[cur]);if(++n===regions.length){ask('ما أجمل بلادي!');setTimeout(finish,1500)}}
+    else{sfx.bad();say('انظر إلى النقطة. هذا الجزء لونه '+CN[r.dataset.k])}}));
+},
+rainbow({board,ask,finish,hint}){
+  const bands=['red','orange','yellow','green','blue','purple'];
+  const svg=`<svg viewBox="0 0 400 230"><rect x="0" y="0" width="400" height="230" fill="#E9F5FF"/>${bands.map((k,i)=>{const r=180-i*24;return `<path class="region" data-k="${k}" d="M${200-r} 210a${r} ${r} 0 0 1 ${2*r} 0h-24a${r-24} ${r-24} 0 0 0 -${2*r-48} 0z" fill="#fff" stroke="#2A2350" stroke-width="3"/><circle cx="${200-r+12}" cy="200" r="9" fill="${C[k]}" stroke="#fff" stroke-width="2" pointer-events="none"/><circle cx="${200+r-12}" cy="200" r="9" fill="${C[k]}" stroke="#fff" stroke-width="2" pointer-events="none"/>`}).join('')}</svg>`;
+  const el=h(`<div class="paint"><div class="canvasbox">${svg}</div><div class="palette"></div></div>`);board.appendChild(el);
+  let cur=null;const pal=el.querySelector('.palette');let n=0;
+  Object.entries(C).forEach(([k,c])=>{const b=h(`<button class="pc" style="background:${c}" aria-label="${CN[k]}"></button>`);b.dataset.k=k;b.onclick=()=>{cur=k;pal.querySelectorAll('.pc').forEach(x=>x.classList.remove('on'));b.classList.add('on');sfx.tap();say(CN[k])};pal.appendChild(b)});
+  hint(()=>{const r=el.querySelector('.region:not([data-ok])');return r?pal.querySelector(`[data-k="${r.dataset.k}"]`):null});
+  ask('لوّن قوس المطر: انظر إلى النقطة في كل قوس واختر لونها');
+  el.querySelectorAll('.region').forEach(r=>r.addEventListener('click',()=>{if(r.dataset.ok)return;if(!cur){say('اختر لونًا أولًا');return}
+    if(cur===r.dataset.k){r.setAttribute('fill',C[cur]);r.dataset.ok=1;sfx.splash();say(CN[cur]);if(++n===bands.length){ask('ما أجمل قوس المطر!');setTimeout(finish,1400)}}
+    else{sfx.bad();say('انظر إلى النقطة. هذا القوس '+CN[r.dataset.k])}}));
+},
+cdraw({board,ask,finish}){
+  const el=h(`<div class="paint"><div class="canvasbox"><canvas width="800" height="520"></canvas></div><div class="palette"></div></div>`);board.appendChild(el);
+  const tools=h(`<div class="tools" style="margin-top:10px"><button class="btn" id="clr2">امسح</button><button class="btn go" id="fin">انتهيت</button></div>`);board.parentElement.appendChild(tools);
+  const cv=el.querySelector('canvas'),x=cv.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,800,520);let cur=C.yellow,drawing=false,last=null;let ink=0;
+  const pal=el.querySelector('.palette');
+  Object.entries(C).forEach(([k,c])=>{const b=h(`<button class="pc ${c===cur?'on':''}" style="background:${c}" aria-label="${CN[k]}"></button>`);b.onclick=()=>{cur=c;pal.querySelectorAll('.pc').forEach(q=>q.classList.remove('on'));b.classList.add('on');sfx.tap();say(CN[k])};pal.appendChild(b)});
+  ask('ارسم شمسًا صفراء وشجرة خضراء، ولوّن ما تحب');
+  const pos=e=>{const r=cv.getBoundingClientRect();return[(e.clientX-r.left)*800/r.width,(e.clientY-r.top)*520/r.height]};
+  cv.addEventListener('pointerdown',e=>{e.preventDefault();drawing=true;cv.setPointerCapture(e.pointerId);last=pos(e);x.fillStyle=cur;x.beginPath();x.arc(...last,11,0,7);x.fill()});
+  cv.addEventListener('pointermove',e=>{if(!drawing)return;const p=pos(e);x.strokeStyle=cur;x.lineWidth=22;x.lineCap='round';x.beginPath();x.moveTo(...last);x.lineTo(...p);x.stroke();ink+=Math.hypot(p[0]-last[0],p[1]-last[1]);last=p});
+  const end=()=>drawing=false;cv.addEventListener('pointerup',end);cv.addEventListener('pointercancel',end);
+  tools.querySelector('#clr2').onclick=()=>{sfx.tap();x.fillStyle='#fff';x.fillRect(0,0,800,520);ink=0};
+  tools.querySelector('#fin').onclick=()=>{if(ink<300){say('ارسم قليلًا ثم اضغط انتهيت');return}finish()};
+}
+};
+
+soundIcon();render();
+})();
+</script>
+
+</body>
+</html>
