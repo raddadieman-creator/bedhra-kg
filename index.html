@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>بذرة | منصة الروضة</title>
 <meta name="description" content="بذرة: منصة تفاعلية لأطفال الروضة في الأشكال والألوان والأعداد والخطوط.">
+<meta name="author" content="Research by Eman">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}</style>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -414,6 +415,7 @@ body.boy{--sky:#E8F4FF;--sky2:#D3EAFF;--line:#CFE3F7}
 .seccard .row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
 .lgroup{background:var(--paper);border-radius:28px;padding:16px;box-shadow:0 6px 0 var(--line);display:flex;flex-direction:column;gap:10px}
 .lgroup h3{margin:0;font-size:22px}
+.landing .credit{margin:4px 0 0;font-size:15px;font-weight:600;color:var(--ink2)}.landing .credit b{font-weight:800;color:var(--ink)}
 .fineprint{font-size:14px;color:var(--ink2);font-weight:600;margin:0;text-align:center}
 @media (max-width:640px){.lnav{grid-template-columns:repeat(2,minmax(0,1fr))}.doors.four .door{padding-top:44px}}
 /* رفرف الفراشة */
@@ -920,7 +922,8 @@ function landingView(){
     <div class="classcard" data-raw="1"><b></b><span class="t"></span><span class="sc"></span></div>
     <button class="startbtn" id="startGo">ابدأ الرحلة</button></div>
     <nav class="lnav" aria-label="صفحات المنصة"><button data-v="home">${NAVI.secs}الأقسام</button><button data-v="achieve">${NAVI.ach}إنجازي</button><button data-v="links">${NAVI.links}روابط مهمة</button><button data-v="teach">${NAVI.teach}للمعلمة</button></nav>
-    <div class="secprev">${SECK().map(k=>`<button data-k="${k}" style="background:${SECTIONS[k].color}">${SECTIONS[k].title}</button>`).join('')}</div></section>`);
+    <div class="secprev">${SECK().map(k=>`<button data-k="${k}" style="background:${SECTIONS[k].color}">${SECTIONS[k].title}</button>`).join('')}</div>
+    <p class="credit" data-raw="1">تصميم: <b dir="ltr">Research by Eman</b></p></section>`);
   const cc=el.querySelector('.classcard');cc.querySelector('b').textContent=I.cls||'';cc.querySelector('.t').textContent=I.teacher?'المعلمة: '+I.teacher:'';cc.querySelector('.sc').textContent=I.school||'';
   el.querySelector('#startGo').onclick=()=>{sfx.good();go({view:'home'})};
   el.querySelectorAll('.lnav button').forEach(b=>b.onclick=()=>{sfx.tap();if(b.dataset.v==='teach')pinPad();else go({view:b.dataset.v})});
